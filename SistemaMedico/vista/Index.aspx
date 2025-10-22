@@ -5,7 +5,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MediTech - Sistema Médico</title>
+    <title>Clínica Aguirre - Sistema Médico</title>
     <link href="../styles/main.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="navbar-brand">
                     <i class="fas fa-heartbeat logo-icon"></i>
-                    <span class="logo-text">MediTech</span>
+                    <span class="logo-text">Clínica Aguirre</span>
                 </div>
                 <ul class="navbar-menu">
                     <li><a href="#staff-medico">Staff Médico</a></li>
@@ -116,13 +116,13 @@
                 <div class="footer-content">
                     <div class="footer-brand">
                         <i class="fas fa-heartbeat logo-icon"></i>
-                        <span class="logo-text">MediTech</span>
+                        <span class="logo-text">Clínica Aguirre</span>
                     </div>
-                    <p class="footer-text">© 2025 MediTech. Todos los derechos reservados.</p>
+                    <p class="footer-text">© 2025 Clínica Aguirre. Todos los derechos reservados.</p>
                     <div class="footer-contact">
                         <span><i class="fas fa-phone"></i> 01-234-5678</span>
                         <span><i class="fas fa-phone"></i> 01-987-6543</span>
-                        <span><i class="fas fa-envelope"></i> info@meditech.com</span>
+                        <span><i class="fas fa-envelope"></i> info@clinicaaguirre.com</span>
                     </div>
                 </div>
             </div>

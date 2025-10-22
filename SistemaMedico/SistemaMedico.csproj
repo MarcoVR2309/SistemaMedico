@@ -70,6 +70,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="modelo\Citas.cs" />
+    <Compile Include="modelo\ConsultasMedicas.cs" />
+    <Compile Include="modelo\Doctores.cs" />
+    <Compile Include="modelo\Especialidades.cs" />
+    <Compile Include="modelo\HorariosDoctor.cs" />
+    <Compile Include="modelo\Pacientes.cs" />
+    <Compile Include="modelo\Pagos.cs" />
+    <Compile Include="modelo\RecetasDetalle.cs" />
+    <Compile Include="modelo\RecetasMedicas.cs" />
+    <Compile Include="modelo\Rol.cs" />
+    <Compile Include="modelo\Sedes.cs" />
+    <Compile Include="modelo\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +92,10 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="controlador\" />
+    <Folder Include="vista\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

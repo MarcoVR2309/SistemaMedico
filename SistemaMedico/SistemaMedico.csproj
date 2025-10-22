@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="vista\Index.aspx" />
+    <Content Include="styles\main.css" />
+    <Content Include="images\README.md" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +85,10 @@
     <Compile Include="modelo\Rol.cs" />
     <Compile Include="modelo\Sedes.cs" />
     <Compile Include="modelo\Usuarios.cs" />
+    <Compile Include="vista\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controlador\" />
-    <Folder Include="vista\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

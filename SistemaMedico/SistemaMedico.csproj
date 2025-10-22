@@ -67,11 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\medical_team.png" />
-    <Content Include="images\Logo_MediTech.png" />
+    <Content Include="vista\images\medical_team.png" />
+    <Content Include="vista\images\Logo_MediTech.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
-    <Content Include="images\README.md" />
+    <Content Include="vista\images\README.md" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

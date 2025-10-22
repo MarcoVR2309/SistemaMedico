@@ -50,7 +50,7 @@
                     <asp:Button ID="btnRegistro" runat="server" Text="Regístrate Aquí" CssClass="btn-hero" OnClick="btnRegistro_Click" />
                 </div>
                 <div class="hero-image">
-                    <img src="../images/medical-team.jpg" alt="Equipo Médico" />
+                    <img src="../images/medical_team.png" alt="Equipo Médico" />
                 </div>
             </div>
         </section>

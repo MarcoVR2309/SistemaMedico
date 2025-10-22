@@ -67,8 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\Imagen N1.png" />
-    <Content Include="images\Logo MediTech.png" />
+    <Content Include="images\medical_team.png" />
+    <Content Include="images\Logo_MediTech.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
     <Content Include="images\README.md" />

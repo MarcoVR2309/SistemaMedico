@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="database\RedClinicas_Azure.sql" />
     <Content Include="vista\images\medical_team.png" />
     <Content Include="vista\images\Logo_MediTech.png" />
     <Content Include="vista\Index.aspx" />
@@ -75,6 +76,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="conexion\ConexionDB.cs" />
     <Compile Include="modelo\Citas.cs" />
     <Compile Include="modelo\ConsultasMedicas.cs" />
     <Compile Include="modelo\Doctores.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\ConectarSSMSaAzure.md" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

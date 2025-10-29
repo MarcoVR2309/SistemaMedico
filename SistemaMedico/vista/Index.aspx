@@ -18,10 +18,12 @@
         <!-- Navbar -->
         <nav class="navbar">
             <div class="container">
-                <div class="navbar-brand">
-                    <i class="fas fa-heartbeat logo-icon"></i>
-                    <span class="logo-text">Clínica Aguirre</span>
-                </div>
+                 <a class="navbar-logo" href="/vista/Index.aspx">
+                    <div class="navbar-brand">
+                        <i class="fas fa-heartbeat logo-icon"></i>
+                        <span class="logo-text">Clínica Aguirre</span>
+                    </div>
+                </a>
                 <ul class="navbar-menu">
                     <li><a href="#staff-medico">Staff Médico</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>

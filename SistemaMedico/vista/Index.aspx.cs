@@ -16,31 +16,26 @@ namespace SistemaMedico.vista
 
         protected void btnRegistro_Click(object sender, EventArgs e)
         {
-            // Redirigir a la página de registro
             Response.Redirect("Registro.aspx");
         }
 
         protected void btnAcceder_Click(object sender, EventArgs e)
         {
-            // Redirigir a la página de login de pacientes
-            Response.Redirect("LoginPaciente.aspx");
+            Response.Redirect("Login.aspx");
         }
 
         protected void btnPortalMedico_Click(object sender, EventArgs e)
         {
-            // Redirigir al portal médico
-            Response.Redirect("LoginMedico.aspx");
+            Response.Redirect("Login.aspx");
         }
 
         protected void btnVerServicios_Click(object sender, EventArgs e)
         {
-            // Redirigir a la página de servicios
             Response.Redirect("Servicios.aspx");
         }
 
         protected void btnVerMedicos_Click(object sender, EventArgs e)
         {
-            // Redirigir a la página de staff médico
             Response.Redirect("StaffMedico.aspx");
         }
     }

@@ -68,15 +68,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="database\RedClinicas_Azure.sql" />
+    <Content Include="database\SP_CRUD_Citas.sql" />
+    <Content Include="database\SP_CRUD_ConsultasMedicas.sql" />
+    <Content Include="database\SP_CRUD_Doctores.sql" />
+    <Content Include="database\SP_CRUD_Especialidades_Sedes_Horarios.sql" />
+    <Content Include="database\SP_CRUD_Pagos_Administradores.sql" />
+    <Content Include="database\SP_CRUD_RecetasMedicas.sql" />
+    <Content Include="database\SP_CRUD_Roles.sql" />
+    <Content Include="database\StoredProcedures_CRUD.sql" />
+    <Content Include="styles\login.css" />
+    <Content Include="styles\registro.css" />
     <Content Include="vista\images\medical_team.png" />
     <Content Include="vista\images\Logo_MediTech.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
     <Content Include="vista\images\README.md" />
+    <Content Include="vista\Login.aspx" />
+    <Content Include="vista\Registro.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="conexion\ConexionDB.cs" />
+    <Compile Include="datos\PacientesDAO.cs" />
+    <Compile Include="datos\RolesDAO.cs" />
+    <Compile Include="datos\UsuariosDAO.cs" />
+    <Compile Include="modelo\Administradores.cs" />
     <Compile Include="modelo\Citas.cs" />
     <Compile Include="modelo\ConsultasMedicas.cs" />
     <Compile Include="modelo\Doctores.cs" />
@@ -94,6 +110,23 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vista\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vista\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vista\Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="docs\ConectarSSMSaAzure.md" />

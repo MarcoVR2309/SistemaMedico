@@ -10,12 +10,10 @@
     <link href="../styles/main.css" rel="stylesheet" type="text/css" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
     <form id="form1" runat="server">
-        <!-- Navbar -->
         <nav class="navbar">
             <div class="container">
                 <div class="navbar-brand">
@@ -26,7 +24,11 @@
                     <li><a href="#staff-medico">Staff Médico</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
                     <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#pacientes" class="btn-primary">Pacientes</a></li>
+                    <li>
+                        <asp:LinkButton ID="lnkPacientesNav" runat="server" CssClass="btn-primary" OnClick="btnAcceder_Click">
+                            Pacientes
+                        </asp:LinkButton>
+                    </li>
                 </ul>
                 <div class="navbar-contact">
                     <span><i class="fas fa-phone"></i> 01-234-5678</span>
@@ -35,7 +37,6 @@
             </div>
         </nav>
 
-        <!-- Hero Section -->
         <section class="hero-section">
             <div class="container hero-container">
                 <div class="hero-content">
@@ -55,12 +56,10 @@
             </div>
         </section>
 
-        <!-- Services Section -->
         <section class="services-section">
             <div class="container">
                 <h2 class="section-title">¿En qué podemos ayudarte hoy?</h2>
                 <div class="services-grid">
-                    <!-- Pacientes -->
                     <div class="service-card">
                         <div class="service-icon icon-blue">
                             <i class="fas fa-bed"></i>
@@ -72,7 +71,6 @@
                         <asp:Button ID="btnAcceder" runat="server" Text="Acceder" CssClass="btn-service btn-teal" OnClick="btnAcceder_Click" />
                     </div>
 
-                    <!-- Médicos -->
                     <div class="service-card">
                         <div class="service-icon icon-purple">
                             <i class="fas fa-flask"></i>
@@ -84,7 +82,6 @@
                         <asp:Button ID="btnPortalMedico" runat="server" Text="Portal Médico" CssClass="btn-service btn-purple" OnClick="btnPortalMedico_Click" />
                     </div>
 
-                    <!-- Servicios -->
                     <div class="service-card">
                         <div class="service-icon icon-teal">
                             <i class="fas fa-briefcase-medical"></i>
@@ -96,7 +93,6 @@
                         <asp:Button ID="btnVerServicios" runat="server" Text="Ver Servicios" CssClass="btn-service btn-teal" OnClick="btnVerServicios_Click" />
                     </div>
 
-                    <!-- Staff Médico -->
                     <div class="service-card">
                         <div class="service-icon icon-green">
                             <i class="fas fa-user-md"></i>
@@ -111,7 +107,6 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="container">
                 <div class="footer-content">

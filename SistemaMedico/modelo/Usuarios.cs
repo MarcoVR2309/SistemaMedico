@@ -69,7 +69,7 @@ namespace SistemaMedico.modelo
         public string NumDoc { get => numDoc; set => numDoc = value; }
         public string Ape { get => ape; set => ape = value; }
         public string Nom { get => nom; set => nom = value; }
-        public string Gen { get => gen; set => gen = value; }
+        public char Gen { get => string.IsNullOrEmpty(gen) ? 'O' : gen[0]; set => gen = value.ToString(); }
         public DateTime? FecNac { get => fecNac; set => fecNac = value; }
         public string Email { get => email; set => email = value; }
         public string Tel { get => tel; set => tel = value; }
@@ -78,5 +78,6 @@ namespace SistemaMedico.modelo
         public bool Activo { get => activo; set => activo = value; }
         public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
         public DateTime FechaUltimaActualizacion { get => fechaUltimaActualizacion; set => fechaUltimaActualizacion = value; }
+
     }
 }

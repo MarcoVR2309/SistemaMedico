@@ -91,6 +91,7 @@
     <Compile Include="conexion\ConexionDB.cs" />
     <Compile Include="datos\PacientesDAO.cs" />
     <Compile Include="datos\RolesDAO.cs" />
+    <Compile Include="datos\SedesDAO.cs" />
     <Compile Include="datos\UsuariosDAO.cs" />
     <Compile Include="modelo\Administradores.cs" />
     <Compile Include="modelo\Citas.cs" />

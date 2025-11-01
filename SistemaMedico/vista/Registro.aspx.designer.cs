@@ -114,13 +114,13 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.TextBox txtFechaNacimiento;
 
         /// <summary>
-        /// Control txtSedePref.
+        /// Control DDLSedePref.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSedePref;
+        protected global::System.Web.UI.WebControls.DropDownList DDLSedePref;
 
         /// <summary>
         /// Control txtPassword.

@@ -122,12 +122,12 @@
 
             <div class="form-group">
                 <label class="form-label">Sede Preferida</label>
-                <asp:TextBox 
-                    ID="txtSedePref" 
-                    runat="server" 
-                    CssClass="form-input" 
-                    placeholder="Sede Principal (opcional)">
-                </asp:TextBox>
+                <asp:DropDownList 
+                    ID="DDLSedePref"
+                    runat="server"
+                    CssClass="form-input"
+                    placeholder="Sede Preferida (Obligatorio)">
+                </asp:DropDownList>
                 <small class="form-help">Puedes dejarlo vacío o ingresar el nombre de tu sede preferida</small>
             </div>
 
@@ -159,7 +159,7 @@
             <asp:Button 
                 ID="btnRegistrar" 
                 runat="server" 
-                Text="Crear Cuenta de Paciente" 
+                Text="Crear Cuenta" 
                 CssClass="btn-registro" 
                 OnClick="btnRegistrar_Click" />
 

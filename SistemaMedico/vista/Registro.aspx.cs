@@ -14,12 +14,14 @@ namespace SistemaMedico.vista
         private UsuariosDAO usuariosDAO;
         private PacientesDAO pacientesDAO;
         private RolesDAO rolesDAO;
+        private SedesDAO sedesDAO;
 
         public Registro()
         {
             usuariosDAO = new UsuariosDAO();
             pacientesDAO = new PacientesDAO();
             rolesDAO = new RolesDAO();
+            sedesDAO = new SedesDAO();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,6 +32,44 @@ namespace SistemaMedico.vista
                 {
                     Response.Redirect("~/vista/Index.aspx");
                 }
+                CargarSedes();
+            }
+        }
+
+        private void CargarSedes()
+        {
+            try
+            {
+                List<Sedes> listaSedes = sedesDAO.ListarSedes();
+                DDLSedePref.Items.Clear();
+                DDLSedePref.Items.Add(new ListItem("-- Seleccionar sede (opcional) --", ""));
+
+                foreach (Sedes sede in listaSedes)
+                {
+                    DDLSedePref.Items.Add(new ListItem(sede.NomSede, sede.Id));
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar las sedes: " + ex.Message);
+            }
+        }
+
+        private bool ValidarSede(string idSede)
+        {
+            if (string.IsNullOrEmpty(idSede))
+            {
+                return true;
+            }
+            try
+            {
+                Sedes sede = sedesDAO.ObtenerPorId(idSede);
+                return sede != null;
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al validar la sede: " + ex.Message);
+                return false;
             }
         }
 
@@ -42,7 +82,7 @@ namespace SistemaMedico.vista
             string genero = ddlGenero.SelectedValue;
             string email = txtEmail.Text.Trim();
             string telefono = txtTelefono.Text.Trim();
-            string sedePref = txtSedePref.Text.Trim();
+            string sedePref = DDLSedePref.SelectedValue;
             string fechaNacStr = txtFechaNacimiento.Text.Trim();
             string password = txtPassword.Text.Trim();
             string confirmarPassword = txtConfirmarPassword.Text.Trim();
@@ -64,6 +104,12 @@ namespace SistemaMedico.vista
             if (password.Length < 6)
             {
                 MostrarError("La contraseña debe tener al menos 6 caracteres.");
+                return;
+            }
+
+            if (!ValidarSede(sedePref))
+            {
+                MostrarError("La sede preferida seleccionada no es válida.");
                 return;
             }
 
@@ -116,14 +162,7 @@ namespace SistemaMedico.vista
 
                 string idPacienteGenerado = pacientesDAO.Insertar(nuevoPaciente);
 
-                Session["UsuarioId"] = idUsuarioGenerado;
-                Session["PacienteId"] = idPacienteGenerado;
-                Session["UsuarioNombre"] = nombre + " " + apellido;
-                Session["UsuarioEmail"] = email;
-                Session["UsuarioRol"] = "Paciente";
-                Session["EsNuevo"] = true;
-
-                Response.Redirect("~/vista/Paciente/Dashboard.aspx");
+                Response.Redirect("~/vista/Login.aspx");
             }
             catch (Exception ex)
             {

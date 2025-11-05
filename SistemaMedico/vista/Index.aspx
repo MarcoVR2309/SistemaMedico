@@ -36,6 +36,11 @@
                 </div>
             </div>
         </nav>
+        
+        
+
+
+
 
         <section class="hero-section">
             <div class="container hero-container">
@@ -55,6 +60,14 @@
                 </div>
             </div>
         </section>
+
+
+
+
+
+
+
+
 
         <section class="services-section">
             <div class="container">
@@ -124,5 +137,6 @@
             </div>
         </footer>
     </form>
+    <script type="module" src="scripts/script.js"></script>
 </body>
 </html>

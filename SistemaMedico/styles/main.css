@@ -114,8 +114,22 @@ body {
 .hero-section {
     background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
     padding: 5rem 0;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    transition: padding 0.3s;
 }
-
+.hero-lista{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    transition: transform 0.3s;
+}
+.hero-item{
+    display: flex;
+    flex-shrink: 0;
+    width: 100%;
+}
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;

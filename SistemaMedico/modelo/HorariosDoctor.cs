@@ -34,6 +34,7 @@ namespace SistemaMedico.modelo
             this.horaFin = horaFin;
         }
 
+        // Propiedades públicas
         public string Id { get => id; set => id = value; }
         public string IdDoc { get => idDoc; set => idDoc = value; }
         public string IdSede { get => idSede; set => idSede = value; }

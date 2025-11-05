@@ -77,18 +77,24 @@
     <Content Include="database\SP_CRUD_Roles.sql" />
     <Content Include="database\StoredProcedures_CRUD.sql" />
     <Content Include="styles\login.css" />
+    <Content Include="styles\panelpaciente.css" />
+    <Content Include="scripts\panelpaciente.js" />
     <Content Include="styles\registro.css" />
+    <Content Include="vista\EspecialidadesPrueba.aspx" />
     <Content Include="vista\images\medical_team.png" />
     <Content Include="vista\images\Logo_MediTech.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
     <Content Include="vista\images\README.md" />
     <Content Include="vista\Login.aspx" />
+    <Content Include="vista\PanelPaciente.aspx" />
     <Content Include="vista\Registro.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="conexion\ConexionDB.cs" />
+    <Compile Include="datos\Doctores.DAO.cs" />
+    <Compile Include="datos\EspecialidadesDAO.cs" />
     <Compile Include="datos\PacientesDAO.cs" />
     <Compile Include="datos\RolesDAO.cs" />
     <Compile Include="datos\SedesDAO.cs" />
@@ -106,6 +112,13 @@
     <Compile Include="modelo\Rol.cs" />
     <Compile Include="modelo\Sedes.cs" />
     <Compile Include="modelo\Usuarios.cs" />
+    <Compile Include="vista\EspecialidadesPrueba.aspx.cs">
+      <DependentUpon>EspecialidadesPrueba.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\EspecialidadesPrueba.aspx.designer.cs">
+      <DependentUpon>EspecialidadesPrueba.aspx</DependentUpon>
+    </Compile>
     <Compile Include="vista\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -120,6 +133,13 @@
     </Compile>
     <Compile Include="vista\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vista\PanelPaciente.aspx.cs">
+      <DependentUpon>PanelPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\PanelPaciente.aspx.designer.cs">
+      <DependentUpon>PanelPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="vista\Registro.aspx.cs">
       <DependentUpon>Registro.aspx</DependentUpon>

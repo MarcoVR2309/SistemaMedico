@@ -38,7 +38,7 @@ namespace SistemaMedico.vista
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                MostrarError("Por favor, ingrese su correo y contrase�a.");
+                MostrarError("Por favor, ingrese su correo y contraseña.");
                 return;
             }
 
@@ -49,10 +49,14 @@ namespace SistemaMedico.vista
 
                 if (credencialesValidas && usuario != null)
                 {
-                    Session["UsuarioId"] = usuario.Id;
-                    Session["UsuarioNombre"] = usuario.Nom + " " + usuario.Ape;
+
+                    Session["UsuarioId"] = usuario.Id;
+                    Session["UsuarioNombreCompleto"] = usuario.Nom + " " + usuario.Ape;
                     Session["UsuarioEmail"] = usuario.Email;
                     Session["IdRol"] = usuario.IdRol;
+                    Session["UsuarioDNI"] = usuario.NumDoc;
+                    Session["UsuarioTelefono"] = usuario.Tel;
+                    Session["UsuarioFechaNac"] = usuario.FecNac;
 
                     string nombreRol = ObtenerNombreRol(usuario.IdRol);
                     Session["UsuarioRol"] = nombreRol;
@@ -70,18 +74,18 @@ namespace SistemaMedico.vista
                 }
                 else
                 {
-                    MostrarError("Correo o contrase�a incorrectos. Por favor, intente nuevamente.");
+                    MostrarError("Correo o contraseña incorrectos. Por favor, intente nuevamente.");
                 }
             }
             catch (Exception ex)
             {
-                MostrarError("Error al iniciar sesi�n: " + ex.Message);
+                MostrarError("Error al iniciar sesión: " + ex.Message);
             }
         }
 
         private string ObtenerNombreRol(string idRol)
         {
-            if (idRol.StartsWith("R"))
+            if (idRol.StartsWith("R"))
             {
                 if (idRol == "R0000001") return "Paciente";
                 if (idRol == "R0000002") return "Doctor";
@@ -97,17 +101,19 @@ namespace SistemaMedico.vista
             switch (rol)
             {
                 case "Paciente":
-                    Response.Redirect("~/vista/Paciente/Dashboard.aspx");
+                    Response.Redirect("~/vista/PanelPaciente.aspx");
                     break;
-                    
+
                 case "Doctor":
-                    Response.Redirect("~/vista/Medico/Dashboard.aspx");
+                    // (Ruta futura)
+                    Response.Redirect("~/vista/Medico/Dashboard.aspx");
                     break;
-                    
+
                 case "Administrador":
-                    Response.Redirect("~/vista/Admin/Dashboard.aspx");
+                    // (Ruta futura)
+                    Response.Redirect("~/vista/Admin/Dashboard.aspx");
                     break;
-                    
+
                 default:
                     Session.Clear();
                     MostrarError("No se pudo determinar el tipo de usuario.");

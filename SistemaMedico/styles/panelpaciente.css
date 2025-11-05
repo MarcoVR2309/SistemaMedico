@@ -1,0 +1,280 @@
+﻿/* --- Estilos CSS completos para el Panel del Paciente --- */
+:root {
+    --primary-color: #007bff; 
+    --secondary-color: #28a745; 
+    --bg-light: #f5f7fa; 
+    --card-bg: #ffffff;
+    --text-dark: #343a40;
+    --border-color: #e9ecef;
+    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+}
+
+.navbar {
+    background-color: var(--card-bg);
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.navbar-user-info {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-user {
+    font-weight: 500;
+    margin-right: 20px;
+    color: var(--text-dark);
+}
+
+.navbar-logout {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+    .navbar-logout:hover {
+        background-color: #0056b3;
+    }
+
+.main-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.tab-menu {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e9ecef;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 15px 20px;
+    text-align: center;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s, border-bottom 0.2s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+}
+
+    .tab-button i {
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+
+    .tab-button.active {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+    }
+
+    .tab-button:not(.active):hover {
+        color: var(--primary-color);
+    }
+
+.tab-content {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-subtle);
+}
+
+.content-section {
+    display: none;
+}
+
+    .content-section.active {
+        display: block;
+    }
+
+h2 {
+    color: var(--primary-color);
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-dark);
+    }
+
+    .form-group select, .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 1rem;
+        color: var(--text-dark);
+        background-color: #fcfcfc;
+    }
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.gridview-style {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .gridview-style th {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .gridview-style td {
+        padding: 10px 15px;
+        border: 1px solid var(--border-color);
+        vertical-align: top;
+    }
+
+    .gridview-style tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+.no-citas {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+    .no-citas i {
+        font-size: 3rem;
+        color: #ced4da;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-right: 20px;
+    box-shadow: 0 0 0 4px #e0e0e0;
+}
+
+.profile-info h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.profile-info p {
+    margin: 5px 0 0;
+    color: #6c757d;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+}
+
+.profile-field span {
+    display: block;
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+    .btn-secondary:hover {
+        background-color: #218838;
+    }
+
+.status-message {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}

@@ -4,20 +4,20 @@
 
 1. **Abrir SQL Server Management Studio (SSMS)**
 
-2. **En la ventana de conexión, configurar:**
+2. **En la ventana de conexiï¿½n, configurar:**
 
 ```
 Tipo de servidor: Motor de base de datos
 Nombre del servidor: clinica-aguirre-pe.database.windows.net
-Autenticación: Autenticación de SQL Server
+Autenticaciï¿½n: Autenticaciï¿½n de SQL Server
 Usuario: adminClinica
-Contraseña: ClinicaAguirre2025
+Contraseï¿½a: ClinicaAguirre2025
 ```
 
 3. **Opciones avanzadas (Click en "Opciones >>")**
-   - Pestaña "Propiedades de conexión"
+   - Pestaï¿½a "Propiedades de conexiï¿½n"
    - Conectarse a la base de datos: RedCLinicas
-   - Cifrar conexión: Activado
+   - Cifrar conexiï¿½n: Activado
 
 4. **Click en "Conectar"**
 
@@ -25,8 +25,8 @@ Contraseña: ClinicaAguirre2025
 
 1. Una vez conectado, click en **"Nueva consulta"**
 2. Abrir tu archivo `.sql` con SSMS: `Archivo > Abrir > Archivo`
-3. Seleccionar tu script de creación
-4. Asegurarte que está seleccionada la BD `RedCLinicas` (arriba)
+3. Seleccionar tu script de creaciï¿½n
+4. Asegurarte que estï¿½ seleccionada la BD `RedCLinicas` (arriba)
 5. Click en **"Ejecutar"** (F5)
 
 ## Verificar Tablas Creadas
@@ -38,19 +38,19 @@ FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE'
 ORDER BY TABLE_NAME;
 
--- Ver estructura de una tabla específica
+-- Ver estructura de una tabla especï¿½fica
 EXEC sp_help 'Usuarios';
 ```
 
 ## Errores Comunes
 
 ### Error: Login failed
-- Verificar usuario y contraseña
-- Verificar que tu IP esté en el firewall de Azure
+- Verificar usuario y contraseï¿½a
+- Verificar que tu IP estï¿½ en el firewall de Azure
 
 ### Error: Firewall blocked
 - Ir a Azure Portal > Tu servidor > Networking
 - Agregar tu IP actual en "Firewall rules"
 
 ### Error: Cannot open database
-- Verificar que el nombre de BD sea exactamente: `RedCLinicas` (con C mayúscula)
+- Verificar que el nombre de BD sea exactamente: `RedCLinicas` (con C mayï¿½scula)

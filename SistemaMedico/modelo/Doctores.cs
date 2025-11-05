@@ -40,5 +40,12 @@ namespace SistemaMedico.modelo
         public string CodMed { get => codMed; set => codMed = value; }
         public string DesPro { get => desPro; set => desPro = value; }
         public int? Expe { get => expe; set => expe = value; }
+
+        //Propiedades de navegacion (JOIN)
+        public string Nom { get; set; } // Nombre del Usuario
+        public string Ape { get; set; } // Apellido del Usuario
+        public string Email { get; set; } // Email del Usuario
+        public string Tel { get; set; } // Teléfono del Usuario
+        public string NombreEspecialidad { get; set; } // Nombre de la Especialidad
     }
 }

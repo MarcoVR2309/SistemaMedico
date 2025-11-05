@@ -200,10 +200,10 @@ BEGIN
         CASE DIA_SEMANA
             WHEN 'Lunes' THEN 1
             WHEN 'Martes' THEN 2
-            WHEN 'Miércoles' THEN 3
+            WHEN 'Miï¿½rcoles' THEN 3
             WHEN 'Jueves' THEN 4
             WHEN 'Viernes' THEN 5
-            WHEN 'Sábado' THEN 6
+            WHEN 'Sï¿½bado' THEN 6
             WHEN 'Domingo' THEN 7
         END,
         HORA_INICIO;

@@ -76,13 +76,16 @@
     <Content Include="database\SP_CRUD_RecetasMedicas.sql" />
     <Content Include="database\SP_CRUD_Roles.sql" />
     <Content Include="database\StoredProcedures_CRUD.sql" />
+    <Content Include="scripts\script.js" />
     <Content Include="styles\login.css" />
     <Content Include="styles\panelpaciente.css" />
     <Content Include="scripts\panelpaciente.js" />
     <Content Include="styles\registro.css" />
     <Content Include="vista\EspecialidadesPrueba.aspx" />
+    <Content Include="vista\images\Equipo.png" />
     <Content Include="vista\images\medical_team.png" />
     <Content Include="vista\images\Logo_MediTech.png" />
+    <Content Include="vista\images\Personal.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
     <Content Include="vista\images\README.md" />

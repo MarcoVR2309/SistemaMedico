@@ -37,38 +37,82 @@
             </div>
         </nav>
         
-        
-
-
-
-
-        <section class="hero-section">
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <span class="hero-badge">QUEREMOS VERTE BIEN</span>
-                    <h1 class="hero-title">
-                        Tu salud en las <span class="highlight">mejores manos</span>
-                    </h1>
-                    <p class="hero-description">
-                        Especialistas con amplia experiencia y la mejor tecnología en cirugías 
-                        para el cuidado integral de tu salud y bienestar.
-                    </p>
-                    <asp:Button ID="btnRegistro" runat="server" Text="Regístrate Aquí" CssClass="btn-hero" OnClick="btnRegistro_Click" />
-                </div>
-                <div class="hero-image">
-                    <img src="../vista/images/medical_team.png" alt="Equipo Médico" />
-                </div>
+        <!-- Inicio de la sección Hero con Carrusel -->
+    <section class="hero-section">
+            <!-- Contenedor principal del carrusel -->
+            <div class="hero-lista">
+          <!-- Slide 1: Presentación Principal -->
+  <div class="hero-item">
+   <div class="container hero-container">
+           <!-- Imagen del slide -->
+      <div class="hero-image">
+       <img src="../vista/images/medical_team.png" alt="Equipo Médico" />
+       </div>
+     <!-- Contenido textual -->
+             <div class="hero-content">
+         <span class="hero-badge">QUEREMOS VERTE BIEN</span>
+         <h1 class="hero-title">
+    Tu salud en las <span class="highlight">mejores manos</span>
+                  </h1>
+       <p class="hero-description">
+           Especialistas con amplia experiencia y la mejor tecnología en cirugías 
+          para el cuidado integral de tu salud y bienestar.
+    </p>
+       <asp:Button ID="btnRegistro" runat="server" 
+            Text="Regístrate Aquí" 
+            CssClass="btn-hero" 
+         OnClick="btnRegistro_Click" />
             </div>
+         </div>
+          </div>
+
+     <!-- Slide 2: Nuestros Especialistas -->
+        <div class="hero-item">
+     <div class="container hero-container">
+     <div class="hero-image">
+     <img src="../vista/images/Personal.png" alt="Equipo Médico" />
+   </div>
+        <div class="hero-content">
+    <span class="hero-badge">NUESTROS ESPECIALISTAS</span>
+        <h1 class="hero-title">
+           Un Equipo Dedicado <span class="highlight">a tu Recuperación</span>
+      </h1>
+          <p class="hero-description">
+              Nuestros médicos y enfermeros están en constante capacitación, 
+      comprometidos con brindarte una atención personalizada.
+   </p>
+    <asp:Button ID="Button1" runat="server" 
+          Text="Regístrate Aquí" 
+  CssClass="btn-hero" 
+ OnClick="btnRegistro_Click" />
+         </div>
+        </div>
+       </div>
+
+           <!-- Slide 3: Tecnología de Vanguardia -->
+        <div class="hero-item">
+         <div class="container hero-container">
+ <div class="hero-content">
+      <span class="hero-badge">TECNOLOGÍA DE VANGUARDIA</span>
+            <h1 class="hero-title">
+   Diagnósticos Precisos, <span class="highlight">Tratamientos Seguros</span>
+ </h1>
+                   <p class="hero-description">
+      Contamos con infraestructura de última generación para 
+           procedimientos mínimamente invasivos y una recuperación más rápida.
+        </p>
+          <asp:Button ID="Button2" runat="server" 
+           Text="Regístrate Aquí" 
+         CssClass="btn-hero" 
+   OnClick="btnRegistro_Click" />
+     </div>
+   <div class="hero-image">
+              <img src="../vista/images/Equipo.png" alt="Equipo Médico" />
+            </div>
+    </div>
+         </div>
+ </div>
         </section>
-
-
-
-
-
-
-
-
-
         <section class="services-section">
             <div class="container">
                 <h2 class="section-title">¿En qué podemos ayudarte hoy?</h2>
@@ -137,6 +181,6 @@
             </div>
         </footer>
     </form>
-    <script type="module" src="scripts/script.js"></script>
+    <script type="module" src="../scripts/script.js"></script>
 </body>
 </html>

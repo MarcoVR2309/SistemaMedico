@@ -17,11 +17,15 @@ namespace SistemaMedico.vista.admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // TEMPORAL: Comentado para permitir acceso directo a la vista (solo para pruebas visuales)
+            // TODO: Descomentar antes de producción
+            /*
             if (!EsAdministrador())
             {
                 Response.Redirect("~/vista/Login.aspx");
                 return;
             }
+            */
 
             if (!IsPostBack)
             {

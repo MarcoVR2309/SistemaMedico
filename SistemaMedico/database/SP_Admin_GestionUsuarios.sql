@@ -5,7 +5,7 @@
 --                GenerarIdHorarioDoctor) y SP CRUD existentes para Usuarios, Doctores,
 --                Pacientes y Especialidades.
 -- ================================================================================
-
+ 
 USE RedCLinicas;
 GO
 

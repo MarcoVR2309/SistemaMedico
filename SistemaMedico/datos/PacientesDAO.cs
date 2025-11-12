@@ -1,8 +1,9 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using SistemaMedico.conexion;
 using SistemaMedico.modelo;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SistemaMedico.datos
 {
@@ -137,6 +138,50 @@ namespace SistemaMedico.datos
                 Peso = reader["PESO"] != DBNull.Value ? Convert.ToDecimal(reader["PESO"]) : (decimal?)null,
                 Edad = reader["EDAD"] != DBNull.Value ? Convert.ToDateTime(reader["EDAD"]) : (DateTime?)null
             };
+        }
+        // NUEVA CLASE: Para llenar el DropDownList del modal
+        // =================================================================
+        public class PacienteParaDropdown
+        {
+            public string ID { get; set; } // ID del Paciente (ej: P0000001)
+            public string NombreCompleto { get; set; }
+        }
+        // NUEVO MÉTODO: El que faltaba
+        // =================================================================
+        public List<PacienteParaDropdown> ListarPacientesParaDropdown()
+        {
+            var lista = new List<PacienteParaDropdown>();
+            try
+            {
+                using (SqlConnection conn = conexionDB.ObtenerConexion())
+                {
+                    // Llama al Stored Procedure que ya tienes y que une con Usuarios
+                    SqlCommand cmd = new SqlCommand("sp_ListarPacientes", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var paciente = new PacienteParaDropdown
+                            {
+                                // ID de la tabla Pacientes
+                                ID = reader["ID"].ToString(),
+
+                                // NOM y APE de la tabla Usuarios
+                                NombreCompleto = reader["NOM"].ToString() + " " + reader["APE"].ToString()
+                            };
+                            lista.Add(paciente);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Lanza una excepción más específica
+                throw new Exception("Error al listar pacientes para dropdown: " + ex.Message);
+            }
+            return lista;
         }
     }
 }

@@ -46,6 +46,7 @@ namespace SistemaMedico.modelo
         public string Ape { get; set; } // Apellido del Usuario
         public string Email { get; set; } // Email del Usuario
         public string Tel { get; set; } // Teléfono del Usuario
+
         public string NombreEspecialidad { get; set; } // Nombre de la Especialidad
     }
 }

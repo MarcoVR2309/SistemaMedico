@@ -76,11 +76,13 @@
     <Content Include="database\SP_CRUD_RecetasMedicas.sql" />
     <Content Include="database\SP_CRUD_Roles.sql" />
     <Content Include="database\StoredProcedures_CRUD.sql" />
+    <Content Include="database\SP_Admin_GestionUsuarios.sql" />
     <Content Include="scripts\script.js" />
     <Content Include="styles\login.css" />
     <Content Include="styles\panelpaciente.css" />
     <Content Include="scripts\panelpaciente.js" />
     <Content Include="styles\registro.css" />
+    <Content Include="styles\admin-usuarios.css" />
     <Content Include="vista\EspecialidadesPrueba.aspx" />
     <Content Include="vista\images\Equipo.png" />
     <Content Include="vista\images\medical_team.png" />
@@ -88,6 +90,7 @@
     <Content Include="vista\images\Personal.png" />
     <Content Include="vista\Index.aspx" />
     <Content Include="styles\main.css" />
+    <Content Include="scripts\admin-usuarios.js" />
     <Content Include="vista\images\README.md" />
     <Content Include="vista\Login.aspx" />
     <Content Include="vista\PanelPaciente.aspx" />
@@ -102,6 +105,7 @@
     <Compile Include="datos\RolesDAO.cs" />
     <Compile Include="datos\SedesDAO.cs" />
     <Compile Include="datos\UsuariosDAO.cs" />
+    <Compile Include="datos\AdminUsuariosDAO.cs" />
     <Compile Include="modelo\Administradores.cs" />
     <Compile Include="modelo\Citas.cs" />
     <Compile Include="modelo\ConsultasMedicas.cs" />
@@ -115,6 +119,10 @@
     <Compile Include="modelo\Rol.cs" />
     <Compile Include="modelo\Sedes.cs" />
     <Compile Include="modelo\Usuarios.cs" />
+    <Compile Include="modelo\AdminUsuarioDetalle.cs" />
+    <Compile Include="modelo\AdminUsuarioItem.cs" />
+    <Compile Include="modelo\AdminUsuarioResumen.cs" />
+    <Compile Include="modelo\AdminUsuariosLista.cs" />
     <Compile Include="vista\EspecialidadesPrueba.aspx.cs">
       <DependentUpon>EspecialidadesPrueba.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,7 +1,9 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 using SistemaMedico.conexion;
+using SistemaMedico.modelo;
 
 namespace SistemaMedico.datos
 {
@@ -39,6 +41,38 @@ namespace SistemaMedico.datos
             }
 
             return idRol;
+        }
+
+        public List<Rol> ListarRoles()
+        {
+            List<Rol> roles = new List<Rol>();
+
+            try
+            {
+                using (SqlConnection conn = conexionDB.ObtenerConexion())
+                using (SqlCommand cmd = new SqlCommand("sp_ListarRoles", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            roles.Add(new Rol
+                            {
+                                Id = reader["ID"].ToString(),
+                                NomRol = reader["NOM_ROL"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar roles: " + ex.Message);
+            }
+
+            return roles;
         }
     }
 }

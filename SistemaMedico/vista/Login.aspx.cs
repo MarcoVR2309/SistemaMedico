@@ -110,8 +110,7 @@ namespace SistemaMedico.vista
                     break;
 
                 case "Administrador":
-                    // (Ruta futura)
-                    Response.Redirect("~/vista/Admin/Dashboard.aspx");
+                    Response.Redirect("~/vista/admin/GestionUsuarios.aspx");
                     break;
 
                 default:

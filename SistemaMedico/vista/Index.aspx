@@ -32,7 +32,7 @@
                 </ul>
                 <div class="navbar-contact">
                     <span><i class="fas fa-phone"></i> 01-234-5678</span>
-                    <span><i class="fas fa-phone"></i> 01-987-6543</span>
+                    <span><i class="fas fa-phone"></i> 01-234-56789</span>
                 </div>
             </div>
         </nav>
@@ -174,7 +174,7 @@
                     <p class="footer-text">© 2025 Clínica Aguirre. Todos los derechos reservados.</p>
                     <div class="footer-contact">
                         <span><i class="fas fa-phone"></i> 01-234-5678</span>
-                        <span><i class="fas fa-phone"></i> 01-987-6543</span>
+                        <span><i class="fas fa-phone"></i> 01-234-56789</span>
                         <span><i class="fas fa-envelope"></i> info@clinicaaguirre.com</span>
                     </div>
                 </div>

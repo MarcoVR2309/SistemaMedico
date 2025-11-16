@@ -89,8 +89,10 @@
     <Content Include="database\SP_CRUD_RecetasMedicas.sql" />
     <Content Include="database\SP_CRUD_Roles.sql" />
     <Content Include="database\StoredProcedures_CRUD.sql" />
+    <Content Include="scripts\panelmedico.js" />
     <Content Include="scripts\script.js" />
     <Content Include="styles\login.css" />
+    <Content Include="styles\panelmedico.css" />
     <Content Include="styles\panelpaciente.css" />
     <Content Include="scripts\panelpaciente.js" />
     <Content Include="styles\registro.css" />
@@ -103,12 +105,14 @@
     <Content Include="styles\main.css" />
     <Content Include="vista\images\README.md" />
     <Content Include="vista\Login.aspx" />
+    <Content Include="vista\PanelMedico.aspx" />
     <Content Include="vista\PanelPaciente.aspx" />
     <Content Include="vista\Registro.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="conexion\ConexionDB.cs" />
+    <Compile Include="datos\CitasDAO.cs" />
     <Compile Include="datos\Doctores.DAO.cs" />
     <Compile Include="datos\EspecialidadesDAO.cs" />
     <Compile Include="datos\PacientesDAO.cs" />
@@ -149,6 +153,13 @@
     </Compile>
     <Compile Include="vista\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vista\PanelMedico.aspx.cs">
+      <DependentUpon>PanelMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\PanelMedico.aspx.designer.cs">
+      <DependentUpon>PanelMedico.aspx</DependentUpon>
     </Compile>
     <Compile Include="vista\PanelPaciente.aspx.cs">
       <DependentUpon>PanelPaciente.aspx</DependentUpon>

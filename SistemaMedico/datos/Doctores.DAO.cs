@@ -132,7 +132,7 @@ namespace SistemaMedico.datos
                 IdUsu = dr["ID_USU"].ToString(),
                 IdEsp = dr["ID_ESP"].ToString(),
                 CodMed = dr["NUM_COLEGIATURA"].ToString(),
-                Expe = Convert.ToInt32(dr["ANIOS_EXP"]),
+                Expe = dr["ANIOS_EXP"] != DBNull.Value ? Convert.ToInt32(dr["ANIOS_EXP"]) : (int?)null,
 
                 // Propiedades de Navegación (del JOIN)
                 Nom = dr["NOM"].ToString(),

@@ -142,5 +142,34 @@ namespace SistemaMedico.datos
                 NombreEspecialidad = dr["NombreEspecialidad"].ToString()
             };
         }
-    }
+        public Doctores ObtenerDoctorPorIdUsuario(string idUsuario)
+        {
+            Doctores oDoctor = null;
+            using (SqlConnection conexion = GetConnection())
+            {
+                try
+                {
+                    // Llama al Stored Procedure que ya existe en tu BD
+                    SqlCommand cmd = new SqlCommand("sp_ObtenerDoctorPorIdUsuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            // Reutilizamos la función MapearDoctor que ya tienes
+                            oDoctor = MapearDoctor(dr);
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception("DAO Error al obtener doctor por ID de Usuario: " + ex.Message);
+                }
+            }
+            return oDoctor;
+        }
+
+    } // Fin de la clase DoctoresDAO
 }

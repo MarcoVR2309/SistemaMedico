@@ -74,19 +74,31 @@ namespace SistemaMedico.vista
                     }
                     else if (nombreRol == "Doctor")
                     {
-                        // Llama al método que acabamos de crear
-                        Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(usuario.Id);
-                        if (doctor != null)
+                        try
                         {
-                            // ¡ESTA ES LA LÍNEA CLAVE!
-                            Session["DoctorId"] = doctor.Id; // Guardamos "D0000001", etc.
+                            System.Diagnostics.Debug.WriteLine($"🔍 Buscando doctor con ID_USU: {usuario.Id}");
+                            
+                            Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(usuario.Id);
+                            
+                            if (doctor != null)
+                            {
+                                Session["DoctorId"] = doctor.Id;
+                                System.Diagnostics.Debug.WriteLine($"✅ Doctor encontrado: ID={doctor.Id}, Nombre={doctor.Nom} {doctor.Ape}");
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine("❌ No se encontró doctor en la BD");
+                                MostrarError("Error: No se encontró el registro de doctor asociado a esta cuenta.");
+                                Session.Clear();
+                                return;
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            // Si es un Doctor pero no tiene registro en la tabla Doctores
-                            MostrarError("Error: La cuenta de doctor no está configurada.");
-                            Session.Clear(); // Limpia la sesión por seguridad
-                            return; // Detiene el login
+                            System.Diagnostics.Debug.WriteLine($"💥 Error al obtener doctor: {ex.Message}");
+                            MostrarError($"Error al obtener información del doctor: {ex.Message}");
+                            Session.Clear();
+                            return;
                         }
                     }
                     RedirigirSegunRol();
@@ -107,7 +119,7 @@ namespace SistemaMedico.vista
             if (idRol.StartsWith("R"))
             {
                 if (idRol == "R0000001") return "Paciente";
-                if (idRol == "R0000002") return "Doctor";
+                if (idRol == "R0000002") return "Médico";
                 if (idRol == "R0000003") return "Administrador";
             }
             return "Paciente";
@@ -123,7 +135,7 @@ namespace SistemaMedico.vista
                     Response.Redirect("~/vista/PanelPaciente.aspx");
                     break;
 
-                case "Doctor":
+                case "Médico":
                     // (Ruta futura)
                     Response.Redirect("~/vista/PanelMedico.aspx");
                     break;

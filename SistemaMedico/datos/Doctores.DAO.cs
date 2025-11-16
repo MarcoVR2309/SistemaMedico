@@ -125,21 +125,22 @@ namespace SistemaMedico.datos
 
         private Doctores MapearDoctor(SqlDataReader dr)
         {
-            // Función para evitar la repetición de código de mapeo en los métodos READ
             return new Doctores()
             {
                 Id = dr["ID"].ToString(),
                 IdUsu = dr["ID_USU"].ToString(),
                 IdEsp = dr["ID_ESP"].ToString(),
-                CodMed = dr["NUM_COLEGIATURA"].ToString(),
-                Expe = dr["ANIOS_EXP"] != DBNull.Value ? Convert.ToInt32(dr["ANIOS_EXP"]) : (int?)null,
+                CodMed = dr["COD_MED"] != DBNull.Value ? dr["COD_MED"].ToString() : string.Empty,
+                Expe = dr["EXPE"] != DBNull.Value ? Convert.ToInt32(dr["EXPE"]) : (int?)null,
 
                 // Propiedades de Navegación (del JOIN)
                 Nom = dr["NOM"].ToString(),
                 Ape = dr["APE"].ToString(),
                 Email = dr["EMAIL"].ToString(),
-                Tel = dr["TEL"].ToString(),
-                NombreEspecialidad = dr["NombreEspecialidad"].ToString()
+                Tel = dr["TEL"] != DBNull.Value ? dr["TEL"].ToString() : string.Empty,
+                NombreEspecialidad = dr["NombreEspecialidad"] != DBNull.Value 
+                    ? dr["NombreEspecialidad"].ToString() 
+                    : string.Empty
             };
         }
         public Doctores ObtenerDoctorPorIdUsuario(string idUsuario)

@@ -13,11 +13,14 @@ namespace SistemaMedico.vista
     {
         private UsuariosDAO usuariosDAO;
         private PacientesDAO pacientesDAO;
+        private DoctoresDAO doctoresDAO;
+
 
         public Login()
         {
             usuariosDAO = new UsuariosDAO();
             pacientesDAO = new PacientesDAO();
+            doctoresDAO = new DoctoresDAO(); 
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -69,7 +72,23 @@ namespace SistemaMedico.vista
                             Session["PacienteId"] = paciente.Id;
                         }
                     }
-
+                    else if (nombreRol == "Doctor")
+                    {
+                        // Llama al método que acabamos de crear
+                        Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(usuario.Id);
+                        if (doctor != null)
+                        {
+                            // ¡ESTA ES LA LÍNEA CLAVE!
+                            Session["DoctorId"] = doctor.Id; // Guardamos "D0000001", etc.
+                        }
+                        else
+                        {
+                            // Si es un Doctor pero no tiene registro en la tabla Doctores
+                            MostrarError("Error: La cuenta de doctor no está configurada.");
+                            Session.Clear(); // Limpia la sesión por seguridad
+                            return; // Detiene el login
+                        }
+                    }
                     RedirigirSegunRol();
                 }
                 else
@@ -106,7 +125,7 @@ namespace SistemaMedico.vista
 
                 case "Doctor":
                     // (Ruta futura)
-                    Response.Redirect("~/vista/Medico/Dashboard.aspx");
+                    Response.Redirect("~/vista/PanelMedico.aspx");
                     break;
 
                 case "Administrador":

@@ -29,10 +29,6 @@ namespace SistemaMedico.vista
                 CargarDropdownsModal();
             }
         }
-
-        /// <summary>
-        /// Carga las citas del día para el doctor simulado y las muestra en el Repeater.
-        /// </summary>
         private void CargarDatosDoctor()
         {
             try

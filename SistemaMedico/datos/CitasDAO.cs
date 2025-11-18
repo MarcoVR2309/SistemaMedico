@@ -44,6 +44,34 @@ namespace SistemaMedico.datos
         public string Diagnostico { get; set; }
     }
 
+    public class DetalleCitaDTO
+    {
+        // Info Cita
+        public string IdCita { get; set; }
+        public DateTime Fecha { get; set; }
+        public TimeSpan Hora { get; set; }
+        public string Motivo { get; set; }
+        public string Estado { get; set; }
+
+        // Info Paciente
+        public string PacienteNombre { get; set; }
+        public string PacienteDNI { get; set; }
+        public string PacienteEmail { get; set; }
+        public string PacienteTelefono { get; set; }
+        public int? PacienteEdad { get; set; } // Calculado o directo
+        public decimal? PacientePeso { get; set; }
+
+        // Info Doctor/Sede
+        public string DoctorNombre { get; set; }
+        public string Especialidad { get; set; }
+        public string Sede { get; set; }
+
+        // Info Consulta (Puede ser null si no se ha hecho)
+        public string Sintomas { get; set; }
+        public string Diagnostico { get; set; }
+        public string Tratamiento { get; set; }
+        public string Observaciones { get; set; }
+    }
     // (La clase para "Ver Ficha" es muy grande, la podemos crear cuando la usemos)
 
     // =========================================================================
@@ -264,8 +292,9 @@ namespace SistemaMedico.datos
             return lista;
         }
 
-        // (El método para "sp_PanelMedico_ObtenerFichaCita" lo crearemos cuando lo necesitemos, 
-        // ya que requiere una clase "FichaCompleta" muy grande)
+        
+        // --- 8. OBTENER CONSULTA ID POR CITA ID ---
+
         public string ObtenerConsultaIdPorCitaId(string idCita)
         {
             string consultaId = null;
@@ -286,6 +315,52 @@ namespace SistemaMedico.datos
                 }
             }
             return consultaId;
+        }
+
+        // --- 9. OBTENER FICHA COMPLETA DE CITA ---
+        public DetalleCitaDTO ObtenerFichaCita(string idCita)
+        {
+            DetalleCitaDTO ficha = null;
+            using (var cn = Conectar())
+            {
+                using (var cmd = new SqlCommand("sp_PanelMedico_ObtenerFichaCita", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_CITA", idCita);
+
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            ficha = new DetalleCitaDTO
+                            {
+                                IdCita = dr["IdCita"].ToString(),
+                                Fecha = (DateTime)dr["FECHA"],
+                                Hora = (TimeSpan)dr["HORA"],
+                                Motivo = dr["MOTIVO"].ToString(),
+                                Estado = dr["ESTADO"].ToString(),
+
+                                PacienteNombre = dr["NombresPaciente"].ToString() + " " + dr["ApellidosPaciente"].ToString(),
+                                PacienteDNI = dr["NumDocPaciente"].ToString(),
+                                PacienteEmail = dr["EmailPaciente"].ToString(),
+                                PacienteTelefono = dr["TelefonoPaciente"].ToString(),
+                                PacientePeso = dr["PESO"] != DBNull.Value ? (decimal?)dr["PESO"] : null,
+
+                                DoctorNombre = dr["NombresDoctor"].ToString() + " " + dr["ApellidosDoctor"].ToString(),
+                                Especialidad = dr["Especialidad"].ToString(),
+                                Sede = dr["Sede"].ToString(),
+
+                                // Estos pueden venir vacíos si la consulta no se ha hecho
+                                Sintomas = dr["SINTOMAS"] != DBNull.Value ? dr["SINTOMAS"].ToString() : "---",
+                                Diagnostico = dr["DIAGNOSTICO"] != DBNull.Value ? dr["DIAGNOSTICO"].ToString() : "---",
+                                Tratamiento = dr["TRATAMIENTO"] != DBNull.Value ? dr["TRATAMIENTO"].ToString() : "---",
+                                Observaciones = dr["OBSERVACIONES"] != DBNull.Value ? dr["OBSERVACIONES"].ToString() : "---"
+                            };
+                        }
+                    }
+                }
+            }
+            return ficha;
         }
     }
 }

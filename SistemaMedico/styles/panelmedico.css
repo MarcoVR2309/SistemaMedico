@@ -375,6 +375,7 @@ html, body, form, #form1 {
     }
 
 .modal-content {
+    position: relative;
     background-color: var(--white);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -478,4 +479,148 @@ html, body, form, #form1 {
     border-top: 1px solid #EEE;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
+}
+
+/* =========================================
+ * ESTILOS DEL PANEL "MI PERFIL"
+ * ========================================= */
+
+.profile-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Cabecera */
+.profile-header-card {
+    background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--light-teal);
+    color: var(--primary-teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    box-shadow: 0 8px 20px rgba(23, 195, 178, 0.2);
+}
+
+.profile-title-info {
+    flex-grow: 1;
+}
+
+.profile-name-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.profile-role-badge {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Grilla de Info */
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EEE;
+}
+
+.info-card-title {
+    font-size: 1.2rem;
+    color: var(--dark-text);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--light-purple);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .info-card-title i {
+        color: var(--primary-purple);
+    }
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+.detail-label {
+    color: var(--gray-text);
+    font-weight: 500;
+}
+
+.detail-value {
+    color: var(--dark-text);
+    font-weight: 600;
+    text-align: right;
+}
+
+.code-text {
+    font-family: monospace;
+    background-color: #F0F0F0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-header-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+
+    .profile-header-actions {
+        width: 100%;
+    }
+
+        .profile-header-actions .btn-service-outline {
+            width: 100%;
+        }
+}
+
+/* Estilo básico para el placeholder del horario */
+.schedule-placeholder {
+    text-align: center;
+    padding: 4rem;
+    background: #F9F9F9;
+    border-radius: 12px;
+    border: 2px dashed #E0E0E0;
+    color: var(--gray-text);
 }

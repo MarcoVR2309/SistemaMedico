@@ -170,3 +170,65 @@ function hideFinalizarModal() {
         modal.classList.remove("show");
     }
 }
+
+/* =========================================
+ * LÓGICA DEL MODAL (VER FICHA)
+ * ========================================= */
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modalVerFicha");
+    const closeBtn = document.getElementById("spanCerrarModalFicha");
+    const closeBtnBottom = document.getElementById("btnCerrarFichaInferior");
+
+    function hideModal() {
+        if (modal) modal.classList.remove("show");
+    }
+
+    if (closeBtn) closeBtn.addEventListener("click", hideModal);
+    if (closeBtnBottom) closeBtnBottom.addEventListener("click", hideModal);
+
+    if (modal) {
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) hideModal();
+        });
+    }
+});
+
+// Función global para C#
+function showFichaModal() {
+    const modal = document.getElementById("modalVerFicha");
+    if (modal) {
+        modal.classList.add("show");
+    }
+}
+// =========================================
+// FUNCIÓN PARA DESCARGAR PDF
+// =========================================
+function descargarFichaPDF() {
+    // 1. Seleccionamos el elemento que queremos imprimir
+    const elemento = document.getElementById('areaImprimibleFicha');
+
+    // 2. Obtenemos el nombre del paciente para el nombre del archivo
+    // (Buscamos el span/label donde pusiste el nombre)
+    const nombrePaciente = document.getElementById('lblFichaPaciente') ?
+        document.getElementById('lblFichaPaciente').innerText : 'Paciente';
+
+    // 3. Configuraciones del PDF
+    const opciones = {
+        margin: 0.5, // Margen en pulgadas
+        filename: `Ficha_Medica_${nombrePaciente}.pdf`, // Nombre del archivo
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true }, // scale 2 mejora la calidad
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    // 4. Generar y Descargar
+    // (El botón cambiará de texto para avisar que está procesando)
+    const btnPDF = document.querySelector('.btn-service-outline.btn-teal');
+    const textoOriginal = btnPDF.innerHTML;
+    btnPDF.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+
+    html2pdf().set(opciones).from(elemento).save().then(function () {
+        // Restaurar botón cuando termine
+        btnPDF.innerHTML = textoOriginal;
+    });
+}

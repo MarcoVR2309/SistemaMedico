@@ -8,8 +8,17 @@ using System.Web.UI.WebControls;
 
 namespace SistemaMedico.vista
 {
+
     public partial class PanelMedico : System.Web.UI.Page
     {
+        //Session["DoctorId"] = doctor.Id;
+        private string CurrentUserId
+        {
+            get { return Session["UsuarioId"]?.ToString() ?? "U000001"; }
+        }
+
+
+
         // Instancia del DAO que usaremos en esta página
         private CitasDAO citasDAO = new CitasDAO();
         private PacientesDAO pacientesDAO = new PacientesDAO();
@@ -17,10 +26,14 @@ namespace SistemaMedico.vista
         private DoctoresDAO doctoresDAO = new DoctoresDAO(); // Para obtener la especialidad
 
 
-        private string idDoctorSimulado = "D000004"; // <--- !! SIMULACIÓN DE LOGIN !!
-
         protected void Page_Load(object sender, EventArgs e)
         {
+            //En caso de que no exista usuario logueado, redirigimos a Login
+            if (Session["UsuarioId"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 // Solo cargamos las citas la primera vez que entra a la página
@@ -34,16 +47,29 @@ namespace SistemaMedico.vista
             try
             {
                 // 1. Llama al DAO
-                Doctores doctor = doctoresDAO.ObtenerDoctorPorId(idDoctorSimulado);
+                Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
+                
 
                 if (doctor != null)
                 {
-                    // 2. Actualiza la etiqueta 'lblDoctorName'
+                    // --- A) Actualiza la etiqueta de bienvenida (Sidebar) ---
                     lblDoctorName.Text = "Dr. " + doctor.Nom + " " + doctor.Ape;
+
+                    // --- B) Actualiza el Panel "Mi Perfil" (NUEVO) ---
+                    lblPerfilNombreCompleto.Text = doctor.Nom + " " + doctor.Ape;
+                    lblPerfilEmail.Text = doctor.Email;
+                    lblPerfilTelefono.Text = string.IsNullOrEmpty(doctor.Tel) ? "No registrado" : doctor.Tel;
+
+                    // Datos Profesionales
+                    lblPerfilEspecialidad.Text = doctor.NombreEspecialidad;
+                    lblPerfilCMP.Text = doctor.CodMed; // Código Médico (Colegiatura)
+                    lblPerfilExperiencia.Text = (doctor.Expe.HasValue ? doctor.Expe.Value.ToString() : "0") + " años";
+                    lblPerfilID.Text = doctor.Id; // Muestra el ID (ej: D0000001)
                 }
                 else
                 {
                     lblDoctorName.Text = "Doctor no encontrado";
+                    lblPerfilNombreCompleto.Text = "Error de Carga";
                 }
             }
             catch (Exception ex)
@@ -54,10 +80,11 @@ namespace SistemaMedico.vista
         }
         private void CargarCitasDelDia()
         {
+            Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
             DateTime fechaHoy = DateTime.Now.Date; // Obtiene la fecha de hoy (sin la hora)
 
             // Llama al DAO para obtener la lista de citas
-            var listaCitas = citasDAO.ListarCitasDelDia(idDoctorSimulado, fechaHoy);
+            var listaCitas = citasDAO.ListarCitasDelDia(doctor.Id, fechaHoy);
 
             if (listaCitas.Count > 0)
             {
@@ -251,6 +278,8 @@ namespace SistemaMedico.vista
         // -- bd
         protected void btnGuardarCita_Click(object sender, EventArgs e)
         {
+            Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
+
             try
             {
                 // 1. Validaciones
@@ -264,7 +293,7 @@ namespace SistemaMedico.vista
                 }
 
                 // 2. Obtener la especialidad del doctor logueado
-                var doctor = doctoresDAO.ObtenerDoctorPorId(idDoctorSimulado);
+                
                 if (doctor == null)
                 {
                     MostrarMensajeModal("Error: No se pudo encontrar al doctor.", "error");
@@ -275,7 +304,7 @@ namespace SistemaMedico.vista
                 Citas nuevaCita = new Citas
                 {
                     IdPac = ddlPacienteModal.SelectedValue,
-                    IdDoc = idDoctorSimulado,
+                    IdDoc = doctor.Id,
                     IdSede = ddlSedeModal.SelectedValue,
                     IdEsp = doctor.IdEsp, // Asignamos la especialidad del doctor
                     Fecha = Convert.ToDateTime(txtFechaModal.Text),
@@ -364,12 +393,49 @@ namespace SistemaMedico.vista
 
         private void VerFicha(string idCita)
         {
-            // Lógica para "Ver Ficha" (RF09)
-            System.Diagnostics.Debug.WriteLine($"Acción: Ver Ficha para CitaID: {idCita}");
+            try
+            {
+                // 1. Obtener los datos completos desde el DAO
+                DetalleCitaDTO ficha = citasDAO.ObtenerFichaCita(idCita);
 
-            // Aquí es donde llamaríamos al SP 'sp_PanelMedico_ObtenerFichaCita'
-            // y mostraríamos los datos en un modal.
-            // De momento, solo imprimimos en consola.
+                if (ficha != null)
+                {
+                    // 2. Llenar los campos del modal
+                    lblFichaId.Text = ficha.IdCita;
+
+                    // Paciente
+                    lblFichaPaciente.Text = ficha.PacienteNombre;
+                    lblFichaDNI.Text = ficha.PacienteDNI;
+                    lblFichaTelefono.Text = ficha.PacienteTelefono;
+                    lblFichaPeso.Text = ficha.PacientePeso.HasValue ? ficha.PacientePeso.Value.ToString("0.0") : "N/A";
+
+                    // Cita
+                    lblFichaFecha.Text = ficha.Fecha.ToString("dd/MM/yyyy") + " - " + DateTime.Today.Add(ficha.Hora).ToString("hh:mm tt");
+                    lblFichaSede.Text = ficha.Sede;
+                    lblFichaEspecialidad.Text = ficha.Especialidad;
+                    lblFichaEstado.Text = ficha.Estado == "P" ? "Pendiente" : (ficha.Estado == "F" ? "Finalizada" : "En Progreso");
+
+                    // Colorear el estado
+                    lblFichaEstado.ForeColor = ficha.Estado == "F" ? System.Drawing.Color.Green : System.Drawing.Color.Orange;
+
+                    // Resumen Clínico
+                    lblFichaMotivo.Text = ficha.Motivo;
+                    lblFichaDiagnostico.Text = ficha.Diagnostico;
+                    lblFichaTratamiento.Text = ficha.Tratamiento;
+                    lblFichaObservaciones.Text = ficha.Observaciones;
+
+                    // 3. Mostrar el modal
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFichaModal", "showFichaModal();", true);
+                }
+                else
+                {
+                    MostrarMensajeModal("No se encontraron detalles para esta cita.", "error");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeModal("Error al cargar la ficha: " + ex.Message, "error");
+            }
         }
 
         // --- Eventos de botones FUERA del Repeater ---
@@ -379,12 +445,13 @@ namespace SistemaMedico.vista
             
         }
 
-        // (Los métodos 'btnIniciarConsulta_Click' y 'btnVerFicha_Click' originales
-        // ya no son necesarios, porque ahora usamos 'repeaterCitas_ItemCommand')
+        //Método ya "desloguea la cuenta"
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Index.aspx");
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("Login.aspx");
         }
 
     }

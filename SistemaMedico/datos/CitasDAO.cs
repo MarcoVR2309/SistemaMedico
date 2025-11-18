@@ -1,5 +1,5 @@
-using SistemaMedico.conexion; // Tu clase de conexiÛn
-using SistemaMedico.modelo; // Tus clases de entidad
+using SistemaMedico.conexion;
+using SistemaMedico.modelo;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,23 +7,21 @@ using System.Data.SqlClient;
 
 namespace SistemaMedico.datos
 {
-
     // =========================================================================
     // CLASES "VIEWMODEL" PARA MANEJAR DATOS DE TABLAS UNIDAS (JOINS)
-    // (Las usamos porque tu Citas.cs solo tiene IDs)
     // =========================================================================
 
     // Usada para el Dashboard y "Mi Horario"
     public class CitaInfo
     {
         public string IdCita { get; set; }
-        public DateTime HoraCompleta { get; set; } 
+        public DateTime HoraCompleta { get; set; }
         public string NombresPaciente { get; set; }
         public string ApellidosPaciente { get; set; }
-        public string ESTADO { get; set; } // <--- °A—ADE ESTA LÕNEA!
+        public string ESTADO { get; set; }
     }
 
-    // Usada para la b˙squeda de Pacientes
+    // Usada para la b√∫squeda de Pacientes
     public class PacienteInfo
     {
         public string IdPaciente { get; set; }
@@ -33,18 +31,16 @@ namespace SistemaMedico.datos
         public string Email { get; set; }
     }
 
-    // Usada para el Historial ClÌnico
+    // Usada para el Historial Cl√≠nico
     public class HistorialInfo
     {
         public string IdCita { get; set; }
-        public DateTime HoraCompleta { get; set; } // <--- SOLUCI”N
+        public DateTime HoraCompleta { get; set; }
         public string ESTADO { get; set; }
         public string Especialidad { get; set; }
         public string Doctor { get; set; }
         public string Diagnostico { get; set; }
     }
-
-    // (La clase para "Ver Ficha" es muy grande, la podemos crear cuando la usemos)
 
     // =========================================================================
     // CLASE PRINCIPAL: CitasDAO
@@ -55,12 +51,14 @@ namespace SistemaMedico.datos
 
         public SqlConnection Conectar()
         {
-            // Antes decÌa: return con.AbrirConexion();
-            return con.ObtenerConexion(); // <-- °Ajustado a tu mÈtodo!
+            return con.ObtenerConexion();
         }
-       
 
-        // --- 1. DASHBOARD: Listar Citas del DÌa ---
+        // =========================================================================
+        // M√âTODOS PARA PANEL M√âDICO Y PACIENTE (COMPARTIDOS)
+        // =========================================================================
+
+        // --- 1. DASHBOARD: Listar Citas del D√≠a ---
         public List<CitaInfo> ListarCitasDelDia(string idDoctor, DateTime fecha)
         {
             var lista = new List<CitaInfo>();
@@ -76,28 +74,28 @@ namespace SistemaMedico.datos
                     dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        // --- INICIO DE LA CORRECCI”N ---
                         var oCitaInfo = new CitaInfo();
                         oCitaInfo.IdCita = dr["IdCita"].ToString();
 
-                        // 1. Obtenemos el TimeSpan (ej: 09:30:00)
                         TimeSpan horaCita = (TimeSpan)dr["HORA"];
-                        // 2. Combinamos la fecha del dÌa (del par·metro) con la hora
-                        oCitaInfo.HoraCompleta = fecha.Date + horaCita; // <--- SOLUCI”N
+                        oCitaInfo.HoraCompleta = fecha.Date + horaCita;
 
                         oCitaInfo.ESTADO = dr["ESTADO"].ToString();
                         oCitaInfo.NombresPaciente = dr["NombresPaciente"].ToString();
                         oCitaInfo.ApellidosPaciente = dr["ApellidosPaciente"].ToString();
                         lista.Add(oCitaInfo);
-                        // --- FIN DE LA CORRECCI”N ---
                     }
                 }
             }
             return lista;
         }
 
-        // --- 2. DASHBOARD: Registrar Nueva Cita ---
-        public string RegistrarCita(Citas oCita) // Usa la clase de tu modelo
+        // --- 2. Registrar Nueva Cita (USADO POR M√âDICO Y PACIENTE) ---
+        /// <summary>
+        /// Registra una nueva cita. Usado tanto por el panel m√©dico como por el panel del paciente.
+        /// Para el paciente: enviar TipoPago=null, Monto=null, PagoReali=false
+        /// </summary>
+        public string RegistrarCita(Citas oCita)
         {
             string nuevoId = "";
             using (var cn = Conectar())
@@ -116,7 +114,6 @@ namespace SistemaMedico.datos
                     cmd.Parameters.AddWithValue("@MONTO", (object)oCita.Monto ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@PAGO_REALI", oCita.PagoReali);
 
-                    // Capturamos el ID devuelto por el SP
                     nuevoId = cmd.ExecuteScalar().ToString();
                 }
             }
@@ -134,7 +131,6 @@ namespace SistemaMedico.datos
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID_CITA", idCita);
 
-                    // Capturamos el ID de consulta devuelto por el SP
                     nuevaConsultaId = cmd.ExecuteScalar().ToString();
                 }
             }
@@ -142,7 +138,7 @@ namespace SistemaMedico.datos
         }
 
         // --- 4. DASHBOARD: Finalizar Consulta ---
-        public void FinalizarConsulta(ConsultasMedicas oConsulta) // Usa la clase de tu modelo
+        public void FinalizarConsulta(ConsultasMedicas oConsulta)
         {
             using (var cn = Conectar())
             {
@@ -178,22 +174,17 @@ namespace SistemaMedico.datos
                     dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
-                        // --- INICIO DE LA CORRECCI”N ---
                         var oCitaInfo = new CitaInfo();
                         oCitaInfo.IdCita = dr["IdCita"].ToString();
 
-                        // 1. Obtenemos el TimeSpan (ej: 09:30:00)
                         TimeSpan horaCita = (TimeSpan)dr["HORA"];
-                        // 2. Obtenemos la FECHA (de la base de datos)
                         DateTime fechaCita = (DateTime)dr["FECHA"];
-                        // 3. Combinamos la fecha con la hora
-                        oCitaInfo.HoraCompleta = fechaCita.Date + horaCita; // <--- SOLUCI”N
+                        oCitaInfo.HoraCompleta = fechaCita.Date + horaCita;
 
                         oCitaInfo.ESTADO = dr["ESTADO"].ToString();
                         oCitaInfo.NombresPaciente = dr["NombresPaciente"].ToString();
                         oCitaInfo.ApellidosPaciente = dr["ApellidosPaciente"].ToString();
                         lista.Add(oCitaInfo);
-                        // --- FIN DE LA CORRECCI”N ---
                     }
                 }
             }
@@ -246,16 +237,14 @@ namespace SistemaMedico.datos
                     {
                         var oHistorial = new HistorialInfo();
                         oHistorial.IdCita = dr["IdCita"].ToString();
-                        // 1. Obtenemos el TimeSpan (ej: 09:30:00)
+
                         TimeSpan horaCita = (TimeSpan)dr["HORA"];
-                        // 2. Obtenemos la FECHA (de la base de datos)
                         DateTime fechaCita = (DateTime)dr["FECHA"];
-                        // 3. Combinamos la fecha con la hora
-                        oHistorial.HoraCompleta = fechaCita.Date + horaCita; // <--- SOLUCI”N
+                        oHistorial.HoraCompleta = fechaCita.Date + horaCita;
+
                         oHistorial.ESTADO = dr["ESTADO"].ToString();
                         oHistorial.Especialidad = dr["Especialidad"].ToString();
                         oHistorial.Doctor = dr["Doctor"].ToString();
-                        // Manejo de posibles nulos en DiagnÛstico
                         oHistorial.Diagnostico = dr["DIAGNOSTICO"] != DBNull.Value ? dr["DIAGNOSTICO"].ToString() : "N/A";
                         lista.Add(oHistorial);
                     }
@@ -264,18 +253,15 @@ namespace SistemaMedico.datos
             return lista;
         }
 
-        // (El mÈtodo para "sp_PanelMedico_ObtenerFichaCita" lo crearemos cuando lo necesitemos, 
-        // ya que requiere una clase "FichaCompleta" muy grande)
+        // --- 8. Obtener ID de Consulta por ID de Cita ---
         public string ObtenerConsultaIdPorCitaId(string idCita)
         {
             string consultaId = null;
             using (var cn = Conectar())
             {
-                // Tu SP sp_PanelMedico_IniciarConsulta ya creÛ esta fila.
-                // Ahora solo la buscamos.
                 using (var cmd = new SqlCommand("SELECT ID FROM dbo.ConsultasMedicas WHERE ID_CITA = @ID_CITA", cn))
                 {
-                    cmd.CommandType = CommandType.Text; // Es un query simple, no un SP
+                    cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("@ID_CITA", idCita);
 
                     var resultado = cmd.ExecuteScalar();
@@ -286,6 +272,70 @@ namespace SistemaMedico.datos
                 }
             }
             return consultaId;
+        }
+
+        // =========================================================================
+        // M√âTODOS ESPEC√çFICOS PARA PANEL PACIENTE
+        // =========================================================================
+
+        // --- 9. PANEL PACIENTE: Listar todas las citas del paciente ---
+        /// <summary>
+        /// Lista todas las citas de un paciente espec√≠fico con informaci√≥n completa
+        /// </summary>
+        public List<Citas> ListarCitasPorPaciente(string idPaciente)
+        {
+            var lista = new List<Citas>();
+            SqlDataReader dr = null;
+
+            using (var cn = Conectar())
+            {
+                using (var cmd = new SqlCommand("sp_ListarCitasPorPaciente", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdPaciente", idPaciente);
+
+                    dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        var cita = new Citas();
+                        cita.Id = dr["ID"].ToString();
+
+                        DateTime fechaHoraCita = Convert.ToDateTime(dr["FEC_CITA"]);
+                        cita.Fecha = fechaHoraCita.Date;
+                        cita.Hora = fechaHoraCita.TimeOfDay;
+
+                        cita.Estado = dr["ESTADO"].ToString();
+                        cita.Motivo = dr["MOTIVO"] != DBNull.Value ? dr["MOTIVO"].ToString() : "";
+
+                        cita.NombreDoctor = dr["NombreDoctor"].ToString() + " " + dr["ApellidoDoctor"].ToString();
+                        cita.NombreEspecialidad = dr["Especialidad"].ToString();
+                        cita.SedeNombre = dr["NombreSede"].ToString();
+
+                        lista.Add(cita);
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+        // --- 10. PANEL PACIENTE: Cancelar Cita ---
+        /// <summary>
+        /// Permite al paciente cancelar su propia cita
+        /// </summary>
+        public void CancelarCitaPaciente(string idCita, string idPaciente)
+        {
+            using (var cn = Conectar())
+            {
+                using (var cmd = new SqlCommand("PanelPaciente_CancelarCita", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_CITA", idCita);
+                    cmd.Parameters.AddWithValue("@ID_PAC", idPaciente);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

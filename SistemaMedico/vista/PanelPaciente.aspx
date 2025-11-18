@@ -1,142 +1,263 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PanelPaciente.aspx.cs" Inherits="SistemaMedico.vista.PanelPaciente" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Panel del Paciente - MediTech</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mi Panel - Clínica Aguirre</title>
+    
+    <link href="../styles/main.css" rel="stylesheet" />
+    <link href="../styles/panelmedico.css" rel="stylesheet" />
     <link href="../styles/panelpaciente.css" rel="stylesheet" />
-    <script src="../scripts/panelpaciente.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="../Scripts/panelpaciente.js?v=1"></script>
 </head>
 <body>
-    <form id="form1" runat="server">
-        
-        <asp:HiddenField ID="hdnActiveTab" runat="server" Value="misCitas" ClientIDMode="Static" />
+<form id="form1" runat="server">
+<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-        <!-- Barra de Navegación Superior -->
-        <div class="navbar">
-            <a href="PanelPaciente.aspx" class="navbar-brand"><i class="fas fa-notes-medical"></i> Clínica Aguirre</a>
-            <div class="navbar-user-info">
-                <span class="navbar-user">Bienvenido, <asp:Label ID="lblUserName" runat="server" Text="[Usuario]"></asp:Label></span>
-                <asp:Button ID="btnLogout" runat="server" Text="Cerrar Sesión" OnClick="btnLogout_Click" CssClass="navbar-logout" />
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-header">
+            <div class="navbar-brand">
+                <i class="fas fa-heartbeat logo-icon"></i>
+                <span class="logo-text">Clínica Aguirre</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-profile">
+            <i class="fas fa-user-circle profile-icon"></i>
+            <div class="profile-info">
+                <span class="profile-welcome">Bienvenido,</span>
+                <asp:Label ID="lblUserName" runat="server" Text="Paciente" CssClass="profile-name"></asp:Label>
             </div>
         </div>
 
-        <!-- Contenedor Principal -->
-        <div class="main-container">
-            
-            <!-- Mensaje de Estado Global -->
-            <asp:Label ID="lblMensajeGlobal" runat="server" CssClass="status-message" EnableViewState="false" Visible="false"></asp:Label>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item active">
+                    <a href="javascript:void(0)" data-target="panel-dashboard">
+                        <i class="fas fa-calendar-check"></i> Mis Citas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" data-target="panel-perfil">
+                        <i class="fas fa-user-circle"></i> Mi Perfil
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-            <!-- Menú de Navegación de Pestañas -->
-            <div class="tab-menu">
-                <!-- El 'onclick' llama a la función en tu archivo .js -->
-                <a id="btn_misCitas" class="tab-button active" onclick="changeTab('misCitas')"><i class="fas fa-calendar-check"></i>Mis Citas</a>
-                <a id="btn_nuevaCita" class="tab-button" onclick="changeTab('nuevaCita')"><i class="fas fa-calendar-plus"></i>Nueva Cita</a>
-                <a id="btn_miPerfil" class="tab-button" onclick="changeTab('miPerfil')"><i class="fas fa-user-circle"></i>Mi Perfil</a>
+        <div class="sidebar-footer">
+            <ul>
+                <li class="nav-item">
+                    <asp:LinkButton ID="lnkCerrarSesion" runat="server" OnClick="btnLogout_Click">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </asp:LinkButton>
+                </li>
+            </ul>
+        </div>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="dashboard-content">
+        
+        <header class="content-header">
+            <div class="header-main">
+                <h1 class="content-title">Mis Citas Médicas</h1>
+                <p class="content-subtitle">Gestiona tus citas de manera fácil y rápida</p>
             </div>
+            <div class="header-actions">
+                <a href="#" id="btnAbrirModalCita" class="btn-service btn-purple">
+                    <i class="fas fa-plus"></i> Agendar Cita
+                </a>
+            </div>
+        </header>
 
-            <!-- Contenido de las Pestañas -->
-            <div class="tab-content">
+        <!-- MODAL AGENDAR CITA -->
+        <div id="modalAgendarCita" class="modal-backdrop">
+            <div class="modal-content">
                 
-                <!-- Pestaña 1: MIS CITAS PENDIENTES -->
-                <div id="misCitas" class="content-section active">
-                    <h2>Mis Citas Programadas</h2>
-                    <asp:GridView ID="gvCitas" runat="server" AutoGenerateColumns="False" CssClass="gridview-style">
-                        <Columns>
-                            <asp:BoundField DataField="FechaCita" HeaderText="Fecha" DataFormatString="{0:d}" />
-                            <asp:BoundField DataField="HoraCita" HeaderText="Hora" DataFormatString="{0:t}" />
-                            <asp:BoundField DataField="NombreDoctor" HeaderText="Doctor" />
-                            <asp:BoundField DataField="NombreEspecialidad" HeaderText="Especialidad" />
-                            <asp:BoundField DataField="Sede" HeaderText="Sede" />
-                            <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                        </Columns>
-                         <EmptyDataTemplate>
-                            <div class="no-citas">
-                                <i class="far fa-calendar-times"></i>
-                                <p>No tienes citas programadas.</p>
-                            </div>
-                        </EmptyDataTemplate>
-                    </asp:GridView>
+                <div class="modal-header">
+                    <h3 class="section-title-panel">Agendar Nueva Cita</h3>
+                    <span class="modal-close" id="spanCerrarModal">&times;</span>
                 </div>
 
-                <!-- Pestaña 2: SOLICITAR NUEVA CITA -->
-                <div id="nuevaCita" class="content-section">
-                    <h2>Programar Nueva Cita</h2>
-                    <p style="margin-bottom: 25px;">Selecciona la especialidad, médico y horario que prefieras.</p>
-                    <div class="profile-grid">
+                <div class="modal-body">
+                    
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="<%= ddlEspecialidades.ClientID %>">1. Especialidad *</label>
-                            <asp:DropDownList ID="ddlEspecialidades" runat="server" DataTextField="NomEsp" DataValueField="Id" 
+                            <label>Especialidad *</label>
+                            <asp:DropDownList ID="ddlEspecialidades" runat="server" CssClass="form-control"
                                 AutoPostBack="True" OnSelectedIndexChanged="ddlEspecialidades_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
+
                         <div class="form-group">
-                            <label for="<%= ddlDoctores.ClientID %>">2. Doctor *</label>
-                            <asp:DropDownList ID="ddlDoctores" runat="server" DataTextField="NombreCompleto" DataValueField="Id" 
+                            <label>Doctor *</label>
+                            <asp:DropDownList ID="ddlDoctores" runat="server" CssClass="form-control"
                                 AutoPostBack="True" OnSelectedIndexChanged="ddlDoctores_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
-                    </div>
-                    <div class="profile-grid">
-                         <div class="form-group">
-                            <label for="<%= txtFechaCita.ClientID %>">3. Fecha *</label>
-                            <asp:TextBox ID="txtFechaCita" runat="server" TextMode="Date" OnTextChanged="txtFechaCita_TextChanged" AutoPostBack="True"></asp:TextBox>
-                        </div>
+
                         <div class="form-group">
-                            <label for="<%= ddlHoras.ClientID %>">4. Hora Disponible *</label>
-                            <asp:DropDownList ID="ddlHoras" runat="server">
-                                <asp:ListItem Text="-- Seleccione hora --" Value=""></asp:ListItem>
+                            <label>Fecha *</label>
+                            <asp:TextBox ID="txtFechaCita" runat="server" CssClass="form-control" 
+                                placeholder="dd/mm/aaaa" 
+                                MaxLength="10"
+                                AutoPostBack="True" 
+                                OnTextChanged="txtFechaCita_TextChanged"></asp:TextBox>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hora *</label>
+                            <asp:DropDownList ID="ddlHoras" runat="server" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
                     </div>
-                    <asp:Button ID="btnReservar" runat="server" Text="Programar Cita" CssClass="btn-primary" OnClick="btnReservar_Click" />
+
+                    <div class="form-group">
+                        <label>Motivo de la Consulta</label>
+                        <asp:TextBox ID="txtMotivo" runat="server" CssClass="form-control" 
+                            TextMode="MultiLine" Rows="3"
+                            placeholder="Ej: Dolor de cabeza, control general, etc."></asp:TextBox>
+                    </div>
+                    
+                    <asp:Label ID="lblModalMensaje" runat="server" CssClass="modal-mensaje"></asp:Label>
+
                 </div>
 
-                <!-- Pestaña 3: MI PERFIL -->
-                <div id="miPerfil" class="content-section">
-                    <h2>Información Personal</h2>
+                <div class="modal-footer">
+                    <button type="button" id="btnCancelarModal" class="btn-service-outline btn-purple">
+                        Cancelar
+                    </button>
+                    <asp:Button ID="btnReservar" runat="server" Text="Reservar Cita" 
+                        CssClass="btn-service btn-teal" OnClick="btnReservar_Click" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PANEL MIS CITAS -->
+        <div id="panel-dashboard" class="content-panel active">
+            <section class="citas-container">
+                <h2 class="section-title-panel">Mis Citas Programadas</h2>
+                
+                <div class="citas-list">
+                    <asp:Repeater ID="repeaterCitas" runat="server">
+                        <ItemTemplate>
+                            <div class="cita-card">
+                                
+                                <div class="cita-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>
+                                        <%# Eval("FechaCita", "{0:dd/MM/yyyy}") %> -
+                                        <%# Eval("HoraCita", "{0:hh\\:mm}") %>
+                                    </span>
+                                </div>
+                                
+                                <div class="cita-patient-info">
+                                    <h3 class="patient-name">Dr. <%# Eval("NombreDoctor") %></h3>
+                                    <p class="patient-specialty"><%# Eval("NombreEspecialidad") %></p>
+                                    <p class="patient-location"><i class="fas fa-map-marker-alt"></i> <%# Eval("SedeNombre") %></p>
+                                </div>
+                                
+                                <div class='cita-status <%# ObtenerClaseEstado(Eval("Estado").ToString()) %>'>
+                                    <i class='<%# ObtenerIconoEstado(Eval("Estado").ToString()) %>'></i>
+                                    <%# Eval("Estado") %>
+                                </div>
+                                
+                                <div class="cita-actions">
+                                    <button type="button" class="btn-service-outline btn-purple" 
+                                        onclick='verDetalleCita("<%# Eval("Id") %>")'>
+                                        Ver Detalle
+                                    </button>
+                                </div>
+
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                    <asp:Label ID="lblNoCitas" runat="server" 
+                        Text="No tienes citas programadas." 
+                        CssClass="no-citas-mensaje" Visible="false" />
+                </div>
+            </section>
+        </div>
+
+        <!-- PANEL PERFIL -->
+        <div id="panel-perfil" class="content-panel">
+            <section class="section-block">
+
+                <h2 class="section-title-panel">Mi Perfil</h2>
+
+                <div class="profile-card">
+
+                    <!-- Avatar + info -->
                     <div class="profile-header">
-                        <div class="profile-avatar"><asp:Label ID="lblAvatarInitial" runat="server" Text="P"></asp:Label></div>
-                        <div class="profile-info">
-                            <h3><asp:Label ID="lblProfileUserName" runat="server" Text="[Usuario]"></asp:Label></h3>
+                        <div class="profile-avatar">
+                            <asp:Label ID="lblAvatarInitial" runat="server" Text="P"></asp:Label>
+                        </div>
+                        <div class="profile-header-info">
+                            <h3><asp:Label ID="lblProfileUserName" runat="server"></asp:Label></h3>
                             <p>Paciente</p>
                         </div>
                     </div>
-                    <div class="profile-grid">
-                        <div class="form-group profile-field">
-                            <label>Nombre Completo</label>
-                            <span><asp:Label ID="txtProfileNombre" runat="server"></asp:Label></span>
+
+                    <hr />
+
+                    <!-- CUADROS BONITOS -->
+                    <div class="profile-data-grid">
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-user"></i> Nombre Completo</h4>
+                            <p><asp:Label ID="txtProfileNombre" runat="server"></asp:Label></p>
                         </div>
-                        <div class="form-group profile-field">
-                            <label>Correo Electrónico</label>
-                            <span><asp:Label ID="txtProfileEmail" runat="server"></asp:Label></span>
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-envelope"></i> Correo</h4>
+                            <p><asp:Label ID="txtProfileEmail" runat="server"></asp:Label></p>
                         </div>
-                        <div class="form-group profile-field">
-                            <label>Teléfono</label>
-                            <span><asp:Label ID="txtProfileTelefono" runat="server"></asp:Label></span>
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-phone"></i> Teléfono</h4>
+                            <p><asp:Label ID="txtProfileTelefono" runat="server"></asp:Label></p>
                         </div>
-                        <div class="form-group profile-field">
-                            <label>Fecha de Nacimiento</label>
-                            <span><asp:Label ID="txtProfileFechaNac" runat="server"></asp:Label></span>
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-birthday-cake"></i> Fecha de Nacimiento</h4>
+                            <p><asp:Label ID="txtProfileFechaNac" runat="server"></asp:Label></p>
                         </div>
-                        <div class="form-group profile-field">
-                            <label>ID de Usuario</label>
-                            <span><asp:Label ID="txtProfileUserId" runat="server"></asp:Label></span>
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-id-card"></i> DNI</h4>
+                            <p><asp:Label ID="txtProfileDNI" runat="server"></asp:Label></p>
                         </div>
-                         <div class="form-group profile-field">
-                            <label>DNI</label>
-                            <span><asp:Label ID="txtProfileDNI" runat="server"></asp:Label></span>
+
+                        <div class="profile-card-item">
+                            <h4><i class="fas fa-hashtag"></i> ID Usuario</h4>
+                            <p><asp:Label ID="txtProfileUserId" runat="server"></asp:Label></p>
                         </div>
+
                     </div>
-                    <div class="profile-actions" style="margin-top: 20px; text-align: right;">
-                        <asp:Button ID="btnEditProfile" runat="server" Text="Editar Contraseña" CssClass="btn-secondary" Visible="true" />
-                    </div>
+
                 </div>
-            </div>
+
+            </section>
         </div>
-    </form>
+
+    </main>
+
+</div>
+
+</form>
 </body>
 </html>

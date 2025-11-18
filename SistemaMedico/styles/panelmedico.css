@@ -1,6 +1,6 @@
 /*
  * =========================================
- * Estilos Específicos para PanelMedico.aspx
+ * Estilos Especï¿½ficos para PanelMedico.aspx
  * Hereda de main.css (variables, botones)
  * =========================================
  */
@@ -75,7 +75,7 @@ html, body, form, #form1 {
 }
 
 
-/* Navegación del Sidebar */
+/* Navegaciï¿½n del Sidebar */
 .sidebar-nav {
     flex-grow: 1; /* Empuja el footer hacia abajo */
     padding: 1rem 0;
@@ -127,7 +127,7 @@ html, body, form, #form1 {
 }
 
     .sidebar-footer .nav-item a:hover {
-        color: #D9534F; /* Un color rojo para "Cerrar Sesión" */
+        color: #D9534F; /* Un color rojo para "Cerrar Sesiï¿½n" */
     }
 
 
@@ -162,8 +162,8 @@ html, body, form, #form1 {
     margin-top: 5px;
 }
 
-/* Botón "Agendar Cita" reutiliza .btn-service.btn-purple de main.css */
-/* Si necesitas ajustar su tamaño: */
+/* Botï¿½n "Agendar Cita" reutiliza .btn-service.btn-purple de main.css */
+/* Si necesitas ajustar su tamaï¿½o: */
 .header-actions .btn-service {
     padding: 0.8rem 1.5rem;
 }
@@ -268,7 +268,7 @@ html, body, form, #form1 {
     justify-content: flex-end;
 }
 
-/* Estilo para Botón Outline (Nuevo) */
+/* Estilo para Botï¿½n Outline (Nuevo) */
 .btn-service-outline {
     background-color: transparent;
     border: 2px solid var(--primary-purple);

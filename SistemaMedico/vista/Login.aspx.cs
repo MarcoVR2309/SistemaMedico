@@ -104,33 +104,31 @@ namespace SistemaMedico.vista
 
         private string ObtenerNombreRol(string idRol)
         {
-            if (idRol.StartsWith("R"))
+            if (idRol.StartsWith("R"))
             {
-                if (idRol == "R0000001") return "Paciente";
+                if (idRol == "R0000001") return "Administrador";
                 if (idRol == "R0000002") return "Doctor";
-                if (idRol == "R0000003") return "Administrador";
+                if (idRol == "R0000003") return "Paciente";
             }
-            return "Paciente";
+            return "Paciente"; // fallback
         }
 
         private void RedirigirSegunRol()
         {
-            string rol = Session["UsuarioRol"]?.ToString();
+            string rol = Session["UsuarioRol"]?.ToString().Trim().ToLower();
 
             switch (rol)
             {
-                case "Paciente":
-                    Response.Redirect("~/vista/PanelPaciente.aspx");
+                case "paciente":
+                    Response.Redirect("~/vista/PanelPaciente.aspx");
                     break;
 
-                case "Doctor":
-                    // (Ruta futura)
-                    Response.Redirect("~/vista/PanelMedico.aspx");
+                case "doctor":
+                    Response.Redirect("~/vista/PanelMedico.aspx");
                     break;
 
-                case "Administrador":
-                    // (Ruta futura)
-                    Response.Redirect("~/vista/Admin/Dashboard.aspx");
+                case "administrador":
+                    Response.Redirect("~/vista/Admin/Dashboard.aspx");
                     break;
 
                 default:

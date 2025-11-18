@@ -1,4 +1,4 @@
-using SistemaMedico.datos; // <-- Importante: Añade el DAO
+using SistemaMedico.datos; // <-- Importante: Aï¿½ade el DAO
 using SistemaMedico.modelo; // <-- (Opcional, pero bueno tenerlo)
 using System;
 using System.Collections.Generic;
@@ -10,20 +10,20 @@ namespace SistemaMedico.vista
 {
     public partial class PanelMedico : System.Web.UI.Page
     {
-        // Instancia del DAO que usaremos en esta página
+        // Instancia del DAO que usaremos en esta pï¿½gina
         private CitasDAO citasDAO = new CitasDAO();
         private PacientesDAO pacientesDAO = new PacientesDAO();
         private SedesDAO sedesDAO = new SedesDAO();
         private DoctoresDAO doctoresDAO = new DoctoresDAO(); // Para obtener la especialidad
 
 
-        private string idDoctorSimulado = "D000004"; // <--- !! SIMULACIÓN DE LOGIN !!
+        private string idDoctorSimulado = "D000004"; // <--- !! SIMULACIï¿½N DE LOGIN !!
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Solo cargamos las citas la primera vez que entra a la página
+                // Solo cargamos las citas la primera vez que entra a la pï¿½gina
                 CargarDatosDoctor();
                 CargarCitasDelDia();
                 CargarDropdownsModal();
@@ -74,7 +74,7 @@ namespace SistemaMedico.vista
                 lblNoCitas.Visible = true;
             }
         }
-        // --- AÑADIR NUEVO MÉTODO PARA CARGAR DROPDOWNS ---
+        // --- Aï¿½ADIR NUEVO Mï¿½TODO PARA CARGAR DROPDOWNS ---
         private void CargarDropdownsModal()
         {
             try
@@ -94,7 +94,7 @@ namespace SistemaMedico.vista
                 ddlSedeModal.Items.Insert(0, new ListItem("-- Seleccionar Sede --", ""));
 
                 // 3. Cargar Horas (Ejemplo simple)
-                if (ddlHoraModal.Items.Count <= 1) // Solo cargar si está vacío
+                if (ddlHoraModal.Items.Count <= 1) // Solo cargar si estï¿½ vacï¿½o
                 {
                     ddlHoraModal.Items.Clear();
                     ddlHoraModal.Items.Insert(0, new ListItem("-- Seleccionar Hora --", ""));
@@ -129,10 +129,10 @@ namespace SistemaMedico.vista
         /// </summary>
         protected void repeaterCitas_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            // Obtenemos el ID de la cita desde el botón que se presionó
+            // Obtenemos el ID de la cita desde el botï¿½n que se presionï¿½
             string idCita = e.CommandArgument.ToString();
 
-            // Usamos un switch para ver qué botón fue
+            // Usamos un switch para ver quï¿½ botï¿½n fue
             switch (e.CommandName)
             {
                 case "Iniciar":
@@ -153,7 +153,7 @@ namespace SistemaMedico.vista
         {
             try
             {
-                // 1. Buscar el ID de la consulta que se creó al "Iniciar"
+                // 1. Buscar el ID de la consulta que se creï¿½ al "Iniciar"
                 string idConsulta = citasDAO.ObtenerConsultaIdPorCitaId(idCita);
 
                 if (string.IsNullOrEmpty(idConsulta))
@@ -161,16 +161,16 @@ namespace SistemaMedico.vista
                     // Si no se encuentra (ej. el doctor nunca dio "Iniciar"), lo creamos AHORA.
                     idConsulta = citasDAO.IniciarConsulta(idCita);
 
-                    // Si AÚN no hay ID, lanzamos error.
+                    // Si Aï¿½N no hay ID, lanzamos error.
                     if (string.IsNullOrEmpty(idConsulta))
                     {
                         throw new Exception("No se pudo iniciar el registro de consulta. Contacte a soporte.");
                     }
 
-                    // Refrescamos la lista para que el botón "Iniciar" cambie a "Finalizar"
+                    // Refrescamos la lista para que el botï¿½n "Iniciar" cambie a "Finalizar"
                     CargarCitasDelDia();
-                    // Asegúrate de tener un UpdatePanel llamado "UpdatePanelContenido"
-                    // si no, comenta la siguiente línea
+                    // Asegï¿½rate de tener un UpdatePanel llamado "UpdatePanelContenido"
+                    // si no, comenta la siguiente lï¿½nea
                 }
 
                 // 2. Guardar los IDs en los campos ocultos del modal
@@ -186,7 +186,7 @@ namespace SistemaMedico.vista
                 lblModalConsultaMensaje.Text = "";
 
                 // 4. Llamar al JS para mostrar el modal
-                // (Asegúrate de tener un ScriptManager en tu .aspx)
+                // (Asegï¿½rate de tener un ScriptManager en tu .aspx)
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFinalizarModal", "showFinalizarModal();", true);
             }
             catch (Exception ex)
@@ -207,7 +207,7 @@ namespace SistemaMedico.vista
         // 2. Validar que los IDs existan
         if (string.IsNullOrEmpty(idCita) || string.IsNullOrEmpty(idConsulta))
         {
-            MostrarMensajeConsultaModal("Error de sesión. Cierre el modal y vuelva a intentarlo.", "error");
+            MostrarMensajeConsultaModal("Error de sesiï¿½n. Cierre el modal y vuelva a intentarlo.", "error");
             return;
         }
 
@@ -227,7 +227,7 @@ namespace SistemaMedico.vista
 
         // 5. Refrescar la lista de citas (para que el estado cambie a 'F')
         CargarCitasDelDia();
-        // (Asegúrate de tener un UpdatePanel)
+        // (Asegï¿½rate de tener un UpdatePanel)
         //UpdatePanelContenido.Update(); // Refresca el panel de citas
 
         // 6. Cerrar el modal
@@ -289,10 +289,10 @@ namespace SistemaMedico.vista
                 // 4. Guardar en la BD
                 string nuevoId = citasDAO.RegistrarCita(nuevaCita);
 
-                // 5. Refrescar el dashboard (¡Importante!)
+                // 5. Refrescar el dashboard (ï¿½Importante!)
                 CargarCitasDelDia();
 
-                // 6. Mostrar mensaje de éxito y CERRAR el modal
+                // 6. Mostrar mensaje de ï¿½xito y CERRAR el modal
                 // Limpiamos los campos
                 LimpiarModal();
                 // Llamamos al JS para que oculte el "cuadro"
@@ -308,10 +308,10 @@ namespace SistemaMedico.vista
             }
         }
         // modal
-        // --- AÑADIR MÉTODOS DE AYUDA PARA EL MODAL ---
+        // --- Aï¿½ADIR Mï¿½TODOS DE AYUDA PARA EL MODAL ---
         private void MostrarMensajeModal(string mensaje, string tipo) // tipo = "success" o "error"
         {
-            // 1. Mostrar el mensaje en el Label (esto está bien)
+            // 1. Mostrar el mensaje en el Label (esto estï¿½ bien)
             lblModalMensaje.Text = mensaje;
             lblModalMensaje.CssClass = "modal-mensaje show " + tipo;
 
@@ -319,7 +319,7 @@ namespace SistemaMedico.vista
             string mensajeEscapado = mensaje
                 .Replace("'", "\\'")   // Escapa comillas simples
                 .Replace("\r", "\\r")  // Escapa retornos de carro
-                .Replace("\n", "\\n"); // Escapa nuevas líneas
+                .Replace("\n", "\\n"); // Escapa nuevas lï¿½neas
 
             // 3. Usar el mensaje escapado en el script
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalOnError",
@@ -336,39 +336,39 @@ namespace SistemaMedico.vista
             lblModalMensaje.Text = string.Empty;
             lblModalMensaje.CssClass = "modal-mensaje";
         }
-        // --- Lógica de los botones ---
+        // --- Lï¿½gica de los botones ---
 
         private void IniciarConsulta(string idCita)
         {
-            // Lógica para "Iniciar Consulta" (RF08)
+            // Lï¿½gica para "Iniciar Consulta" (RF08)
             try
             {
                 // 1. Llamamos al DAO para que inicie la consulta y cree el registro
                 string nuevoIdConsulta = citasDAO.IniciarConsulta(idCita);
 
-                // 2. (Simulación) Mostramos un mensaje o actualizamos la UI
-                System.Diagnostics.Debug.WriteLine($"Acción: Iniciar Consulta para CitaID: {idCita}. Nuevo ID de Consulta: {nuevoIdConsulta}");
+                // 2. (Simulaciï¿½n) Mostramos un mensaje o actualizamos la UI
+                System.Diagnostics.Debug.WriteLine($"Acciï¿½n: Iniciar Consulta para CitaID: {idCita}. Nuevo ID de Consulta: {nuevoIdConsulta}");
 
                 // 3. Volvemos a cargar la lista para que se actualice el estado a 'I' (Iniciada)
                 CargarCitasDelDia();
 
-                // (En un futuro, podríamos redirigir a una página de consulta)
+                // (En un futuro, podrï¿½amos redirigir a una pï¿½gina de consulta)
                 // Response.Redirect($"DetalleConsulta.aspx?ConsultaID={nuevoIdConsulta}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"ERROR al iniciar consulta: {ex.Message}");
-                // (Aquí deberías mostrar un mensaje de error al usuario)
+                // (Aquï¿½ deberï¿½as mostrar un mensaje de error al usuario)
             }
         }
 
         private void VerFicha(string idCita)
         {
-            // Lógica para "Ver Ficha" (RF09)
-            System.Diagnostics.Debug.WriteLine($"Acción: Ver Ficha para CitaID: {idCita}");
+            // Lï¿½gica para "Ver Ficha" (RF09)
+            System.Diagnostics.Debug.WriteLine($"Acciï¿½n: Ver Ficha para CitaID: {idCita}");
 
-            // Aquí es donde llamaríamos al SP 'sp_PanelMedico_ObtenerFichaCita'
-            // y mostraríamos los datos en un modal.
+            // Aquï¿½ es donde llamarï¿½amos al SP 'sp_PanelMedico_ObtenerFichaCita'
+            // y mostrarï¿½amos los datos en un modal.
             // De momento, solo imprimimos en consola.
         }
 
@@ -379,7 +379,7 @@ namespace SistemaMedico.vista
             
         }
 
-        // (Los métodos 'btnIniciarConsulta_Click' y 'btnVerFicha_Click' originales
+        // (Los mï¿½todos 'btnIniciarConsulta_Click' y 'btnVerFicha_Click' originales
         // ya no son necesarios, porque ahora usamos 'repeaterCitas_ItemCommand')
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
@@ -388,4 +388,5 @@ namespace SistemaMedico.vista
         }
 
     }
+
 }

@@ -7,6 +7,7 @@ namespace SistemaMedico.modelo
 {
     public class Citas
     {
+        // --- Campos privados (Columnas de la BD) ---
         private string id;
         private string idPac;
         private string idDoc;
@@ -20,6 +21,7 @@ namespace SistemaMedico.modelo
         private bool pagoReali;
         private string motivo;
 
+        // --- Constructores ---
         public Citas()
         {
             this.id = "";
@@ -36,8 +38,8 @@ namespace SistemaMedico.modelo
             this.motivo = "";
         }
 
-        public Citas(string id, string idPac, string idDoc, string idSede, string idEsp, 
-                    DateTime fecha, TimeSpan hora, string estado, string tipoPago, 
+        public Citas(string id, string idPac, string idDoc, string idSede, string idEsp,
+                    DateTime fecha, TimeSpan hora, string estado, string tipoPago,
                     decimal? monto, bool pagoReali, string motivo)
         {
             this.id = id;
@@ -54,6 +56,7 @@ namespace SistemaMedico.modelo
             this.motivo = motivo;
         }
 
+        // --- Propiedades públicas (Get/Set) ---
         public string Id { get => id; set => id = value; }
         public string IdPac { get => idPac; set => idPac = value; }
         public string IdDoc { get => idDoc; set => idDoc = value; }
@@ -66,5 +69,38 @@ namespace SistemaMedico.modelo
         public decimal? Monto { get => monto; set => monto = value; }
         public bool PagoReali { get => pagoReali; set => pagoReali = value; }
         public string Motivo { get => motivo; set => motivo = value; }
+
+        // =========================================================================
+        // PROPIEDADES DE NAVEGACIÓN (Para mostrar en GridView/Repeater)
+        // Estas NO se guardan en la BD, solo se usan para mostrar información
+        // que viene de un JOIN con otras tablas
+        // =========================================================================
+
+        /// <summary>
+        /// Nombre completo del doctor (viene del JOIN con tabla Doctores y Usuarios)
+        /// </summary>
+        public string NombreDoctor { get; set; }
+
+        /// <summary>
+        /// Nombre de la especialidad (viene del JOIN con tabla Especialidades)
+        /// </summary>
+        public string NombreEspecialidad { get; set; }
+
+        /// <summary>
+        /// Nombre de la sede (viene del JOIN con tabla Sedes)
+        /// </summary>
+        public string SedeNombre { get; set; }
+
+        // Propiedades adicionales opcionales que puedes necesitar en el futuro:
+
+        /// <summary>
+        /// Nombre completo del paciente (opcional, para panel del doctor)
+        /// </summary>
+        public string NombrePaciente { get; set; }
+
+        /// <summary>
+        /// DNI del paciente (opcional)
+        /// </summary>
+        public string DniPaciente { get; set; }
     }
 }

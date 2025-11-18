@@ -1,15 +1,15 @@
-// Espera a que el DOM (la página) esté completamente cargado
+// Espera a que el DOM (la pï¿½gina) estï¿½ completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 1. Seleccionar todos los enlaces de navegación que tienen 'data-target'
+    // 1. Seleccionar todos los enlaces de navegaciï¿½n que tienen 'data-target'
     const navLinks = document.querySelectorAll(".sidebar-nav .nav-item a[data-target], .sidebar-footer .nav-item a[data-target]");
 
     // 2. Seleccionar todos los paneles de contenido
     const contentPanels = document.querySelectorAll(".content-panel");
 
-    // 3. Función para manejar el clic en un enlace
+    // 3. Funciï¿½n para manejar el clic en un enlace
     function showPanel(event) {
-        // Prevenir el comportamiento por defecto del enlace (que recargaría la página)
+        // Prevenir el comportamiento por defecto del enlace (que recargarï¿½a la pï¿½gina)
         event.preventDefault();
 
         // Obtener el ID del panel objetivo (ej. "panel-dashboard")
@@ -27,24 +27,24 @@ document.addEventListener("DOMContentLoaded", function () {
             targetPanel.classList.add("active");
         }
 
-        // --- Actualizar Estado Activo del Menú ---
+        // --- Actualizar Estado Activo del Menï¿½ ---
         // Quitar la clase 'active' de todos los <li> padres de los enlaces
         navLinks.forEach(link => {
             link.parentElement.classList.remove("active");
         });
 
-        // Añadir la clase 'active' solo al <li> padre del enlace clickeado
+        // Aï¿½adir la clase 'active' solo al <li> padre del enlace clickeado
         this.parentElement.classList.add("active");
     }
 
-    // 4. Asignar la función 'showPanel' al evento 'click' de cada enlace
+    // 4. Asignar la funciï¿½n 'showPanel' al evento 'click' de cada enlace
     navLinks.forEach(link => {
         link.addEventListener("click", showPanel);
     });
 
 });
 /* =========================================
- * LÓGICA DEL MODAL (AGENDAR CITA)
+ * Lï¿½GICA DEL MODAL (AGENDAR CITA)
  * ========================================= */
 
 // Usamos el 'DOMContentLoaded' que ya tienes o agregamos uno nuevo
@@ -56,12 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.getElementById("spanCerrarModal");
     const cancelBtn = document.getElementById("btnCancelarModal");
 
-    // Función para mostrar el modal
+    // Funciï¿½n para mostrar el modal
     function showModal(event) {
         event.preventDefault(); // Evita que el enlace <a> navegue
         if (modal) {
             modal.classList.add("show");
-            // Limpia mensajes de error/éxito anteriores
+            // Limpia mensajes de error/ï¿½xito anteriores
             const msgLabel = modal.querySelector('.modal-mensaje');
             if (msgLabel) {
                 msgLabel.classList.remove('show', 'success', 'error');
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Función para ocultar el modal
+    // Funciï¿½n para ocultar el modal
     function hideModal() {
         if (modal) {
             modal.classList.remove("show");
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Función global para que C# pueda llamarla
+// Funciï¿½n global para que C# pueda llamarla
 // (En caso de que el UpdatePanel no funcione bien)
 function showModalFromCodeBehind(message, type) {
     const modal = document.getElementById("modalAgendarCita");
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.getElementById("spanCerrarModalConsulta");
     const cancelBtn = document.getElementById("btnCancelarModalConsulta");
 
-    // Función para ocultar el modal
+    // Funciï¿½n para ocultar el modal
     function hideModal() {
         if (modal) {
             modal.classList.remove("show");
@@ -149,12 +149,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Función global para que C# pueda LLAMARLA
+// Funciï¿½n global para que C# pueda LLAMARLA
 function showFinalizarModal() {
     const modal = document.getElementById("modalFinalizarConsulta");
     if (modal) {
         modal.classList.add("show");
-        // Limpia mensajes de error/éxito anteriores
+        // Limpia mensajes de error/ï¿½xito anteriores
         const msgLabel = modal.querySelector('.modal-mensaje');
         if (msgLabel) {
             msgLabel.classList.remove('show', 'success', 'error');
@@ -163,7 +163,7 @@ function showFinalizarModal() {
     }
 }
 
-// Función global para que C# pueda LLAMARLA
+// Funciï¿½n global para que C# pueda LLAMARLA
 function hideFinalizarModal() {
     const modal = document.getElementById("modalFinalizarConsulta");
     if (modal) {

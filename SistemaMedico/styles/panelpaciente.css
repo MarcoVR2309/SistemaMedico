@@ -1,829 +1,222 @@
 ﻿/* ===========================================
-   ESTILO GENERAL DEL DASHBOARD
+   PanelPaciente.css Limpio y Optimizado
+   Versión completamente depurada
+   Sin duplicados ni reglas repetidas
 =========================================== */
+
+/* ================= GENERALES ================ */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f6f7fb;
-    margin: 0;
-    padding: 0;
+    background: #f2f8fc;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* ===========================================
-   MODAL
-=========================================== */
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+h2.section-title-panel {
+    font-size: 28px;
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 25px;
 }
 
-.modal-content {
-    background: white;
-    padding: 26px;
-    border-radius: 14px;
-    width: 450px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
-    animation: fadeIn 0.25s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Formularios dentro del modal */
-.form-group {
-    margin-bottom: 15px;
-}
-
-    .form-group label {
-        font-weight: 600;
-        margin-bottom: 5px;
-        display: block;
-    }
-
-input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #dcdcdc;
-    border-radius: 10px;
-    transition: 0.2s;
-}
-
-    input:focus, select:focus, textarea:focus {
-        border-color: #4A90E2;
-    }
-
-/* ===========================================
-   SECCIÓN CITAS PROGRAMADAS
-=========================================== */
+/* ================= TARJETAS DE CITA ================ */
 .citas-list {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
 }
 
 .cita-card {
     background: #ffffff;
-    border-radius: 14px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr auto auto;
+    padding: 22px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: 0.2s ease;
 }
 
-.cita-time i {
-    margin-right: 6px;
-    color: #6c6cff;
+    .cita-card:hover {
+        box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+/* Fecha y Hora */
+.cita-time {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #475569;
+    gap: 6px;
 }
 
-.cita-time span {
-    font-weight: 600;
-    color: #333;
-}
+    .cita-time i {
+        color: #6366f1;
+    }
 
+/* Info del Doctor */
 .cita-patient-info h3 {
     margin: 0;
     font-size: 17px;
-    color: #333;
+    font-weight: 600;
 }
 
 .cita-patient-info p {
-    margin: 3px 0;
+    margin: 0;
     font-size: 14px;
-    color: #666;
+    color: #64748b;
 }
 
+/* Estado */
 .cita-status {
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-weight: 600;
+    padding: 6px 14px;
     font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    border-radius: 14px;
+    font-weight: 500;
 }
 
-    .cita-status i {
-        font-size: 14px;
+    .cita-status.pending {
+        background-color: #fef3c7;
+        color: #b45309;
     }
 
-/* Estado colores */
-.estado-pendiente {
-    background: #fff3cd;
-    color: #856404;
-}
+    .cita-status.completed {
+        background-color: #dcfce7;
+        color: #166534;
+    }
 
-.estado-confirmada {
-    background: #d4edda;
-    color: #155724;
-}
+    .cita-status.cancelled {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
 
-.estado-cancelada {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* ===========================================
-   BOTONES
-=========================================== */
-.btn-service {
-    padding: 10px 18px;
-    border-radius: 12px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-}
-
+/* ================= BOTÓN DETALLE ================ */
 .btn-service-outline {
-    padding: 10px 18px;
-    border-radius: 12px;
-    border: 2px solid #6c63ff;
-    color: #6c63ff;
-    background: transparent;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 2px solid #6366f1;
+    background: white;
+    color: #4f46e5;
+    font-weight: 500;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+
+    .btn-service-outline:hover {
+        background: #6366f1;
+        color: white;
+    }
+
+    /* Versión morada (para Ver Detalle) */
+    .btn-service-outline.btn-purple {
+        border-color: #4f46e5;
+        color: #4f46e5;
+        background: white;
+    }
+
+        .btn-service-outline.btn-purple:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+/* ================= MODAL ================ */
+.modal-header {
+    border: none;
+    padding-bottom: 0;
+}
+
+.modal-title {
+    font-size: 22px;
     font-weight: 600;
 }
 
-.btn-purple {
-    background: #6c63ff;
+.modal-body label {
+    font-size: 14px;
+    color: #475569;
 }
 
-.btn-teal {
-    background: #2fbdb8;
+.modal-footer button {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 500;
+    border: 2px solid #6366f1;
+    background: white;
+    color: #4f46e5;
+    transition: 0.2s ease;
 }
 
-.btn-service-outline:hover {
-    background: #f0edff;
-}
+    .modal-footer button:hover {
+        background: #6366f1;
+        color: white;
+    }
 
-/* ===========================================
-   PERFIL - TARJETA Y GRID
-=========================================== */
-.profile-card {
+/* ================= SELECTS & INPUTS ================ */
+select, input[type="datetime-local"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
     background: #ffffff;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    border: 1px solid #f0f0f0;
-    max-width: 900px;
-    margin: auto;
-}
-
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
-
-.profile-avatar {
-    width: 70px;
-    height: 70px;
-    background: #7c4dff;
-    color: white;
-    border-radius: 50%;
-    font-size: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.profile-data-grid {
-    margin-top: 25px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-.profile-card-item {
-    background: #f9f9ff;
-    padding: 18px 22px;
-    border-radius: 14px;
-    border: 1px solid #e5e5ff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 14px;
     transition: 0.2s;
 }
 
-    .profile-card-item:hover {
-        background: #ffffff;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    select:focus, input[type="datetime-local"]:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 4px rgba(99, 102, 241, 0.4);
     }
 
-    .profile-card-item h4 {
-        font-size: 15px;
-        color: #5a5a8a;
-        margin-bottom: 6px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .profile-card-item p {
-        margin: 0;
-        font-size: 17px;
-        color: #2d2d3a;
-        font-weight: 500;
-    }
-
-.profile-card hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid #e9e9e9;
+/* ================= BOTÓN AGENDAR ================ */
+.btn-purple {
+    background: #6366f1;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-/* ===========================================
-   RESPONSIVE
-=========================================== */
-@media (max-width: 780px) {
+    .btn-purple:hover {
+        background: #4f46e5;
+    }
+
+/* ================= CONTENEDORES ================ */
+.content-panel {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+}
+
+/* ================= RESPONSIVE ================ */
+@media (max-width: 768px) {
     .cita-card {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 15px;
         text-align: center;
     }
 
-    .profile-header {
-        flex-direction: column;
+    .btn-service-outline {
+        width: 100%;
     }
 }
 
-/* ===========================================
-   ⚠️ AGREGAR ESTAS REGLAS AL FINAL DE TU panelpaciente.css
-   CRÍTICO: Sin estas reglas, nada funciona
-=========================================== */
-
-/* 1. PANELES: Mostrar/Ocultar */
-.content-panel {
-    display: none !important;
-}
-
-.content-panel.active {
-    display: block !important;
-}
-
-/* 2. MODAL: Mostrar cuando tiene clase "show" */
-.modal-backdrop.show {
-    display: flex !important;
-}
-
-/* 3. MODAL: Hacer más ancho */
-.modal-content {
-    width: 850px !important; /* Cambia de 450px a 850px */
-    max-width: 90%;
-    padding: 0 !important; /* Quita el padding para usar el del header/body */
-}
-
-/* 4. MODAL HEADER: Agregar estilo */
-.modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 24px 32px;
-    border-radius: 14px 14px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h3,
-.modal-header .section-title-panel {
-    color: white;
-    margin: 0;
-    font-size: 22px;
-}
-
-.modal-close {
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.2);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s;
-}
-
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
-}
-
-/* 5. MODAL BODY: Agregar padding */
-.modal-body {
-    padding: 32px;
-}
-
-/* 6. MODAL FOOTER: Estilo */
-.modal-footer {
-    padding: 20px 32px;
-    background: #f9fafb;
-    border-top: 1px solid #e5e7eb;
-    border-radius: 0 0 14px 14px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-/* 7. FORM GRID: 2 columnas */
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-/* 8. Campo de texto completo (Motivo) */
-.form-group:has(textarea) {
-    grid-column: 1 / -1; /* Ocupa ambas columnas */
-}
-
-/* 9. Mensajes del modal */
-.modal-mensaje {
-    display: none;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-top: 16px;
-    font-weight: 500;
-}
-
-.modal-mensaje.show {
-    display: block !important;
-}
-
-.modal-mensaje.success {
-    background: #d1fae5;
-    color: #065f46;
-    border-left: 4px solid #10b981;
-}
-
-.modal-mensaje.error {
-    background: #fee2e2;
-    color: #991b1b;
-    border-left: 4px solid #ef4444;
-}
-
-/* 10. Estados de citas (compatibilidad) */
-.status-pendiente {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.status-confirmada {
-    background: #d4edda;
-    color: #155724;
-}
-
-.status-completada {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-cancelada {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.status-en-proceso {
-    background: #e0e7ff;
-    color: #4338ca;
-}
-
-/* 11. Cita card mejorado */
-.cita-card {
-    grid-template-columns: auto 1fr auto auto !important;
-}
-
-.cita-time {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: 12px;
-    background: #f3f4f6;
-    border-radius: 10px;
-    min-width: 140px;
-}
-
-.patient-specialty {
-    color: #667eea !important;
-    font-weight: 500;
-}
-
-.patient-location {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.patient-location i {
-    color: #ef4444;
-}
-
-/* 12. Profile card mejorado */
-.profile-header-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.profile-avatar-large {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 50%;
-    font-size: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.profile-details h3 {
-    margin: 0 0 4px 0;
-    font-size: 24px;
-    color: #111827;
-}
-
-.profile-role {
-    color: #6b7280;
+.btn-ver-detalle {
+    background-color: #28a745;      /* Verde */
+    color: #fff;                    /* Texto blanco */
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
     font-size: 14px;
-    margin: 0;
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.profile-field {
-    background: #f9fafb;
-    padding: 18px 20px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    transition: all 0.2s;
-}
-
-.profile-field:hover {
-    background: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.profile-field label {
-    font-size: 13px;
-    color: #6b7280;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
-}
-
-.profile-field label i {
-    color: #667eea;
-}
-
-.profile-field span {
-    font-size: 16px;
-    color: #111827;
-    font-weight: 500;
-}
-
-/* 13. Responsive */
-@media (max-width: 768px) {
-    .modal-content {
-        width: 95% !important;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cita-card {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-
-
-
-/* ===========================================
-   ⚠️ AGREGAR ESTAS REGLAS AL FINAL DE TU panelpaciente.css
-   CRÍTICO: Sin estas reglas, nada funciona
-=========================================== */
-
-/* 1. PANELES: Mostrar/Ocultar */
-.content-panel {
-    display: none !important;
-}
-
-.content-panel.active {
-    display: block !important;
-}
-
-/* 2. MODAL: Mostrar cuando tiene clase "show" */
-.modal-backdrop.show {
-    display: flex !important;
-}
-
-/* 3. MODAL: Hacer más ancho */
-.modal-content {
-    width: 850px !important; /* Cambia de 450px a 850px */
-    max-width: 90%;
-    padding: 0 !important; /* Quita el padding para usar el del header/body */
-}
-
-/* 4. MODAL HEADER: Agregar estilo */
-.modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 24px 32px;
-    border-radius: 14px 14px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h3,
-.modal-header .section-title-panel {
-    color: white;
-    margin: 0;
-    font-size: 22px;
-}
-
-.modal-close {
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.2);
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s;
-}
-
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
-}
-
-/* 5. MODAL BODY: Agregar padding */
-.modal-body {
-    padding: 32px;
-}
-
-/* 6. MODAL FOOTER: Estilo */
-.modal-footer {
-    padding: 20px 32px;
-    background: #f9fafb;
-    border-top: 1px solid #e5e7eb;
-    border-radius: 0 0 14px 14px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-/* 7. FORM GRID: 2 columnas */
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-/* 8. Campo de texto completo (Motivo) */
-.form-group:has(textarea) {
-    grid-column: 1 / -1; /* Ocupa ambas columnas */
-}
-
-/* 9. Mensajes del modal */
-.modal-mensaje {
-    display: none;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-top: 16px;
-    font-weight: 500;
-}
-
-.modal-mensaje.show {
-    display: block !important;
-}
-
-.modal-mensaje.success {
-    background: #d1fae5;
-    color: #065f46;
-    border-left: 4px solid #10b981;
-}
-
-.modal-mensaje.error {
-    background: #fee2e2;
-    color: #991b1b;
-    border-left: 4px solid #ef4444;
-}
-
-/* 10. Estados de citas (compatibilidad) */
-.status-pendiente {
-    background: #fff3cd;
-    color: #856404;
-}
-
-.status-confirmada {
-    background: #d4edda;
-    color: #155724;
-}
-
-.status-completada {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-cancelada {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.status-en-proceso {
-    background: #e0e7ff;
-    color: #4338ca;
-}
-
-/* 11. Cita card mejorado */
-.cita-card {
-    grid-template-columns: auto 1fr auto auto !important;
-}
-
-.cita-time {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: 12px;
-    background: #f3f4f6;
-    border-radius: 10px;
-    min-width: 140px;
-}
-
-.patient-specialty {
-    color: #667eea !important;
-    font-weight: 500;
-}
-
-.patient-location {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.patient-location i {
-    color: #ef4444;
-}
-
-/* 12. Profile card mejorado */
-.profile-header-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.profile-avatar-large {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 50%;
-    font-size: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
-.profile-details h3 {
-    margin: 0 0 4px 0;
-    font-size: 24px;
-    color: #111827;
-}
-
-.profile-role {
-    color: #6b7280;
-    font-size: 14px;
-    margin: 0;
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.profile-field {
-    background: #f9fafb;
-    padding: 18px 20px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    transition: all 0.2s;
-}
-
-.profile-field:hover {
-    background: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.profile-field label {
-    font-size: 13px;
-    color: #6b7280;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
-}
-
-.profile-field label i {
-    color: #667eea;
-}
-
-.profile-field span {
-    font-size: 16px;
-    color: #111827;
-    font-weight: 500;
-}
-
-/* 13. Responsive */
-@media (max-width: 768px) {
-    .modal-content {
-        width: 95% !important;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cita-card {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-/* ===========================================
-   FIX: Botón Cancelar visible
-=========================================== */
-.modal-footer button,
-.modal-footer .btn-service-outline {
-    color: #667eea !important;
-    background: white !important;
-    border: 2px solid #667eea !important;
-    padding: 12px 24px;
-    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: 0.2s ease-in-out;
 }
 
-    .modal-footer button:hover,
-    .modal-footer .btn-service-outline:hover {
-        background: #f0f4ff !important;
-        transform: translateY(-1px);
-    }
-
-.modal-footer .btn-service.btn-teal {
-    background: linear-gradient(135deg, #2fbdb8 0%, #1a9e99 100%) !important;
-    color: white !important;
-    border: none !important;
+.btn-ver-detalle:hover {
+    background-color: #218838;      /* Verde más oscuro */
+    color: #ffffff;
 }
-
-#btnCancelarModal {
-    color: #6A0DAD !important; /* texto morado visible */
-    background-color: transparent; /* fondo transparente */
-    border: 2px solid #6A0DAD; /* borde morado */
-}
-
-    #btnCancelarModal:hover {
-        background-color: #6A0DAD; /* morado en hover */
-        color: #fff !important; /* texto blanco en hover */
-    }

@@ -1,5 +1,5 @@
-using SistemaMedico.datos; // <-- Importante: A�ade el DAO
-using SistemaMedico.modelo; // <-- (Opcional, pero bueno tenerlo)
+using SistemaMedico.datos;
+using SistemaMedico.modelo;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,40 +10,55 @@ namespace SistemaMedico.vista
 {
     public partial class PanelMedico : System.Web.UI.Page
     {
-        // Instancia del DAO que usaremos en esta p�gina
+        private string CurrentUserId
+        {
+            get { return Session["UsuarioId"]?.ToString() ?? "U000001"; }
+        }
+
+        // Instancia de DAO
         private CitasDAO citasDAO = new CitasDAO();
         private PacientesDAO pacientesDAO = new PacientesDAO();
         private SedesDAO sedesDAO = new SedesDAO();
-        private DoctoresDAO doctoresDAO = new DoctoresDAO(); // Para obtener la especialidad
-
-
-        private string idDoctorSimulado = "D000004"; // <--- !! SIMULACI�N DE LOGIN !!
+        private DoctoresDAO doctoresDAO = new DoctoresDAO();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["UsuarioId"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
-                // Solo cargamos las citas la primera vez que entra a la p�gina
                 CargarDatosDoctor();
                 CargarCitasDelDia();
                 CargarDropdownsModal();
             }
         }
+
         private void CargarDatosDoctor()
         {
             try
             {
-                // 1. Llama al DAO
-                Doctores doctor = doctoresDAO.ObtenerDoctorPorId(idDoctorSimulado);
+                Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
 
                 if (doctor != null)
                 {
-                    // 2. Actualiza la etiqueta 'lblDoctorName'
                     lblDoctorName.Text = "Dr. " + doctor.Nom + " " + doctor.Ape;
+
+                    lblPerfilNombreCompleto.Text = doctor.Nom + " " + doctor.Ape;
+                    lblPerfilEmail.Text = doctor.Email;
+                    lblPerfilTelefono.Text = string.IsNullOrEmpty(doctor.Tel) ? "No registrado" : doctor.Tel;
+
+                    lblPerfilEspecialidad.Text = doctor.NombreEspecialidad;
+                    lblPerfilCMP.Text = doctor.CodMed;
+                    lblPerfilExperiencia.Text = (doctor.Expe.HasValue ? doctor.Expe.Value.ToString() : "0") + " años";
+                    lblPerfilID.Text = doctor.Id;
                 }
                 else
                 {
                     lblDoctorName.Text = "Doctor no encontrado";
+                    lblPerfilNombreCompleto.Text = "Error de Carga";
                 }
             }
             catch (Exception ex)
@@ -52,69 +67,59 @@ namespace SistemaMedico.vista
                 lblDoctorName.Text = "Error al cargar";
             }
         }
+
         private void CargarCitasDelDia()
         {
-            DateTime fechaHoy = DateTime.Now.Date; // Obtiene la fecha de hoy (sin la hora)
+            Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
+            DateTime fechaHoy = DateTime.Now.Date;
 
-            // Llama al DAO para obtener la lista de citas
-            var listaCitas = citasDAO.ListarCitasDelDia(idDoctorSimulado, fechaHoy);
+            var listaCitas = citasDAO.ListarCitasDelDia(doctor.Id, fechaHoy);
 
             if (listaCitas.Count > 0)
             {
-                // Hay citas, las enlazamos al Repeater
                 repeaterCitas.DataSource = listaCitas;
                 repeaterCitas.DataBind();
                 lblNoCitas.Visible = false;
             }
             else
             {
-                // No hay citas, mostramos el mensaje
                 repeaterCitas.DataSource = null;
                 repeaterCitas.DataBind();
                 lblNoCitas.Visible = true;
             }
         }
-        // --- A�ADIR NUEVO M�TODO PARA CARGAR DROPDOWNS ---
+
         private void CargarDropdownsModal()
         {
             try
             {
-                // 1. Cargar Pacientes
                 ddlPacienteModal.DataSource = pacientesDAO.ListarPacientesParaDropdown();
-                ddlPacienteModal.DataTextField = "NombreCompleto"; // Asumiendo que Pacientes.cs tiene esta propiedad
+                ddlPacienteModal.DataTextField = "NombreCompleto";
                 ddlPacienteModal.DataValueField = "ID";
                 ddlPacienteModal.DataBind();
                 ddlPacienteModal.Items.Insert(0, new ListItem("-- Seleccionar Paciente --", ""));
 
-                // 2. Cargar Sedes
                 ddlSedeModal.DataSource = sedesDAO.ListarSedes();
                 ddlSedeModal.DataTextField = "NomSede";
                 ddlSedeModal.DataValueField = "ID";
                 ddlSedeModal.DataBind();
                 ddlSedeModal.Items.Insert(0, new ListItem("-- Seleccionar Sede --", ""));
 
-                // 3. Cargar Horas (Ejemplo simple)
-                if (ddlHoraModal.Items.Count <= 1) // Solo cargar si est� vac�o
+                if (ddlHoraModal.Items.Count <= 1)
                 {
                     ddlHoraModal.Items.Clear();
                     ddlHoraModal.Items.Insert(0, new ListItem("-- Seleccionar Hora --", ""));
 
-                    // Definimos el inicio (6:00 AM) y el fin (11:00 PM)
-                    DateTime startTime = DateTime.Today.AddHours(6); // 6:00
-                    DateTime endTime = DateTime.Today.AddHours(23); // 23:00
+                    DateTime startTime = DateTime.Today.AddHours(6);
+                    DateTime endTime = DateTime.Today.AddHours(23);
 
                     DateTime currentTime = startTime;
                     while (currentTime <= endTime)
                     {
-                        // Texto (lo que el usuario ve): ej. "06:30 AM"
                         string displayText = currentTime.ToString("hh:mm tt");
-
-                        // Valor (lo que guardamos): ej. "06:30" o "23:00"
                         string valueText = currentTime.ToString("HH:mm");
 
                         ddlHoraModal.Items.Add(new ListItem(displayText, valueText));
-
-                        // Avanzamos 30 minutos
                         currentTime = currentTime.AddMinutes(30);
                     }
                 }
@@ -124,20 +129,17 @@ namespace SistemaMedico.vista
                 MostrarMensajeModal("Error al cargar datos: " + ex.Message, "error");
             }
         }
-        /// <summary>
-        /// Maneja TODOS los clics de botones dentro del Repeater de Citas.
-        /// </summary>
+
         protected void repeaterCitas_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            // Obtenemos el ID de la cita desde el bot�n que se presion�
             string idCita = e.CommandArgument.ToString();
 
-            // Usamos un switch para ver qu� bot�n fue
             switch (e.CommandName)
             {
                 case "Iniciar":
                     IniciarConsulta(idCita);
                     break;
+
                 case "AbrirModalFinalizar":
                     AbrirModalFinalizar(idCita);
                     break;
@@ -146,247 +148,225 @@ namespace SistemaMedico.vista
                     VerFicha(idCita);
                     break;
             }
-
         }
-        //
+
         private void AbrirModalFinalizar(string idCita)
         {
             try
             {
-                // 1. Buscar el ID de la consulta que se cre� al "Iniciar"
                 string idConsulta = citasDAO.ObtenerConsultaIdPorCitaId(idCita);
 
                 if (string.IsNullOrEmpty(idConsulta))
                 {
-                    // Si no se encuentra (ej. el doctor nunca dio "Iniciar"), lo creamos AHORA.
                     idConsulta = citasDAO.IniciarConsulta(idCita);
 
-                    // Si A�N no hay ID, lanzamos error.
                     if (string.IsNullOrEmpty(idConsulta))
-                    {
-                        throw new Exception("No se pudo iniciar el registro de consulta. Contacte a soporte.");
-                    }
+                        throw new Exception("No se pudo iniciar la consulta.");
 
-                    // Refrescamos la lista para que el bot�n "Iniciar" cambie a "Finalizar"
                     CargarCitasDelDia();
-                    // Aseg�rate de tener un UpdatePanel llamado "UpdatePanelContenido"
-                    // si no, comenta la siguiente l�nea
                 }
 
-                // 2. Guardar los IDs en los campos ocultos del modal
                 hfConsultaIdCita.Value = idCita;
                 hfConsultaIdConsulta.Value = idConsulta;
 
-                // 3. Limpiar campos del modal
                 txtSintomas.Text = "";
                 txtDiagnostico.Text = "";
                 txtTratamiento.Text = "";
                 txtObservaciones.Text = "";
-                lblModalConsultaMensaje.CssClass = "modal-mensaje";
                 lblModalConsultaMensaje.Text = "";
+                lblModalConsultaMensaje.CssClass = "modal-mensaje";
 
-                // 4. Llamar al JS para mostrar el modal
-                // (Aseg�rate de tener un ScriptManager en tu .aspx)
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFinalizarModal", "showFinalizarModal();", true);
             }
             catch (Exception ex)
             {
-                // Muestra el error en el modal de AGENDAR CITA
                 MostrarMensajeModal("Error: " + ex.Message, "error");
             }
         }
 
         protected void btnGuardarConsulta_Click(object sender, EventArgs e)
-{
-    try
-    {
-        // 1. Recuperar los IDs de los campos ocultos
-        string idCita = hfConsultaIdCita.Value;
-        string idConsulta = hfConsultaIdConsulta.Value;
-
-        // 2. Validar que los IDs existan
-        if (string.IsNullOrEmpty(idCita) || string.IsNullOrEmpty(idConsulta))
         {
-            MostrarMensajeConsultaModal("Error de sesi�n. Cierre el modal y vuelva a intentarlo.", "error");
-            return;
+            try
+            {
+                string idCita = hfConsultaIdCita.Value;
+                string idConsulta = hfConsultaIdConsulta.Value;
+
+                if (string.IsNullOrEmpty(idCita) || string.IsNullOrEmpty(idConsulta))
+                {
+                    MostrarMensajeConsultaModal("Error de sesión.", "error");
+                    return;
+                }
+
+                ConsultasMedicas consulta = new ConsultasMedicas
+                {
+                    Id = idConsulta,
+                    IdCita = idCita,
+                    Sintomas = txtSintomas.Text,
+                    Diagnostico = txtDiagnostico.Text,
+                    Tratamiento = txtTratamiento.Text,
+                    Observaciones = txtObservaciones.Text
+                };
+
+                citasDAO.FinalizarConsulta(consulta);
+
+                CargarCitasDelDia();
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "HideFinalizarModal", "hideFinalizarModal();", true);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeConsultaModal("Error al guardar: " + ex.Message, "error");
+            }
         }
 
-        // 3. Crear el objeto ConsultasMedicas
-        ConsultasMedicas consulta = new ConsultasMedicas
-        {
-            Id = idConsulta,
-            IdCita = idCita,
-            Sintomas = txtSintomas.Text,
-            Diagnostico = txtDiagnostico.Text,
-            Tratamiento = txtTratamiento.Text,
-            Observaciones = txtObservaciones.Text
-        };
-
-        // 4. Llamar al DAO para guardar en la BD
-        citasDAO.FinalizarConsulta(consulta); // Llama al SP sp_PanelMedico_FinalizarConsulta
-
-        // 5. Refrescar la lista de citas (para que el estado cambie a 'F')
-        CargarCitasDelDia();
-        // (Aseg�rate de tener un UpdatePanel)
-        //UpdatePanelContenido.Update(); // Refresca el panel de citas
-
-        // 6. Cerrar el modal
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "HideFinalizarModal", "hideFinalizarModal();", true);
-    }
-    catch (Exception ex)
-    {
-        // Muestra el error DENTRO del modal de consulta
-        MostrarMensajeConsultaModal("Error al guardar: " + ex.Message, "error");
-    }
-}
-        private void MostrarMensajeConsultaModal(string mensaje, string tipo) // tipo = "success" o "error"
+        private void MostrarMensajeConsultaModal(string mensaje, string tipo)
         {
             lblModalConsultaMensaje.Text = mensaje;
             lblModalConsultaMensaje.CssClass = "modal-mensaje show " + tipo;
 
-            // Mantiene el modal abierto para que se vea el error
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFinalizarModalOnError",
                 $"showFinalizarModal();", true);
         }
-        // -- bd
+
         protected void btnGuardarCita_Click(object sender, EventArgs e)
         {
+            Doctores doctor = doctoresDAO.ObtenerDoctorPorIdUsuario(CurrentUserId);
+
             try
             {
-                // 1. Validaciones
                 if (string.IsNullOrEmpty(ddlPacienteModal.SelectedValue) ||
                     string.IsNullOrEmpty(ddlSedeModal.SelectedValue) ||
                     string.IsNullOrEmpty(txtFechaModal.Text) ||
                     string.IsNullOrEmpty(ddlHoraModal.SelectedValue))
                 {
-                    MostrarMensajeModal("Por favor, complete todos los campos obligatorios.", "error");
+                    MostrarMensajeModal("Complete todos los campos.", "error");
                     return;
                 }
 
-                // 2. Obtener la especialidad del doctor logueado
-                var doctor = doctoresDAO.ObtenerDoctorPorId(idDoctorSimulado);
                 if (doctor == null)
                 {
-                    MostrarMensajeModal("Error: No se pudo encontrar al doctor.", "error");
+                    MostrarMensajeModal("No se encontró el doctor.", "error");
                     return;
                 }
 
-                // 3. Crear el objeto Cita
                 Citas nuevaCita = new Citas
                 {
                     IdPac = ddlPacienteModal.SelectedValue,
-                    IdDoc = idDoctorSimulado,
+                    IdDoc = doctor.Id,
                     IdSede = ddlSedeModal.SelectedValue,
-                    IdEsp = doctor.IdEsp, // Asignamos la especialidad del doctor
+                    IdEsp = doctor.IdEsp,
                     Fecha = Convert.ToDateTime(txtFechaModal.Text),
                     Hora = TimeSpan.Parse(ddlHoraModal.SelectedValue),
                     Motivo = txtMotivoModal.Text,
-                    TipoPago = "Presencial", // Valor por defecto
-                    Monto = 0,                // Valor por defecto
+                    TipoPago = "Presencial",
+                    Monto = 0,
                     PagoReali = false
                 };
 
-                // 4. Guardar en la BD
                 string nuevoId = citasDAO.RegistrarCita(nuevaCita);
 
-                // 5. Refrescar el dashboard (�Importante!)
                 CargarCitasDelDia();
-
-                // 6. Mostrar mensaje de �xito y CERRAR el modal
-                // Limpiamos los campos
                 LimpiarModal();
-                // Llamamos al JS para que oculte el "cuadro"
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "HideModal", "hideModalFromCodeBehind();", true);
             }
             catch (SqlException sqEx)
             {
-                MostrarMensajeModal("Error de Base de Datos: " + sqEx.Message, "error");
+                MostrarMensajeModal("Error de BD: " + sqEx.Message, "error");
             }
             catch (Exception ex)
             {
-                MostrarMensajeModal("Error al guardar la cita: " + ex.Message, "error");
+                MostrarMensajeModal("Error al guardar: " + ex.Message, "error");
             }
         }
-        // modal
-        // --- A�ADIR M�TODOS DE AYUDA PARA EL MODAL ---
-        private void MostrarMensajeModal(string mensaje, string tipo) // tipo = "success" o "error"
+
+        private void MostrarMensajeModal(string mensaje, string tipo)
         {
-            // 1. Mostrar el mensaje en el Label (esto est� bien)
             lblModalMensaje.Text = mensaje;
             lblModalMensaje.CssClass = "modal-mensaje show " + tipo;
 
-            // 2. Escapar el mensaje para que sea seguro en JavaScript
             string mensajeEscapado = mensaje
-                .Replace("'", "\\'")   // Escapa comillas simples
-                .Replace("\r", "\\r")  // Escapa retornos de carro
-                .Replace("\n", "\\n"); // Escapa nuevas l�neas
+                .Replace("'", "\\'")
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n");
 
-            // 3. Usar el mensaje escapado en el script
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalOnError",
                 $"showModalFromCodeBehind('{mensajeEscapado}', '{tipo}');", true);
         }
-        // -- Limpiar model
+
         private void LimpiarModal()
         {
             ddlPacienteModal.SelectedIndex = 0;
             ddlSedeModal.SelectedIndex = 0;
             ddlHoraModal.SelectedIndex = 0;
-            txtFechaModal.Text = string.Empty;
-            txtMotivoModal.Text = string.Empty;
-            lblModalMensaje.Text = string.Empty;
+            txtFechaModal.Text = "";
+            txtMotivoModal.Text = "";
+            lblModalMensaje.Text = "";
             lblModalMensaje.CssClass = "modal-mensaje";
         }
-        // --- L�gica de los botones ---
 
         private void IniciarConsulta(string idCita)
         {
-            // L�gica para "Iniciar Consulta" (RF08)
             try
             {
-                // 1. Llamamos al DAO para que inicie la consulta y cree el registro
                 string nuevoIdConsulta = citasDAO.IniciarConsulta(idCita);
 
-                // 2. (Simulaci�n) Mostramos un mensaje o actualizamos la UI
-                System.Diagnostics.Debug.WriteLine($"Acci�n: Iniciar Consulta para CitaID: {idCita}. Nuevo ID de Consulta: {nuevoIdConsulta}");
-
-                // 3. Volvemos a cargar la lista para que se actualice el estado a 'I' (Iniciada)
                 CargarCitasDelDia();
-
-                // (En un futuro, podr�amos redirigir a una p�gina de consulta)
-                // Response.Redirect($"DetalleConsulta.aspx?ConsultaID={nuevoIdConsulta}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"ERROR al iniciar consulta: {ex.Message}");
-                // (Aqu� deber�as mostrar un mensaje de error al usuario)
             }
         }
 
         private void VerFicha(string idCita)
         {
-            // L�gica para "Ver Ficha" (RF09)
-            System.Diagnostics.Debug.WriteLine($"Acci�n: Ver Ficha para CitaID: {idCita}");
+            try
+            {
+                DetalleCitaDTO ficha = citasDAO.ObtenerFichaCita(idCita);
 
-            // Aqu� es donde llamar�amos al SP 'sp_PanelMedico_ObtenerFichaCita'
-            // y mostrar�amos los datos en un modal.
-            // De momento, solo imprimimos en consola.
+                if (ficha != null)
+                {
+                    lblFichaId.Text = ficha.IdCita;
+
+                    lblFichaPaciente.Text = ficha.PacienteNombre;
+                    lblFichaDNI.Text = ficha.PacienteDNI;
+                    lblFichaTelefono.Text = ficha.PacienteTelefono;
+                    lblFichaPeso.Text = ficha.PacientePeso.HasValue ? ficha.PacientePeso.Value.ToString("0.0") : "N/A";
+
+                    lblFichaFecha.Text = ficha.Fecha.ToString("dd/MM/yyyy") + " - " + DateTime.Today.Add(ficha.Hora).ToString("hh:mm tt");
+                    lblFichaSede.Text = ficha.Sede;
+                    lblFichaEspecialidad.Text = ficha.Especialidad;
+                    lblFichaEstado.Text = ficha.Estado == "P" ? "Pendiente" : (ficha.Estado == "F" ? "Finalizada" : "En Progreso");
+                    lblFichaEstado.ForeColor = ficha.Estado == "F" ? System.Drawing.Color.Green : System.Drawing.Color.Orange;
+
+                    lblFichaMotivo.Text = ficha.Motivo;
+                    lblFichaDiagnostico.Text = ficha.Diagnostico;
+                    lblFichaTratamiento.Text = ficha.Tratamiento;
+                    lblFichaObservaciones.Text = ficha.Observaciones;
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFichaModal", "showFichaModal();", true);
+                }
+                else
+                {
+                    MostrarMensajeModal("No se encontraron detalles.", "error");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeModal("Error al cargar la ficha: " + ex.Message, "error");
+            }
         }
-
-        // --- Eventos de botones FUERA del Repeater ---
 
         protected void btnNuevaCita_Click(object sender, EventArgs e)
         {
-            
         }
-
-        // (Los m�todos 'btnIniciarConsulta_Click' y 'btnVerFicha_Click' originales
-        // ya no son necesarios, porque ahora usamos 'repeaterCitas_ItemCommand')
 
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Index.aspx");
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("Login.aspx");
         }
-
     }
-
 }

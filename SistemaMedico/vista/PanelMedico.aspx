@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PanelMedico.aspx.cs" Inherits="SistemaMedico.vista.PanelMedico" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PanelMedico.aspx.cs" Inherits="SistemaMedico.vista.PanelMedico" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,6 +12,7 @@
     <link href="../styles/panelmedico.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="../scripts/panelmedico.js"></script>
 
 </head>
@@ -223,15 +224,129 @@
     <asp:Label ID="lblNoCitas" runat="server" Text="No hay citas programadas para hoy." CssClass="no-citas-mensaje" Visible="false" />
     
 </div>
+
+<div id="modalVerFicha" class="modal-backdrop">
+    <div class="modal-content" style="max-width: 800px;">
+
+        <div id="areaImprimibleFicha" style="background-color: #fff;"> <div class="modal-header" style="background-color: var(--light-blue); border-bottom: 2px solid var(--primary-blue);">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="logo-circle" style="background: white; padding: 10px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--primary-blue);">
+                        <i class="fas fa-heartbeat fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="section-title-panel" style="margin: 0; font-size: 1.4rem;">Ficha Médica Digital</h3>
+                        <small style="color: var(--gray-text);">Clínica Aguirre - Informe de Consulta</small>
+                    </div>
+                </div>
+                </div>
+
+            <div class="modal-body" style="padding: 2rem 3rem;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px dashed #CCC;">
+
+                    <div>
+                        <h4 style="color: var(--primary-purple); margin-bottom: 1rem; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;">Paciente</h4>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>Nombre:</strong> <asp:Label ID="lblFichaPaciente" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>DNI:</strong> <asp:Label ID="lblFichaDNI" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>Teléfono:</strong> <asp:Label ID="lblFichaTelefono" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row">
+                            <strong>Peso:</strong> <asp:Label ID="lblFichaPeso" runat="server" Text="-" /> kg
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="color: var(--primary-teal); margin-bottom: 1rem; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;">Detalles de la Cita</h4>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>Fecha:</strong> <asp:Label ID="lblFichaFecha" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>Sede:</strong> <asp:Label ID="lblFichaSede" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row" style="margin-bottom: 8px;">
+                            <strong>Especialidad:</strong> <asp:Label ID="lblFichaEspecialidad" runat="server" Text="-" />
+                        </div>
+                        <div class="info-row">
+                            <strong>Estado:</strong> <asp:Label ID="lblFichaEstado" runat="server" Text="-" Font-Bold="true" />
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background-color: #F9FAFB; padding: 1.5rem; border-radius: 12px; border: 1px solid #E5E7EB;">
+                    <h4 style="color: var(--dark-text); margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-blue); display: inline-block; padding-bottom: 5px;">Resumen Clínico</h4>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <strong style="display: block; color: var(--gray-text); font-size: 0.9rem; margin-bottom: 5px;">Motivo de Consulta:</strong>
+                        <asp:Label ID="lblFichaMotivo" runat="server" Text="-" Style="display: block; font-style: italic;" />
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <strong style="color: var(--primary-blue);">Diagnóstico:</strong>
+                            <p style="margin-top: 5px; line-height: 1.6;">
+                                <asp:Label ID="lblFichaDiagnostico" runat="server" Text="-" />
+                            </p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--primary-teal);">Tratamiento:</strong>
+                            <p style="margin-top: 5px; line-height: 1.6;">
+                                <asp:Label ID="lblFichaTratamiento" runat="server" Text="-" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <strong>Observaciones:</strong>
+                        <p style="margin-top: 5px;">
+                            <asp:Label ID="lblFichaObservaciones" runat="server" Text="-" />
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; text-align: center; color: #999; font-size: 0.8rem; border-top: 1px solid #eee; padding-top: 10px;">
+                    <p>Este documento es un reporte médico oficial generado por el Sistema de Clínica Aguirre.</p>
+                    <small>ID Cita: <asp:Label ID="lblFichaId" runat="server" /></small>
+                </div>
+
+            </div>
+        </div>
+        <span class="modal-close" id="spanCerrarModalFicha" style="position: absolute; top: 20px; right: 25px; z-index: 10;">&times;</span>
+
+        <div class="modal-footer" style="justify-content: flex-end; align-items: center; gap: 10px;">
+            <button type="button" class="btn-service-outline btn-teal" onclick="descargarFichaPDF()">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
+
+            <button type="button" id="btnCerrarFichaInferior" class="btn-service btn-purple">Cerrar</button>
+        </div>
+
+    </div>
+</div>
+
                     </section>
                 </div>
 
                 <div id="panel-horario" class="content-panel">
-                    <section class="placeholder-container">
-                        <h2 class="section-title-panel">Mi Horario</h2>
-                        <p>Aquí se mostrará el módulo para gestionar los horarios de atención (RF12).</p>
-                        </section>
-                </div>
+    <div class="schedule-container">
+        <div class="schedule-header">
+            <h2 class="section-title-panel">Agenda Semanal</h2>
+            <div class="schedule-controls">
+                <span class="current-week-label">Semana Actual</span>
+            </div>
+        </div>
+        <div class="schedule-grid-wrapper">
+            <div class="schedule-placeholder">
+                <i class="far fa-calendar-alt fa-3x" style="color: var(--gray-text); margin-bottom: 1rem;"></i>
+                <p>La visualización del horario se cargará aquí próximamente.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
                 <div id="panel-pacientes" class="content-panel">
                     <section class="placeholder-container">
@@ -240,13 +355,69 @@
                         </section>
                 </div>
                 
+
+
+
                 <div id="panel-perfil" class="content-panel">
-                    <section class="placeholder-container">
-                        <h2 class="section-title-panel">Mi Perfil</h2>
-                        <p>Aquí se mostrará el formulario para editar datos personales y contraseña (RF03).</p>
-                        </section>
-                </div>
+    
+    <div class="profile-container">
+        
+        <div class="profile-header-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <div class="profile-title-info">
+                <h2 class="profile-name-display"><asp:Label ID="lblPerfilNombreCompleto" runat="server" Text="Cargando..." /></h2>
+                <span class="profile-role-badge">Médico Especialista</span>
+            </div>
+            <div class="profile-header-actions">
+                 <asp:Button ID="btnEditarPerfil" runat="server" Text="Editar Datos" CssClass="btn-service-outline btn-purple" OnClientClick="return false;" />
+            </div>
+        </div>
+
+        <div class="profile-info-grid">
+            
+            <div class="info-card">
+                <h3 class="info-card-title"><i class="far fa-id-card"></i> Información Personal</h3>
                 
+                <div class="detail-row">
+                    <span class="detail-label">Correo Electrónico</span>
+                    <asp:Label ID="lblPerfilEmail" runat="server" CssClass="detail-value" />
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Teléfono de Contacto</span>
+                    <asp:Label ID="lblPerfilTelefono" runat="server" CssClass="detail-value" />
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 class="info-card-title"><i class="fas fa-briefcase-medical"></i> Datos Profesionales</h3>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Especialidad</span>
+                    <asp:Label ID="lblPerfilEspecialidad" runat="server" CssClass="detail-value" />
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">N° Colegiatura (CMP)</span>
+                    <asp:Label ID="lblPerfilCMP" runat="server" CssClass="detail-value" />
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Años de Experiencia</span>
+                    <asp:Label ID="lblPerfilExperiencia" runat="server" CssClass="detail-value" />
+                </div>
+                 <div class="detail-row">
+                    <span class="detail-label">ID Sistema</span>
+                    <asp:Label ID="lblPerfilID" runat="server" CssClass="detail-value code-text" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+                
+
+
+
                 </main>
         </div>
     </form>

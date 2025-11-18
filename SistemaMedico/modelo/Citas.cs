@@ -55,6 +55,17 @@ namespace SistemaMedico.modelo
             this.pagoReali = pagoReali;
             this.motivo = motivo;
         }
+        // Propiedades calculadas usadas por el Repeater del PanelPaciente
+        public string FechaCita
+        {
+            get { return Fecha.ToString("dd/MM/yyyy"); }
+        }
+
+        public string HoraCita
+        {
+            get { return Hora.ToString(@"hh\:mm"); }
+        }
+
 
         // --- Propiedades públicas (Get/Set) ---
         public string Id { get => id; set => id = value; }
@@ -103,4 +114,5 @@ namespace SistemaMedico.modelo
         /// </summary>
         public string DniPaciente { get; set; }
     }
+
 }

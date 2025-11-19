@@ -1,0 +1,162 @@
+=================================================================
+CORRECCIONES PARA PANELADMINISTRADOR.ASPX
+=================================================================
+
+? ERROR: IDs DUPLICADOS EN LAS LÍNEAS 857 Y 878
+
+?? SOLUCIÓN:
+
+Busca en tu archivo PanelAdministrador.aspx estas líneas y reemplázalas:
+
+=================================================================
+LÍNEA 857 - Panel de Especialidades
+=================================================================
+
+ANTES (CON ERROR):
+```aspx
+<div class="stat-card green">
+    <div class="label">Especialidades Activas</div>
+    <div class="value"><asp:Label ID="lblTotalEspecialidades" runat="server" Text="0"></asp:Label></div>
+</div>
+<div class="stat-card blue">
+    <div class="label">Total Doctores</div>
+    <div class="value"><asp:Label ID="lblDoctores" runat="server" Text="0"></asp:Label></div>
+</div>
+```
+
+DESPUÉS (CORREGIDO):
+```aspx
+<div class="stat-card green">
+    <div class="label">Especialidades Activas</div>
+    <div class="value"><asp:Label ID="lblEspecialidadesActivas" runat="server" Text="0"></asp:Label></div>
+</div>
+<div class="stat-card blue">
+    <div class="label">Total Doctores</div>
+    <div class="value"><asp:Label ID="lblTotalDoctores" runat="server" Text="0"></asp:Label></div>
+</div>
+```
+
+=================================================================
+LÍNEA 878 - Panel de Sedes
+=================================================================
+
+ANTES (CON ERROR):
+```aspx
+<div class="stat-card green">
+    <div class="label">Sedes Activas</div>
+    <div class="value"><asp:Label ID="lblTotalSedes" runat="server" Text="0"></asp:Label></div>
+</div>
+```
+
+DESPUÉS (CORREGIDO):
+```aspx
+<div class="stat-card green">
+    <div class="label">Sedes Activas</div>
+    <div class="value"><asp:Label ID="lblSedesActivas" runat="server" Text="0"></asp:Label></div>
+</div>
+```
+
+=================================================================
+PASO 2: AGREGAR AL DESIGNER.CS
+=================================================================
+
+Abre: SistemaMedico/vista/PanelAdministrador.aspx.designer.cs
+
+Busca donde terminan los controles de Sedes (después de btnCrearSede) y agrega:
+
+```csharp
+        /// <summary>
+        /// lblEspecialidadesActivas control.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblEspecialidadesActivas;
+
+        /// <summary>
+        /// lblTotalDoctores control.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblTotalDoctores;
+
+        /// <summary>
+        /// lblSedesActivas control.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblSedesActivas;
+```
+
+=================================================================
+PASO 3: AGREGAR FUNCIONALIDAD EN EL .CS (OPCIONAL)
+=================================================================
+
+Si quieres que estos Labels muestren datos, actualiza los métodos en PanelAdministrador.aspx.cs:
+
+```csharp
+private void CargarListaEspecialidades()
+{
+    try
+    {
+        using (SqlConnection conn = conexionDB.ObtenerConexion())
+        {
+            SqlCommand cmd = new SqlCommand("sp_ListarEspecialidades", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            gvEspecialidades.DataSource = dt;
+            gvEspecialidades.DataBind();
+
+            lblTotalEspecialidades.Text = dt.Rows.Count.ToString();
+            lblEspecialidadesActivas.Text = dt.Rows.Count.ToString();
+            // Si tienes forma de contar solo las activas, usa esa lógica aquí
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine($"Error al cargar especialidades: {ex.Message}");
+    }
+}
+
+private void CargarListaSedes()
+{
+    try
+    {
+        using (SqlConnection conn = conexionDB.ObtenerConexion())
+        {
+            SqlCommand cmd = new SqlCommand("sp_ListarSedes", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            gvSedes.DataSource = dt;
+            gvSedes.DataBind();
+
+            lblTotalSedes.Text = dt.Rows.Count.ToString();
+            lblSedesActivas.Text = dt.Rows.Count.ToString();
+            // Si tienes forma de contar solo las activas, usa esa lógica aquí
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine($"Error al cargar sedes: {ex.Message}");
+    }
+}
+```
+
+=================================================================
+RESUMEN DE CAMBIOS
+=================================================================
+
+IDs MODIFICADOS:
+1. lblTotalEspecialidades (duplicado) ? lblEspecialidadesActivas
+2. lblDoctores ? lblTotalDoctores
+3. lblTotalSedes (duplicado) ? lblSedesActivas
+
+ARCHIVOS A MODIFICAR:
+? PanelAdministrador.aspx (3 cambios de ID)
+? PanelAdministrador.aspx.designer.cs (agregar 3 declaraciones)
+? PanelAdministrador.aspx.cs (opcional - actualizar métodos)
+
+=================================================================
+¡LISTO! Después de estos cambios, compila el proyecto y el error desaparecerá.
+=================================================================

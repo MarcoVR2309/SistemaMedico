@@ -199,9 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="docs\ConectarSSMSaAzure.md" />
-    <Content Include="database\README.md" />
-    <Content Include="database\PANEL_ADMIN_README.md" />
-    <Content Include="database\CREAR_USUARIO_README.md" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\SistemaClinica-webapp - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">

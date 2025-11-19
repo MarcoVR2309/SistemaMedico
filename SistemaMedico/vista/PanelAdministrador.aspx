@@ -1143,6 +1143,14 @@
                     </asp:Panel>
                 </div>
 
+                <!-- FOOTER DEL MODAL USUARIO -->
+                <div class="modal-footer-custom">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalCrearUsuario()">Cancelar</button>
+                    <asp:Button ID="btnCrearUsuario" runat="server" Text="Crear Usuario" CssClass="btn btn-primary" OnClick="btnCrearUsuario_Click" />
+                </div>
+            </div>
+        </div>
+
                 <!-- MODAL CREAR ESPECIALIDAD -->
                 <div id="modalCrearEspecialidad" class="modal-backdrop">
                     <div class="modal-container-custom">

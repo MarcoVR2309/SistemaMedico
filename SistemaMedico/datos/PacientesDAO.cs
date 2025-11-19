@@ -146,7 +146,7 @@ namespace SistemaMedico.datos
             public string ID { get; set; } // ID del Paciente (ej: P0000001)
             public string NombreCompleto { get; set; }
         }
-        // NUEVO MÉTODO: El que faltaba
+        // NUEVO Mï¿½TODO: El que faltaba
         // =================================================================
         public List<PacienteParaDropdown> ListarPacientesParaDropdown()
         {
@@ -178,7 +178,7 @@ namespace SistemaMedico.datos
             }
             catch (Exception ex)
             {
-                // Lanza una excepción más específica
+                // Lanza una excepciï¿½n mï¿½s especï¿½fica
                 throw new Exception("Error al listar pacientes para dropdown: " + ex.Message);
             }
             return lista;

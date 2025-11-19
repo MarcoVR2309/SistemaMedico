@@ -258,18 +258,28 @@ namespace SistemaMedico.vista
                 }
 
                 // 6. Crear objeto Citas (con datos de pago en NULL para pacientes)
+                PacientesDAO pacientesDAO = new PacientesDAO();
+                var paciente = pacientesDAO.ObtenerPorIdUsuario(CurrentUserId);
+
+                if (paciente == null)
+                {
+                    MostrarMensajeModal("No se encontró el paciente asociado al usuario.", "error");
+                    return;
+                }
+
+                // 6.2 Crear objeto Citas usando el ID correcto del paciente
                 var nuevaCita = new Citas
                 {
-                    IdPac = CurrentUserId,
+                    IdPac = paciente.Id,  // ← ahora sí es P000000x
                     IdDoc = ddlDoctores.SelectedValue,
                     IdSede = "S000002",  // Ajusta según tu sede
                     IdEsp = doctor.IdEsp,
                     Fecha = fechaCita,
                     Hora = horaCita,
                     Motivo = txtMotivo.Text.Trim(),
-                    TipoPago = null,     // ← NULL para pacientes
-                    Monto = null,        // ← NULL para pacientes
-                    PagoReali = false    // ← false por defecto
+                    TipoPago = null,
+                    Monto = null,
+                    PagoReali = false
                 };
 
                 // 7. Guardar usando el procedimiento compartido

@@ -787,6 +787,10 @@
                                 <div class="value"><asp:Label ID="lblPacientes" runat="server" Text="0"></asp:Label></div>
                             </div>
                             <div class="stat-card orange">
+                                <div class="label">Administradores</div>
+                                <div class="value"><asp:Label ID="lblAdministradores" runat="server" Text="0"></asp:Label></div>
+                            </div>
+                            <div class="stat-card">
                                 <div class="label">Activos</div>
                                 <div class="value"><asp:Label ID="lblActivos" runat="server" Text="0"></asp:Label></div>
                             </div>
@@ -1317,6 +1321,31 @@
                 }
             });
         });
+
+        // Función para mostrar/ocultar campos según el rol seleccionado
+        function cambiarRol() {
+            var rolSelect = document.getElementById('<%= ddlRol.ClientID %>');
+            var rolSeleccionado = rolSelect.value;
+            
+            // Obtener los paneles
+            var pnlMedico = document.getElementById('<%= pnlMedico.ClientID %>');
+            var pnlAdministrador = document.getElementById('<%= pnlAdministrador.ClientID %>');
+            var pnlPaciente = document.getElementById('<%= pnlPaciente.ClientID %>');
+            
+            // Ocultar todos los paneles primero
+            pnlMedico.classList.remove('show');
+            pnlAdministrador.classList.remove('show');
+            pnlPaciente.classList.remove('show');
+            
+            // Mostrar el panel correspondiente según el rol
+            if (rolSeleccionado === 'R0000002') { // Médico
+                pnlMedico.classList.add('show');
+            } else if (rolSeleccionado === 'R0000001') { // Administrador
+                pnlAdministrador.classList.add('show');
+            } else if (rolSeleccionado === 'R0000003') { // Paciente
+                pnlPaciente.classList.add('show');
+            }
+        }
     </script>
 </body>
 </html>

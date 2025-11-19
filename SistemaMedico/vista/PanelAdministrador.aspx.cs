@@ -180,6 +180,7 @@ namespace SistemaMedico.vista
                         lblDoctores.Text = reader["TotalDoctores"].ToString();
                         lblPacientes.Text = reader["TotalPacientes"].ToString();
                         lblActivos.Text = reader["UsuariosActivos"].ToString();
+                        lblAdministradores.Text = reader["TotalAdministradores"].ToString();
                     }
                     reader.Close();
                 }

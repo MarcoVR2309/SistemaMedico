@@ -84,6 +84,7 @@
     <Content Include="database\02_CREATE_SEQUENCES.sql" />
     <Content Include="database\03_INSERT_INITIAL_DATA.sql" />
     <Content Include="database\RedClinicas_Azure.sql" />
+    <Content Include="database\SP_ADMIN_GESTION.sql" />
     <Content Include="database\SP_CRUD_Citas.sql" />
     <Content Include="database\SP_CRUD_ConsultasMedicas.sql" />
     <Content Include="database\SP_CRUD_Doctores.sql" />
@@ -99,6 +100,7 @@
     <Content Include="styles\panelpaciente.css" />
     <Content Include="scripts\panelpaciente.js" />
     <Content Include="styles\registro.css" />
+    <Content Include="vista\CrearUsuario.aspx" />
     <Content Include="vista\EspecialidadesPrueba.aspx" />
     <Content Include="vista\images\Equipo.png" />
     <Content Include="vista\images\medical_team.png" />
@@ -108,6 +110,7 @@
     <Content Include="styles\main.css" />
     <Content Include="vista\images\README.md" />
     <Content Include="vista\Login.aspx" />
+    <Content Include="vista\PanelAdministrador.aspx" />
     <Content Include="vista\PanelMedico.aspx" />
     <Content Include="vista\PanelPaciente.aspx" />
     <Content Include="vista\Registro.aspx" />
@@ -115,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="conexion\ConexionDB.cs" />
+    <Compile Include="datos\AdministradoresDAO.cs" />
     <Compile Include="datos\CitasDAO.cs" />
     <Compile Include="datos\Doctores.DAO.cs" />
     <Compile Include="datos\EspecialidadesDAO.cs" />
@@ -135,6 +139,13 @@
     <Compile Include="modelo\Rol.cs" />
     <Compile Include="modelo\Sedes.cs" />
     <Compile Include="modelo\Usuarios.cs" />
+    <Compile Include="vista\CrearUsuario.aspx.cs">
+      <DependentUpon>CrearUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\CrearUsuario.aspx.designer.cs">
+      <DependentUpon>CrearUsuario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="vista\EspecialidadesPrueba.aspx.cs">
       <DependentUpon>EspecialidadesPrueba.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -156,6 +167,13 @@
     </Compile>
     <Compile Include="vista\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="vista\PanelAdministrador.aspx.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="vista\PanelAdministrador.aspx.designer.cs">
+      <DependentUpon>PanelAdministrador.aspx</DependentUpon>
     </Compile>
     <Compile Include="vista\PanelMedico.aspx.cs">
       <DependentUpon>PanelMedico.aspx</DependentUpon>
@@ -182,6 +200,8 @@
   <ItemGroup>
     <Content Include="docs\ConectarSSMSaAzure.md" />
     <Content Include="database\README.md" />
+    <Content Include="database\PANEL_ADMIN_README.md" />
+    <Content Include="database\CREAR_USUARIO_README.md" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\SistemaClinica-webapp - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -193,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controlador\" />
-    <Folder Include="vista\admin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

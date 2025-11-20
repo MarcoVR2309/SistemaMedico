@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
+using System.Net.Mail;
 
 namespace SistemaMedico.vista
 {
@@ -343,7 +345,10 @@ namespace SistemaMedico.vista
                     lblFichaMotivo.Text = ficha.Motivo;
                     lblFichaDiagnostico.Text = ficha.Diagnostico;
                     lblFichaTratamiento.Text = ficha.Tratamiento;
+                    lblFichaTratamiento.Text = ficha.Tratamiento;
                     lblFichaObservaciones.Text = ficha.Observaciones;
+
+                    hfFichaEmailPaciente.Value = ficha.PacienteEmail;
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowFichaModal", "showFichaModal();", true);
                 }
@@ -368,5 +373,52 @@ namespace SistemaMedico.vista
             Session.Abandon();
             Response.Redirect("Login.aspx");
         }
-    }
+
+        [System.Web.Services.WebMethod]
+        public static string EnviarFichaPorCorreo(string email, string pdfBase64)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(email))
+                    return "El paciente no tiene un correo registrado.";
+
+                // 1. Convertir Base64 a Bytes
+                // El string viene como "data:application/pdf;filename=generated.pdf;base64,JVBERi0..."
+                // Necesitamos quitar la cabecera si existe
+                string base64Data = pdfBase64;
+                if (base64Data.Contains(","))
+                {
+                    base64Data = base64Data.Split(',')[1];
+                }
+                
+                byte[] pdfBytes = Convert.FromBase64String(base64Data);
+
+                // 2. Configurar el Correo
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("clinicaaguirre.notificaciones@gmail.com", "Clínica Aguirre"); // CAMBIAR POR CORREO REAL
+                mail.To.Add(email);
+                mail.Subject = "Su Ficha Médica - Clínica Aguirre";
+                mail.Body = "Estimado paciente,\n\nAdjunto encontrará su ficha médica de la consulta reciente.\n\nAtentamente,\nClínica Aguirre";
+                
+                // 3. Adjuntar PDF
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream(pdfBytes))
+                {
+                    mail.Attachments.Add(new Attachment(ms, "FichaMedica.pdf", "application/pdf"));
+
+                    // 4. Enviar (Usa configuración de Web.config)
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Send(mail);
+                }
+
+                return "Correo enviado correctamente a " + email;
+            }
+            catch (SmtpException smtpEx)
+            {
+                return "Error SMTP: " + smtpEx.Message + " (Verifique credenciales en Web.config)";
+            }
+            catch (Exception ex)
+            {
+                return "Error al enviar correo: " + ex.Message;
+            }
+        }
 }

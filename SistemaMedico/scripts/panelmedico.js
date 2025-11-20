@@ -208,7 +208,6 @@ function descargarFichaPDF() {
     const elemento = document.getElementById('areaImprimibleFicha');
 
     // 2. Obtenemos el nombre del paciente para el nombre del archivo
-    // (Buscamos el span/label donde pusiste el nombre)
     const nombrePaciente = document.getElementById('lblFichaPaciente') ?
         document.getElementById('lblFichaPaciente').innerText : 'Paciente';
 
@@ -222,13 +221,70 @@ function descargarFichaPDF() {
     };
 
     // 4. Generar y Descargar
-    // (El bot�n cambiar� de texto para avisar que est� procesando)
-    const btnPDF = document.querySelector('.btn-service-outline.btn-teal');
+    // (El botón cambiará de texto para avisar que está procesando)
+    const btnPDF = document.querySelector('button[onclick="descargarFichaPDF()"]');
     const textoOriginal = btnPDF.innerHTML;
     btnPDF.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
 
     html2pdf().set(opciones).from(elemento).save().then(function () {
-        // Restaurar bot�n cuando termine
+        // Restaurar botón cuando termine
         btnPDF.innerHTML = textoOriginal;
+    });
+}
+
+// =========================================================================
+// FUNCIÓN PARA ENVIAR PDF POR CORREO
+// =========================================================================
+function enviarFichaPorCorreo() {
+    // 1. Obtener el correo del HiddenField
+    const email = document.getElementById('hfFichaEmailPaciente').value;
+
+    if (!email || email === "") {
+        alert("El paciente no tiene un correo electrónico registrado.");
+        return;
+    }
+
+    if (!confirm("¿Desea enviar la ficha médica al correo: " + email + "?")) {
+        return;
+    }
+
+    // 2. UI: Mostrar estado de carga
+    const btnEmail = document.querySelector('button[onclick="enviarFichaPorCorreo()"]');
+    const textoOriginal = btnEmail.innerHTML;
+    btnEmail.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    btnEmail.disabled = true;
+
+    // 3. Generar el PDF en Base64 (sin descargarlo)
+    const elemento = document.getElementById('areaImprimibleFicha');
+
+    // Obtenemos nombre para el archivo (opcional, pero buena práctica)
+    const nombrePaciente = document.getElementById('lblFichaPaciente') ?
+        document.getElementById('lblFichaPaciente').innerText : 'Paciente';
+
+    const opciones = {
+        margin: 0.5,
+        filename: `Ficha_Medica_${nombrePaciente}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opciones).from(elemento).outputPdf('datauristring').then(function (pdfBase64) {
+
+        // 4. Llamar al WebMethod (PageMethods)
+        PageMethods.EnviarFichaPorCorreo(email, pdfBase64,
+            function (response) {
+                // Success
+                alert(response);
+                btnEmail.innerHTML = textoOriginal;
+                btnEmail.disabled = false;
+            },
+            function (error) {
+                // Error
+                alert("Error al enviar: " + error.get_message());
+                btnEmail.innerHTML = textoOriginal;
+                btnEmail.disabled = false;
+            }
+        );
     });
 }

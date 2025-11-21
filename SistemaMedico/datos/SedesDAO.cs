@@ -35,7 +35,10 @@ namespace SistemaMedico.datos
                             {
                                 Id = reader["ID"].ToString(),
                                 NomSede = reader["NOM_SEDE"].ToString(),
-                                DirSede = reader["DIR_SEDE"].ToString()
+                                // Intentar leer DIR_SEDE primero, si no existe usar DIRECCION
+                                DirSede = reader["DIR_SEDE"] != DBNull.Value 
+                                    ? reader["DIR_SEDE"].ToString() 
+                                    : (reader["DIRECCION"] != DBNull.Value ? reader["DIRECCION"].ToString() : "")
                             };
                             listaSedes.Add(sede);
                         }
@@ -48,6 +51,7 @@ namespace SistemaMedico.datos
             }
             return listaSedes;
         }
+
         public Sedes ObtenerPorId(string id)
         {
             Sedes sede = null;
@@ -55,6 +59,7 @@ namespace SistemaMedico.datos
             {
                 using (SqlConnection conn = conexionDB.ObtenerConexion())
                 {
+                    // Usar el nombre SIN prefijo sp_ como está en tu BD
                     SqlCommand cmd = new SqlCommand("ObtenerSedePorId", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -67,7 +72,10 @@ namespace SistemaMedico.datos
                             {
                                 Id = reader["ID"].ToString(),
                                 NomSede = reader["NOM_SEDE"].ToString(),
-                                DirSede = reader["DIR_SEDE"].ToString()
+                                // Intentar leer DIR_SEDE primero, si no existe usar DIRECCION
+                                DirSede = reader["DIR_SEDE"] != DBNull.Value 
+                                    ? reader["DIR_SEDE"].ToString() 
+                                    : (reader["DIRECCION"] != DBNull.Value ? reader["DIRECCION"].ToString() : "")
                             };
                         }
                     }
@@ -78,6 +86,33 @@ namespace SistemaMedico.datos
                 throw new Exception("Error al obtener sede por ID: " + ex.Message);
             }
             return sede;
+        }
+
+        public bool Actualizar(Sedes sede)
+        {
+            try
+            {
+                using (SqlConnection conn = conexionDB.ObtenerConexion())
+                {
+                    // Usar el nombre SIN prefijo sp_ como está en tu BD
+                    SqlCommand cmd = new SqlCommand("ActualizarSede", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Id", sede.Id);
+                    cmd.Parameters.AddWithValue("@Nombre", sede.NomSede);
+                    cmd.Parameters.AddWithValue("@Direccion", 
+                        string.IsNullOrWhiteSpace(sede.DirSede) ? (object)DBNull.Value : sede.DirSede);
+                    cmd.Parameters.AddWithValue("@Telefono", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Email", DBNull.Value);
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar sede: " + ex.Message);
+            }
         }
     }
 }

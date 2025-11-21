@@ -24,6 +24,24 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// Control ScriptManager1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// Control hfPanelActivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfPanelActivo;
+
+        /// <summary>
         /// Control lblNombreAdmin.
         /// </summary>
         /// <remarks>
@@ -69,15 +87,6 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.Label lblPacientes;
 
         /// <summary>
-        /// Control lblActivos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblActivos;
-
-        /// <summary>
         /// Control lblAdministradores.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace SistemaMedico.vista
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAdministradores;
+
+        /// <summary>
+        /// Control lblActivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblActivos;
 
         /// <summary>
         /// Control txtBusqueda.
@@ -141,22 +159,22 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.Label lblEspecialidadesActivas;
 
         /// <summary>
-        /// Control lblTotalDoctores.
+        /// Control rptEspecialidades.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalDoctores;
+        protected global::System.Web.UI.WebControls.Repeater rptEspecialidades;
 
         /// <summary>
-        /// Control gvEspecialidades.
+        /// Control pnlEmptyEspecialidades.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvEspecialidades;
+        protected global::System.Web.UI.WebControls.Panel pnlEmptyEspecialidades;
 
         /// <summary>
         /// Control lblTotalSedes.
@@ -177,13 +195,49 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.Label lblSedesActivas;
 
         /// <summary>
-        /// Control gvSedes.
+        /// Control rptSedes.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvSedes;
+        protected global::System.Web.UI.WebControls.Repeater rptSedes;
+
+        /// <summary>
+        /// Control pnlEmptySedes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEmptySedes;
+
+        /// <summary>
+        /// Control lblTituloModalUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloModalUsuario;
+
+        /// <summary>
+        /// Control hfIdUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdUsuario;
+
+        /// <summary>
+        /// Control hfModoEdicion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModoEdicion;
 
         /// <summary>
         /// Control pnlMensaje.
@@ -283,6 +337,24 @@ namespace SistemaMedico.vista
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSede;
+
+        /// <summary>
+        /// Control lblPasswordOptional.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPasswordOptional;
+
+        /// <summary>
+        /// Control spanPasswordRequired.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanPasswordRequired;
 
         /// <summary>
         /// Control txtPassword.
@@ -393,6 +465,33 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.Button btnCrearUsuario;
 
         /// <summary>
+        /// Control lblTituloModalEspecialidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloModalEspecialidad;
+
+        /// <summary>
+        /// Control hfIdEspecialidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdEspecialidad;
+
+        /// <summary>
+        /// Control hfModoEdicionEsp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModoEdicionEsp;
+
+        /// <summary>
         /// Control pnlMensajeEspecialidad.
         /// </summary>
         /// <remarks>
@@ -438,6 +537,33 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.Button btnCrearEspecialidad;
 
         /// <summary>
+        /// Control lblTituloModalSede.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloModalSede;
+
+        /// <summary>
+        /// Control hfIdSede.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdSede;
+
+        /// <summary>
+        /// Control hfModoEdicionSede.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfModoEdicionSede;
+
+        /// <summary>
         /// Control pnlMensajeSede.
         /// </summary>
         /// <remarks>
@@ -465,15 +591,6 @@ namespace SistemaMedico.vista
         protected global::System.Web.UI.WebControls.TextBox txtNombreSede;
 
         /// <summary>
-        /// Control txtTelefonoSede.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTelefonoSede;
-
-        /// <summary>
         /// Control txtDireccionSede.
         /// </summary>
         /// <remarks>
@@ -481,15 +598,6 @@ namespace SistemaMedico.vista
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDireccionSede;
-
-        /// <summary>
-        /// Control txtEmailSede.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmailSede;
 
         /// <summary>
         /// Control btnCrearSede.

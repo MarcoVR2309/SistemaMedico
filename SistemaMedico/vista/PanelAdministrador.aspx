@@ -12,6 +12,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <style>
+        /* ===== Variables de Colores ===== */
+        :root {
+            --primary-teal: #17C3B2;
+            --primary-blue: #4169E1;
+            --primary-purple: #7B68EE;
+            --light-blue: #E8F4F8;
+            --light-purple: #F0EEFF;
+            --light-teal: #E0F9F7;
+            --light-green: #E0F9ED;
+            --dark-text: #1A1A1A;
+            --gray-text: #666666;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,8 +34,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f2f8fc;
             min-height: 100vh;
         }
 
@@ -33,11 +48,11 @@
         /* SIDEBAR */
         .dashboard-sidebar {
             width: 280px;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, var(--primary-purple) 0%, #6850DE 100%);
             color: white;
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 4px 0 10px var(--shadow);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -59,7 +74,7 @@
 
         .logo-icon {
             font-size: 32px;
-            color: #ffd700;
+            color: var(--primary-teal);
         }
 
         .logo-text {
@@ -135,7 +150,7 @@
         .nav-item.active a,
         .nav-item.active .nav-link {
             background: rgba(255,255,255,0.15);
-            border-left-color: #ffd700;
+            border-left-color: var(--primary-teal);
         }
 
         .nav-item i {
@@ -152,14 +167,14 @@
         .dashboard-content {
             margin-left: 280px;
             flex: 1;
-            background: #f5f7fa;
+            background: #f2f8fc;
             min-height: 100vh;
         }
 
         .content-header {
             background: white;
             padding: 25px 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -169,17 +184,17 @@
 
         .header-main h1 {
             font-size: 28px;
-            color: #2c3e50;
+            color: var(--dark-text);
             margin-bottom: 5px;
         }
 
         .header-main p {
-            color: #7f8c8d;
+            color: var(--gray-text);
             font-size: 14px;
         }
 
         .btn-create {
-            background: #667eea;
+            background: var(--primary-teal);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -194,9 +209,9 @@
         }
 
         .btn-create:hover {
-            background: #5568d3;
+            background: #14B0A0;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(23, 195, 178, 0.4);
         }
 
         /* CONTENT AREA */
@@ -224,19 +239,19 @@
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px var(--shadow);
             transition: transform 0.3s;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid var(--primary-blue);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
         .stat-card .label {
             font-size: 14px;
-            color: #7f8c8d;
+            color: var(--gray-text);
             margin-bottom: 10px;
             font-weight: 500;
         }
@@ -244,19 +259,19 @@
         .stat-card .value {
             font-size: 32px;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--dark-text);
         }
 
         .stat-card.green {
-            border-left-color: #11998e;
+            border-left-color: #27AE60;
         }
 
         .stat-card.blue {
-            border-left-color: #4facfe;
+            border-left-color: var(--primary-blue);
         }
 
         .stat-card.orange {
-            border-left-color: #fa709a;
+            border-left-color: #FF6B9D;
         }
 
         /* SEARCH AND FILTERS */
@@ -265,7 +280,7 @@
             padding: 25px;
             border-radius: 12px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px var(--shadow);
             display: grid;
             grid-template-columns: 2fr 1fr auto;
             gap: 15px;
@@ -295,11 +310,11 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--primary-purple);
         }
 
         .btn-search {
-            background: #667eea;
+            background: var(--primary-purple);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -314,14 +329,14 @@
         }
 
         .btn-search:hover {
-            background: #5568d3;
+            background: #6850DE;
         }
 
         /* TABLE */
         .table-container {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px var(--shadow);
             overflow: hidden;
         }
 
@@ -332,7 +347,7 @@
         }
 
         .users-table thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6850DE 100%);
             color: white;
         }
 
@@ -341,20 +356,29 @@
             text-align: left;
             font-weight: 600;
             font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .users-table td {
             padding: 15px;
             border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         .users-table tbody tr {
-            transition: background 0.3s;
+            transition: all 0.3s ease;
         }
 
         .users-table tbody tr:hover {
-            background: #f8f9fa;
+            background: var(--light-purple);
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.1);
+        }
+
+        .users-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         /* BADGES */
@@ -367,57 +391,70 @@
         }
 
         .badge-success {
-            background: #d4edda;
-            color: #155724;
+            background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
         }
 
         .badge-danger {
-            background: #f8d7da;
-            color: #721c24;
+            background: linear-gradient(135deg, #E74C3C 0%, #EC7063 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
         }
 
         .badge-paciente {
-            background: #e3f2fd;
-            color: #1565c0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #5A7FE6 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(65, 105, 225, 0.3);
         }
 
         .badge-medico {
-            background: #f3e5f5;
-            color: #6a1b9a;
+            background: linear-gradient(135deg, var(--primary-teal) 0%, #2ECEC0 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(23, 195, 178, 0.3);
         }
 
         .badge-admin {
-            background: #fff3e0;
-            color: #e65100;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #8F7AEE 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(123, 104, 238, 0.3);
         }
 
         /* ACTION BUTTONS */
         .btn-action {
-            padding: 8px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s;
             margin: 0 3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .btn-edit {
-            background: #4facfe;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #5A7FE6 100%);
             color: white;
         }
 
         .btn-edit:hover {
-            background: #3f9de8;
+            background: linear-gradient(135deg, #5A7FE6 0%, var(--primary-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
         }
 
         .btn-delete {
-            background: #fa709a;
+            background: linear-gradient(135deg, #E74C3C 0%, #EC7063 100%);
             color: white;
         }
 
         .btn-delete:hover {
-            background: #e85d88;
+            background: linear-gradient(135deg, #EC7063 0%, #E74C3C 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
         }
 
         /* MODAL STYLES */
@@ -467,7 +504,7 @@
         }
 
         .modal-header-custom {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6850DE 100%);
             color: white;
             padding: 25px 30px;
             display: flex;
@@ -502,7 +539,7 @@
 
         .btn-close-modal:hover {
             background: white;
-            color: #667eea;
+            color: var(--primary-purple);
             transform: rotate(90deg);
         }
 
@@ -537,8 +574,8 @@
         .section-divider {
             margin: 30px 0 20px 0;
             padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-            color: #667eea;
+            border-bottom: 2px solid var(--primary-purple);
+            color: var(--primary-purple);
             font-weight: 600;
             font-size: 16px;
             display: flex;
@@ -609,14 +646,14 @@
         }
 
         .btn-primary {
-            background: #667eea;
+            background: var(--primary-teal);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #5568d3;
+            background: #14B0A0;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(23, 195, 178, 0.4);
         }
 
         .btn:disabled {
@@ -631,22 +668,174 @@
             font-style: italic;
         }
 
-        .placeholder-container {
+        /* CARDS GRID PARA SEDES Y ESPECIALIDADES */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .location-card {
             background: white;
-            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px var(--shadow);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .location-card-header {
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, #6850DE 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .location-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
         }
 
-        .placeholder-container h2 {
-            color: #2c3e50;
-            margin-bottom: 15px;
+        .location-info {
+            flex: 1;
         }
 
-        .placeholder-container p {
-            color: #7f8c8d;
+        .location-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .location-card-body {
+            padding: 25px;
+        }
+
+        .location-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .location-detail i {
+            color: var(--primary-purple);
+            font-size: 18px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .location-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stat-item i {
+            color: var(--primary-teal);
             font-size: 16px;
+        }
+
+        .location-card-footer {
+            padding: 20px 25px;
+            background: #f8f9fa;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn-card-action {
+            flex: 1;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-edit-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #5A7FE6 100%);
+            color: white;
+        }
+
+        .btn-edit-card:hover {
+            background: linear-gradient(135deg, #5A7FE6 0%, var(--primary-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
+        }
+
+        .btn-delete-card {
+            background: linear-gradient(135deg, #E74C3C 0%, #EC7063 100%);
+            color: white;
+        }
+
+        .btn-delete-card:hover {
+            background: linear-gradient(135deg, #EC7063 0%, #E74C3C 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--gray-text);
+            font-size: 16px;
+            margin-bottom: 25px;
         }
 
         /* RESPONSIVE */
@@ -665,6 +854,10 @@
 
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
 
@@ -704,6 +897,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true"></asp:ScriptManager>
+        
+        <!-- Campo oculto para recordar el panel activo -->
+        <asp:HiddenField ID="hfPanelActivo" runat="server" Value="panel-usuarios" />
+        
         <div class="dashboard-layout">
             
             <!-- SIDEBAR -->
@@ -788,7 +986,8 @@
                             </div>
                             <div class="stat-card orange">
                                 <div class="label">Administradores</div>
-                                <div class="value"><asp:Label ID="lblAdministradores" runat="server" Text="0"></asp:Label></div>
+                                <div class="value"><asp:Label ID="lblAdministradores" runat="server" Text="0"></asp:Label>
+                                </div>
                             </div>
                             <div class="stat-card">
                                 <div class="label">Activos</div>
@@ -839,9 +1038,20 @@
                                         <ItemTemplate>
                                             <asp:Button ID="btnEditar" runat="server" Text="Editar" CssClass="btn-action btn-edit" 
                                                         CommandName="Editar" CommandArgument='<%# Eval("ID") %>' />
-                                            <asp:Button ID="btnEliminar" runat="server" Text="Desactivar" CssClass="btn-action btn-delete" 
-                                                        CommandName="Desactivar" CommandArgument='<%# Eval("ID") %>' 
-                                                        OnClientClick="return confirm('¿Está seguro de desactivar este usuario?');" />
+                                            
+                                            <asp:PlaceHolder ID="phAccionEstado" runat="server" Visible='<%# Convert.ToBoolean(Eval("Activo")) %>'>
+                                                <asp:Button ID="btnDesactivar" runat="server" Text="Desactivar" CssClass="btn-action btn-delete" 
+                                                            CommandName="Desactivar" CommandArgument='<%# Eval("ID") %>' 
+                                                            OnClientClick="return confirm('¿Está seguro de desactivar este usuario?');" />
+                                            </asp:PlaceHolder>
+                                            
+                                            <asp:PlaceHolder ID="phAccionActivar" runat="server" Visible='<%# !Convert.ToBoolean(Eval("Activo")) %>'>
+                                                <asp:Button ID="btnActivar" runat="server" Text="Activar" 
+                                                            CssClass="btn-action" 
+                                                            style="background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%); color: white;" 
+                                                            CommandName="Activar" CommandArgument='<%# Eval("ID") %>' 
+                                                            OnClientClick="return confirm('¿Está seguro de activar este usuario?');" />
+                                            </asp:PlaceHolder>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -881,35 +1091,52 @@
                                 <div class="label">Especialidades Activas</div>
                                 <div class="value"><asp:Label ID="lblEspecialidadesActivas" runat="server" Text="0"></asp:Label></div>
                             </div>
-                            <div class="stat-card blue">
-                                <div class="label">Total Doctores</div>
-                                <div class="value"><asp:Label ID="lblTotalDoctores" runat="server" Text="0"></asp:Label></div>
-                            </div>
                         </div>
 
-                        <!-- ESPECIALIDADES TABLE -->
-                        <div class="table-container">
-                            <asp:GridView ID="gvEspecialidades" runat="server" AutoGenerateColumns="False" CssClass="users-table" 
-                                          OnRowCommand="gvEspecialidades_RowCommand" DataKeyNames="ID">
-                                <Columns>
-                                    <asp:BoundField DataField="NombreEspecialidad" HeaderText="Especialidad" />
-                                    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-                                    <asp:BoundField DataField="TotalDoctores" HeaderText="Total Doctores" />
-                                    <asp:BoundField DataField="DoctoresActivos" HeaderText="Doctores Activos" />
-                                    <asp:TemplateField HeaderText="Acciones">
-                                        <ItemTemplate>
-                                            <asp:Button ID="btnEditarEsp" runat="server" Text="Editar" CssClass="btn-action btn-edit" 
+                        <!-- ESPECIALIDADES CARDS -->
+                        <div class="cards-grid">
+                            <asp:Repeater ID="rptEspecialidades" runat="server" OnItemCommand="rptEspecialidades_ItemCommand">
+                                <ItemTemplate>
+                                    <div class="location-card">
+                                        <div class="location-card-header">
+                                            <div class="location-icon">
+                                                <i class="fas fa-stethoscope"></i>
+                                            </div>
+                                            <div class="location-info">
+                                                <h3><%# Eval("NombreEspecialidad") %></h3>
+                                            </div>
+                                        </div>
+                                        <div class="location-card-body">
+                                            <div class="location-detail">
+                                                <i class="fas fa-align-left"></i>
+                                                <span><%# string.IsNullOrEmpty(Eval("Descripcion").ToString()) ? "Sin descripción" : Eval("Descripcion") %></span>
+                                            </div>
+                                            <div class="location-stats">
+                                                <div class="stat-item">
+                                                    <i class="fas fa-user-md"></i>
+                                                    <span><%# Eval("TotalDoctores") %> doctores</span>
+                                                </div>
+                                                <div class="stat-item">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span><%# Eval("DoctoresActivos") %> activos</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="location-card-footer">
+                                            <asp:Button ID="btnEditarEsp" runat="server" Text="Editar" CssClass="btn-card-action btn-edit-card" 
                                                         CommandName="Editar" CommandArgument='<%# Eval("ID") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <EmptyDataTemplate>
-                                    <div style="text-align: center; padding: 40px; color: #999;">
-                                        <i class="fas fa-stethoscope" style="font-size: 48px; margin-bottom: 15px;"></i>
-                                        <p>No se encontraron especialidades</p>
+                                        </div>
                                     </div>
-                                </EmptyDataTemplate>
-                            </asp:GridView>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <asp:Panel ID="pnlEmptyEspecialidades" runat="server" CssClass="empty-state" Visible="false">
+                                <i class="fas fa-stethoscope"></i>
+                                <h3>No hay especialidades registradas</h3>
+                                <p>Comienza agregando tu primera especialidad médica</p>
+                                <button type="button" class="btn-create" onclick="abrirModalEspecialidad()">
+                                    <i class="fas fa-plus"></i> Nueva Especialidad
+                                </button>
+                            </asp:Panel>
                         </div>
                     </div>
                 </div>
@@ -941,29 +1168,50 @@
                             </div>
                         </div>
 
-                        <!-- SEDES TABLE -->
-                        <div class="table-container">
-                            <asp:GridView ID="gvSedes" runat="server" AutoGenerateColumns="False" CssClass="users-table" 
-                                          OnRowCommand="gvSedes_RowCommand" DataKeyNames="ID">
-                                <Columns>
-                                    <asp:BoundField DataField="NombreSede" HeaderText="Sede" />
-                                    <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
-                                    <asp:BoundField DataField="UsuariosPrefieren" HeaderText="Usuarios Prefieren" />
-                                    <asp:BoundField DataField="TotalCitas" HeaderText="Total Citas" />
-                                    <asp:TemplateField HeaderText="Acciones">
-                                        <ItemTemplate>
-                                            <asp:Button ID="btnEditarSede" runat="server" Text="Editar" CssClass="btn-action btn-edit" 
+                        <!-- SEDES CARDS -->
+                        <div class="cards-grid">
+                            <asp:Repeater ID="rptSedes" runat="server" OnItemCommand="rptSedes_ItemCommand">
+                                <ItemTemplate>
+                                    <div class="location-card">
+                                        <div class="location-card-header">
+                                            <div class="location-icon">
+                                                <i class="fas fa-building"></i>
+                                            </div>
+                                            <div class="location-info">
+                                                <h3><%# Eval("NombreSede") %></h3>
+                                            </div>
+                                        </div>
+                                        <div class="location-card-body">
+                                            <div class="location-detail">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span><%# string.IsNullOrEmpty(Eval("Direccion").ToString()) ? "Sin dirección especificada" : Eval("Direccion") %></span>
+                                            </div>
+                                            <div class="location-stats">
+                                                <div class="stat-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span><%# Eval("UsuariosPrefieren") %> usuarios</span>
+                                                </div>
+                                                <div class="stat-item">
+                                                    <i class="fas fa-calendar-check"></i>
+                                                    <span><%# Eval("TotalCitas") %> citas</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="location-card-footer">
+                                            <asp:Button ID="btnEditarSede" runat="server" Text="Editar" CssClass="btn-card-action btn-edit-card" 
                                                         CommandName="Editar" CommandArgument='<%# Eval("ID") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                                <EmptyDataTemplate>
-                                    <div style="text-align: center; padding: 40px; color: #999;">
-                                        <i class="fas fa-building" style="font-size: 48px; margin-bottom: 15px;"></i>
-                                        <p>No se encontraron sedes</p>
+                                        </div>
                                     </div>
-                                </EmptyDataTemplate>
-                            </asp:GridView>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <asp:Panel ID="pnlEmptySedes" runat="server" CssClass="empty-state" Visible="false">
+                                <i class="fas fa-building"></i>
+                                <h3>No hay sedes registradas</h3>
+                                <p>Comienza agregando tu primera sede de atención</p>
+                                <button type="button" class="btn-create" onclick="abrirModalSede()">
+                                    <i class="fas fa-plus"></i> Nueva Sede
+                                </button>
+                            </asp:Panel>
                         </div>
                     </div>
                 </div>
@@ -977,12 +1225,19 @@
 
                 <!-- HEADER -->
                 <div class="modal-header-custom">
-                    <h2><i class="fas fa-user-plus"></i> Crear Nuevo Usuario</h2>
+                    <h2>
+                        <i class="fas fa-user-plus"></i> 
+                        <asp:Label ID="lblTituloModalUsuario" runat="server" Text="Crear Nuevo Usuario"></asp:Label>
+                    </h2>
                     <button type="button" class="btn-close-modal" onclick="cerrarModalCrearUsuario()">×</button>
                 </div>
 
                 <!-- BODY -->
                 <div class="modal-body-custom">
+                    <!-- CAMPOS OCULTOS PARA EDICIÓN -->
+                    <asp:HiddenField ID="hfIdUsuario" runat="server" />
+                    <asp:HiddenField ID="hfModoEdicion" runat="server" Value="0" />
+
                     <!-- MENSAJE DE ERROR/ÉXITO -->
                     <asp:Panel ID="pnlMensaje" runat="server" CssClass="alert" Visible="false">
                         <asp:Label ID="lblMensaje" runat="server"></asp:Label>
@@ -1059,7 +1314,11 @@
                             </asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <label>Contraseña <span class="required">*</span></label>
+                            <label>
+                                Contraseña 
+                                <asp:Label ID="lblPasswordOptional" runat="server" Text="" Visible="false" CssClass="info-text">(Dejar en blanco para mantener la actual)</asp:Label>
+                                <span class="required" id="spanPasswordRequired" runat="server">*</span>
+                            </label>
                             <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="Mínimo 6 caracteres"></asp:TextBox>
                             <span class="info-text">La contraseña debe tener al menos 6 caracteres</span>
                         </div>
@@ -1160,12 +1419,19 @@
                     <div class="modal-container-custom">
                         <!-- HEADER -->
                         <div class="modal-header-custom">
-                            <h2><i class="fas fa-plus"></i> Nueva Especialidad Médica</h2>
+                            <h2>
+                                <i class="fas fa-plus"></i> 
+                                <asp:Label ID="lblTituloModalEspecialidad" runat="server" Text="Nueva Especialidad Médica"></asp:Label>
+                            </h2>
                             <button type="button" class="btn-close-modal" onclick="cerrarModalCrearEspecialidad()">×</button>
                         </div>
 
                         <!-- BODY -->
                         <div class="modal-body-custom">
+                            <!-- CAMPOS OCULTOS PARA EDICIÓN -->
+                            <asp:HiddenField ID="hfIdEspecialidad" runat="server" />
+                            <asp:HiddenField ID="hfModoEdicionEsp" runat="server" Value="0" />
+
                             <!-- MENSAJE DE ERROR/ÉXITO -->
                             <asp:Panel ID="pnlMensajeEspecialidad" runat="server" CssClass="alert" Visible="false">
                                 <asp:Label ID="lblMensajeEspecialidad" runat="server"></asp:Label>
@@ -1203,34 +1469,30 @@
                 <div id="modalSede" class="modal-backdrop">
                     <div class="modal-container-custom" style="max-width: 700px;">
                         <div class="modal-header-custom">
-                            <h2><i class="fas fa-building"></i> Nueva Sede</h2>
+                            <h2>
+                                <i class="fas fa-building"></i> 
+                                <asp:Label ID="lblTituloModalSede" runat="server" Text="Nueva Sede"></asp:Label>
+                            </h2>
                             <button type="button" class="btn-close-modal" onclick="cerrarModalSede()">×</button>
                         </div>
 
                         <div class="modal-body-custom">
+                            <!-- CAMPOS OCULTOS PARA EDICIÓN -->
+                            <asp:HiddenField ID="hfIdSede" runat="server" />
+                            <asp:HiddenField ID="hfModoEdicionSede" runat="server" Value="0" />
+
                             <asp:Panel ID="pnlMensajeSede" runat="server" CssClass="alert" Visible="false">
                                 <asp:Label ID="lblMensajeSede" runat="server"></asp:Label>
                             </asp:Panel>
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Nombre de la Sede <span class="required">*</span></label>
-                                    <asp:TextBox ID="txtNombreSede" runat="server" CssClass="form-control" placeholder="Ej: Sede Principal" MaxLength="200"></asp:TextBox>
-                                </div>
-                                <div class="form-group">
-                                    <label>Teléfono</label>
-                                    <asp:TextBox ID="txtTelefonoSede" runat="server" CssClass="form-control" placeholder="987654321" MaxLength="20"></asp:TextBox>
-                                </div>
+                            <div class="form-group">
+                                <label>Nombre de la Sede <span class="required">*</span></label>
+                                <asp:TextBox ID="txtNombreSede" runat="server" CssClass="form-control" placeholder="Ej: Sede Principal" MaxLength="200"></asp:TextBox>
                             </div>
 
                             <div class="form-group">
                                 <label>Dirección</label>
                                 <asp:TextBox ID="txtDireccionSede" runat="server" CssClass="form-control" placeholder="Av. Principal 123" MaxLength="300"></asp:TextBox>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Email</label>
-                                <asp:TextBox ID="txtEmailSede" runat="server" CssClass="form-control" TextMode="Email" placeholder="sede@clinica.com" MaxLength="150"></asp:TextBox>
                             </div>
                         </div>
 
@@ -1247,6 +1509,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             const navItems = document.querySelectorAll('.sidebar-nav .nav-item a');
             const panels = document.querySelectorAll('.content-panel');
+            const hfPanelActivo = document.getElementById('<%= hfPanelActivo.ClientID %>');
+
+            // Restaurar el panel activo después del postback
+            if (hfPanelActivo && hfPanelActivo.value) {
+                const panelActivo = hfPanelActivo.value;
+                
+                // Ocultar todos los paneles
+                panels.forEach(panel => panel.classList.remove('active'));
+                
+                // Mostrar el panel guardado
+                const targetPanel = document.getElementById(panelActivo);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+                
+                // Actualizar la navegación
+                navItems.forEach(item => {
+                    item.parentElement.classList.remove('active');
+                    if (item.getAttribute('data-target') === panelActivo) {
+                        item.parentElement.classList.add('active');
+                    }
+                });
+            }
 
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
@@ -1267,14 +1552,113 @@
                     if (targetPanel) {
                         targetPanel.classList.add('active');
                     }
+                    
+                    // Guardar el panel activo en el HiddenField
+                    if (hfPanelActivo) {
+                        hfPanelActivo.value = targetId;
+                    }
                 });
             });
         });
 
         // Funciones para modal de usuarios
-        function abrirModalCrearUsuario() {
-            document.getElementById('modalCrearUsuario').classList.add('show');
-            document.body.style.overflow = 'hidden';
+        function abrirModalCrearUsuario(skipLimpiar) {
+            console.log('🔵 abrirModalCrearUsuario() llamada' + (skipLimpiar ? ' (modo edición)' : ' (modo creación)'));
+            const modal = document.getElementById('modalCrearUsuario');
+            console.log('Modal encontrado:', modal);
+            
+            // LIMPIAR FORMULARIO solo si NO viene de una edición
+            if (!skipLimpiar) {
+                limpiarFormularioUsuario();
+            }
+            
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                console.log('✅ Modal abierto exitosamente');
+            } else {
+                console.error('❌ No se encontró el elemento modalCrearUsuario');
+            }
+        }
+
+        // Nueva función para limpiar el formulario de usuario
+        function limpiarFormularioUsuario() {
+            // Resetear campos ocultos
+            const hfIdUsuario = document.getElementById('<%= hfIdUsuario.ClientID %>');
+            const hfModoEdicion = document.getElementById('<%= hfModoEdicion.ClientID %>');
+            
+            if (hfIdUsuario) hfIdUsuario.value = '';
+            if (hfModoEdicion) hfModoEdicion.value = '0';
+            
+            // Resetear título y botón
+            const lblTituloModalUsuario = document.getElementById('<%= lblTituloModalUsuario.ClientID %>');
+            const btnCrearUsuario = document.getElementById('<%= btnCrearUsuario.ClientID %>');
+            
+            if (lblTituloModalUsuario) lblTituloModalUsuario.innerText = 'Crear Nuevo Usuario';
+            if (btnCrearUsuario) btnCrearUsuario.value = 'Crear Usuario';
+            
+            // Mostrar/Ocultar indicadores de contraseña
+            const lblPasswordOptional = document.getElementById('<%= lblPasswordOptional.ClientID %>');
+            const spanPasswordRequired = document.getElementById('<%= spanPasswordRequired.ClientID %>');
+            
+            if (lblPasswordOptional) lblPasswordOptional.style.display = 'none';
+            if (spanPasswordRequired) spanPasswordRequired.style.display = 'inline';
+            
+            // Limpiar todos los campos de texto
+            const txtNombre = document.getElementById('<%= txtNombre.ClientID %>');
+            const txtApellido = document.getElementById('<%= txtApellido.ClientID %>');
+            const txtNumDoc = document.getElementById('<%= txtNumDoc.ClientID %>');
+            const txtFechaNac = document.getElementById('<%= txtFechaNac.ClientID %>');
+            const txtEmail = document.getElementById('<%= txtEmail.ClientID %>');
+            const txtTelefono = document.getElementById('<%= txtTelefono.ClientID %>');
+            const txtPassword = document.getElementById('<%= txtPassword.ClientID %>');
+            const txtNumColegiatura = document.getElementById('<%= txtNumColegiatura.ClientID %>');
+            const txtExperiencia = document.getElementById('<%= txtExperiencia.ClientID %>');
+            const txtPeso = document.getElementById('<%= txtPeso.ClientID %>');
+            const txtEdad = document.getElementById('<%= txtEdad.ClientID %>');
+            
+            if (txtNombre) txtNombre.value = '';
+            if (txtApellido) txtApellido.value = '';
+            if (txtNumDoc) txtNumDoc.value = '';
+            if (txtFechaNac) txtFechaNac.value = '';
+            if (txtEmail) txtEmail.value = '';
+            if (txtTelefono) txtTelefono.value = '';
+            if (txtPassword) txtPassword.value = '';
+            if (txtNumColegiatura) txtNumColegiatura.value = '';
+            if (txtExperiencia) txtExperiencia.value = '';
+            if (txtPeso) txtPeso.value = '';
+            if (txtEdad) txtEdad.value = '';
+            
+            // Resetear dropdowns
+            const ddlTipoDoc = document.getElementById('<%= ddlTipoDoc.ClientID %>');
+            const ddlGenero = document.getElementById('<%= ddlGenero.ClientID %>');
+            const ddlSede = document.getElementById('<%= ddlSede.ClientID %>');
+            const ddlRol = document.getElementById('<%= ddlRol.ClientID %>');
+            const ddlEspecialidad = document.getElementById('<%= ddlEspecialidad.ClientID %>');
+            const ddlNivelAcceso = document.getElementById('<%= ddlNivelAcceso.ClientID %>');
+            
+            if (ddlTipoDoc) ddlTipoDoc.selectedIndex = 0;
+            if (ddlGenero) ddlGenero.selectedIndex = 0;
+            if (ddlSede) ddlSede.selectedIndex = 0;
+            if (ddlRol) ddlRol.selectedIndex = 0;
+            if (ddlEspecialidad) ddlEspecialidad.selectedIndex = 0;
+            if (ddlNivelAcceso) ddlNivelAcceso.selectedIndex = 0;
+            
+            // Ocultar paneles dinámicos
+            const pnlMedico = document.getElementById('<%= pnlMedico.ClientID %>');
+            const pnlAdministrador = document.getElementById('<%= pnlAdministrador.ClientID %>');
+            const pnlPaciente = document.getElementById('<%= pnlPaciente.ClientID %>');
+            
+            if (pnlMedico) pnlMedico.classList.remove('show');
+            if (pnlAdministrador) pnlAdministrador.classList.remove('show');
+            if (pnlPaciente) pnlPaciente.classList.remove('show');
+            
+            // Ocultar mensaje
+            const pnlMensaje = document.getElementById('<%= pnlMensaje.ClientID %>');
+            if (pnlMensaje) {
+                pnlMensaje.style.display = 'none';
+                pnlMensaje.classList.remove('show');
+            }
         }
 
         function cerrarModalCrearUsuario() {
@@ -1283,25 +1667,130 @@
         }
 
         // Funciones para modal de especialidades
-        function abrirModalEspecialidad() {
-            document.getElementById('modalCrearEspecialidad').classList.add('show');
-            document.body.style.overflow = 'hidden';
+        function abrirModalEspecialidad(skipLimpiar) {
+            const modal = document.getElementById('modalCrearEspecialidad');
+            const hfPanelActivo = document.getElementById('<%= hfPanelActivo.ClientID %>');
+            
+            // Guardar que estamos en el panel de especialidades
+            if (hfPanelActivo) {
+                hfPanelActivo.value = 'panel-especialidades';
+            }
+            
+            // LIMPIAR FORMULARIO solo si NO viene de una edición
+            // skipLimpiar será true cuando se llama desde C# (modo edición)
+            if (!skipLimpiar) {
+                limpiarFormularioEspecialidad();
+            }
+            
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                console.log('Modal Especialidad Abierto' + (skipLimpiar ? ' (modo edición)' : ' (modo creación)'));
+            } else {
+                console.error('Modal de Especialidad no encontrado');
+            }
+        }
+
+        // Nueva función para limpiar el formulario de especialidad
+        function limpiarFormularioEspecialidad() {
+            // Resetear campos ocultos
+            const hfIdEspecialidad = document.getElementById('<%= hfIdEspecialidad.ClientID %>');
+            const hfModoEdicionEsp = document.getElementById('<%= hfModoEdicionEsp.ClientID %>');
+            
+            if (hfIdEspecialidad) hfIdEspecialidad.value = '';
+            if (hfModoEdicionEsp) hfModoEdicionEsp.value = '0';
+            
+            // Resetear título y botón
+            const lblTituloModalEspecialidad = document.getElementById('<%= lblTituloModalEspecialidad.ClientID %>');
+            const btnCrearEspecialidad = document.getElementById('<%= btnCrearEspecialidad.ClientID %>');
+            
+            if (lblTituloModalEspecialidad) lblTituloModalEspecialidad.innerText = 'Nueva Especialidad Médica';
+            if (btnCrearEspecialidad) btnCrearEspecialidad.value = 'Crear Especialidad';
+            
+            // Limpiar campos de texto
+            const txtNombreEspecialidad = document.getElementById('<%= txtNombreEspecialidad.ClientID %>');
+            const txtDescripcionEspecialidad = document.getElementById('<%= txtDescripcionEspecialidad.ClientID %>');
+            
+            if (txtNombreEspecialidad) txtNombreEspecialidad.value = '';
+            if (txtDescripcionEspecialidad) txtDescripcionEspecialidad.value = '';
+            
+            // Ocultar mensaje
+            const pnlMensajeEspecialidad = document.getElementById('<%= pnlMensajeEspecialidad.ClientID %>');
+            if (pnlMensajeEspecialidad) {
+                pnlMensajeEspecialidad.style.display = 'none';
+                pnlMensajeEspecialidad.classList.remove('show');
+            }
         }
 
         function cerrarModalCrearEspecialidad() {
-            document.getElementById('modalCrearEspecialidad').classList.remove('show');
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById('modalCrearEspecialidad');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Funciones para modal de sedes
-        function abrirModalSede() {
-            document.getElementById('modalSede').classList.add('show');
-            document.body.style.overflow = 'hidden';
+        function abrirModalSede(skipLimpiar) {
+            const modal = document.getElementById('modalSede');
+            const hfPanelActivo = document.getElementById('<%= hfPanelActivo.ClientID %>');
+            
+            // Guardar que estamos en el panel de sedes
+            if (hfPanelActivo) {
+                hfPanelActivo.value = 'panel-sedes';
+            }
+            
+            // LIMPIAR FORMULARIO solo si NO viene de una edición
+            if (!skipLimpiar) {
+                limpiarFormularioSede();
+            }
+            
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                console.log('Modal Sede Abierto' + (skipLimpiar ? ' (modo edición)' : ' (modo creación)'));
+            } else {
+                console.error('Modal de Sede no encontrado');
+            }
+        }
+
+        // Nueva función para limpiar el formulario de sede
+        function limpiarFormularioSede() {
+            // Resetear campos ocultos
+            const hfIdSede = document.getElementById('<%= hfIdSede.ClientID %>');
+            const hfModoEdicionSede = document.getElementById('<%= hfModoEdicionSede.ClientID %>');
+            
+            if (hfIdSede) hfIdSede.value = '';
+            if (hfModoEdicionSede) hfModoEdicionSede.value = '0';
+            
+            // Resetear título y botón
+            const lblTituloModalSede = document.getElementById('<%= lblTituloModalSede.ClientID %>');
+            const btnCrearSede = document.getElementById('<%= btnCrearSede.ClientID %>');
+            
+            if (lblTituloModalSede) lblTituloModalSede.innerText = 'Nueva Sede';
+            if (btnCrearSede) btnCrearSede.value = 'Crear Sede';
+            
+            // Limpiar campos de texto
+            const txtNombreSede = document.getElementById('<%= txtNombreSede.ClientID %>');
+            const txtDireccionSede = document.getElementById('<%= txtDireccionSede.ClientID %>');
+            
+            if (txtNombreSede) txtNombreSede.value = '';
+            if (txtDireccionSede) txtDireccionSede.value = '';
+            
+            // Ocultar mensaje
+            const pnlMensajeSede = document.getElementById('<%= pnlMensajeSede.ClientID %>');
+            if (pnlMensajeSede) {
+                pnlMensajeSede.style.display = 'none';
+                pnlMensajeSede.classList.remove('show');
+            }
         }
 
         function cerrarModalSede() {
-            document.getElementById('modalSede').classList.remove('show');
-            document.body.style.overflow = 'auto';
+            const modal = document.getElementById('modalSede');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Cerrar modales al hacer clic fuera

@@ -149,7 +149,7 @@ namespace SistemaMedico.datos
             {
                 using (SqlConnection conn = conexionDB.ObtenerConexion())
                 {
-                    SqlCommand cmd = new SqlCommand("RegistrarAccionAdmin", conn);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarAccionAdmin", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdAdmin", idAdmin);
                     cmd.Parameters.AddWithValue("@TipoAccion", tipoAccion);

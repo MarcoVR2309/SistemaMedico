@@ -83,6 +83,8 @@
     <Content Include="database\01_CREATE_TABLES.sql" />
     <Content Include="database\02_CREATE_SEQUENCES.sql" />
     <Content Include="database\03_INSERT_INITIAL_DATA.sql" />
+    <Content Include="database\FIX_SP_EDICION_USUARIOS.sql" />
+    <Content Include="database\FIX_SP_SEDES_NOMBRES.sql" />
     <Content Include="database\RedClinicas_Azure.sql" />
     <Content Include="database\SP_ADMIN_GESTION.sql" />
     <Content Include="database\SP_CRUD_Citas.sql" />
@@ -93,6 +95,7 @@
     <Content Include="database\SP_CRUD_RecetasMedicas.sql" />
     <Content Include="database\SP_CRUD_Roles.sql" />
     <Content Include="database\StoredProcedures_CRUD.sql" />
+    <Content Include="database\VERIFICAR_Y_CREAR_SP_ADMIN.sql" />
     <Content Include="scripts\panelmedico.js" />
     <Content Include="scripts\script.js" />
     <Content Include="styles\login.css" />

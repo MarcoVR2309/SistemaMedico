@@ -15,7 +15,6 @@ namespace SistemaMedico.datos
             return objConexion.ObtenerConexion();
         }
 
-
         public int AgregarEspecialidad(Especialidades oEspecialidad)
         {
             int resultado = 0;
@@ -60,7 +59,7 @@ namespace SistemaMedico.datos
                             {
                                 Id = dr["ID"].ToString(),
                                 NomEsp = dr["NOM_ESP"].ToString(),
-                                DesEsp = dr["DES_ESP"].ToString()
+                                DesEsp = dr["DES_ESP"] != DBNull.Value ? dr["DES_ESP"].ToString() : ""
                             });
                         }
                     }
@@ -71,6 +70,62 @@ namespace SistemaMedico.datos
                 }
             }
             return lista;
+        }
+
+        public Especialidades ObtenerPorId(string id)
+        {
+            Especialidades especialidad = null;
+            using (SqlConnection conexion = GetConnection())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_ObtenerEspecialidadPorId", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            especialidad = new Especialidades()
+                            {
+                                Id = dr["ID"].ToString(),
+                                NomEsp = dr["NOM_ESP"].ToString(),
+                                DesEsp = dr["DES_ESP"] != DBNull.Value ? dr["DES_ESP"].ToString() : ""
+                            };
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception("DAO Error al obtener especialidad: " + ex.Message);
+                }
+            }
+            return especialidad;
+        }
+
+        public bool Actualizar(Especialidades especialidad)
+        {
+            using (SqlConnection conexion = GetConnection())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_ActualizarEspecialidad", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Id", especialidad.Id);
+                    cmd.Parameters.AddWithValue("@Nombre", especialidad.NomEsp);
+                    cmd.Parameters.AddWithValue("@Descripcion", 
+                        string.IsNullOrWhiteSpace(especialidad.DesEsp) ? (object)DBNull.Value : especialidad.DesEsp);
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception("DAO Error al actualizar especialidad: " + ex.Message);
+                }
+            }
         }
     }
 }

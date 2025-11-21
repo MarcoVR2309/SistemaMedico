@@ -78,10 +78,12 @@
                 <header class="content-header">
                      <div class="header-main">
                         <h1 class="content-title">Dashboard</h1>
-                        <p class="content-subtitle">Citas programadas para hoy: 12 de Noviembre, 2025</p>
+                        <p class="content-subtitle">
+    Citas programadas para hoy: <asp:Label ID="lblFechaHoy" runat="server"></asp:Label>
+</p>
                     </div>
                     <div class="header-actions">
-                         <a href="#" id="btnAbrirModalCita" class="btn-service btn-purple">+ Agendar Cita</a>
+                         <%-- <a href="#" id="btnAbrirModalCita" class="btn-service btn-purple">+ Agendar Cita</a> --%>
                     </div>
                 </header>
 

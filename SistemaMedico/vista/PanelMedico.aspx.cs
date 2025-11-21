@@ -30,6 +30,7 @@ namespace SistemaMedico.vista
             }
             if (!IsPostBack)
             {
+                lblFechaHoy.Text = DateTime.Now.ToString("dd 'de' MMMM, yyyy", new System.Globalization.CultureInfo("es-ES"));
                 CargarDatosDoctor();
                 CargarCitasDelDia();
                 CargarDropdownsModal();

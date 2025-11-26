@@ -1,6 +1,6 @@
 ﻿// ===========================================================================
-// SCRIPTS PARA PANEL PACIENTE - VERSIÓN FINAL
-// Compatible con la estructura de PanelMedico
+// SCRIPTS PARA PANEL PACIENTE - VERSIÓN RESPONSIVE
+// Compatible con Desktop, Tablet y Móvil
 // ===========================================================================
 
 console.log('🚀 Cargando PanelPaciente.js...');
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     inicializarNavegacion();
     inicializarModal();
+    inicializarMenuMovil();
 });
 
 // ===========================================================================
@@ -53,8 +54,78 @@ function inicializarNavegacion() {
                 l.parentElement.classList.remove("active");
             });
             this.parentElement.classList.add("active");
+
+            // Cerrar sidebar en móvil después de seleccionar
+            if (window.innerWidth <= 768) {
+                cerrarMenuMovil();
+            }
         });
     });
+}
+
+// ===========================================================================
+// MENÚ MÓVIL (HAMBURGUESA)
+// ===========================================================================
+
+function inicializarMenuMovil() {
+    console.log('📱 Inicializando menú móvil...');
+
+    // Crear botón de menú si no existe
+    let menuBtn = document.querySelector('.mobile-menu-toggle');
+    if (!menuBtn) {
+        menuBtn = document.createElement('button');
+        menuBtn.className = 'mobile-menu-toggle';
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        menuBtn.setAttribute('aria-label', 'Abrir menú');
+        document.body.appendChild(menuBtn);
+        console.log('   ✅ Botón de menú creado');
+    }
+
+    const sidebar = document.querySelector('.dashboard-sidebar');
+
+    // Toggle del menú
+    menuBtn.addEventListener('click', function() {
+        if (sidebar.classList.contains('show')) {
+            cerrarMenuMovil();
+        } else {
+            abrirMenuMovil();
+        }
+    });
+
+    // Cerrar al hacer clic fuera del sidebar en móvil
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768) {
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                cerrarMenuMovil();
+            }
+        }
+    });
+}
+
+function abrirMenuMovil() {
+    const sidebar = document.querySelector('.dashboard-sidebar');
+    const menuBtn = document.querySelector('.mobile-menu-toggle');
+    
+    if (sidebar) {
+        sidebar.classList.add('show');
+        if (menuBtn) {
+            menuBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        console.log('   🔓 Menú móvil abierto');
+    }
+}
+
+function cerrarMenuMovil() {
+    const sidebar = document.querySelector('.dashboard-sidebar');
+    const menuBtn = document.querySelector('.mobile-menu-toggle');
+    
+    if (sidebar) {
+        sidebar.classList.remove('show');
+        if (menuBtn) {
+            menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        console.log('   🔒 Menú móvil cerrado');
+    }
 }
 
 // ===========================================================================
@@ -115,6 +186,7 @@ function showModal() {
     const modal = document.getElementById("modalAgendarCita");
     if (modal) {
         modal.classList.add("show");
+        document.body.style.overflow = 'hidden'; // Prevenir scroll
 
         // Limpiar mensajes de error/éxito anteriores
         const msgLabel = modal.querySelector('.modal-mensaje');
@@ -132,6 +204,7 @@ function hideModal() {
     const modal = document.getElementById("modalAgendarCita");
     if (modal) {
         modal.classList.remove("show");
+        document.body.style.overflow = 'auto'; // Restaurar scroll
         console.log('   ✅ Modal oculto');
     }
 }
@@ -146,6 +219,7 @@ function showModalFromCodeBehind(message, type) {
     const modal = document.getElementById("modalAgendarCita");
     if (modal) {
         modal.classList.add("show");
+        document.body.style.overflow = 'hidden';
         const msgLabel = modal.querySelector('.modal-mensaje');
         if (msgLabel && message && type) {
             msgLabel.innerText = message;
@@ -182,6 +256,7 @@ function handleGuardarCita(button) {
     return true;
 }
 
+// Formateo de fecha DD/MM/AAAA
 document.addEventListener("DOMContentLoaded", function () {
     const txtFecha = document.querySelector('input[id*="txtFechaCita"]');
 
@@ -201,4 +276,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-console.log('PanelPaciente.js cargado completamente');
+// ===========================================================================
+// MANEJO DE RESIZE
+// ===========================================================================
+
+// Cerrar menú móvil al cambiar a desktop
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        cerrarMenuMovil();
+    }
+});
+
+console.log('✅ PanelPaciente.js cargado completamente (Versión Responsive)');

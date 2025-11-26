@@ -382,13 +382,13 @@ namespace SistemaMedico.datos
                                 IdCita = dr["IdCita"].ToString(),
                                 Fecha = (DateTime)dr["FECHA"],
                                 Hora = (TimeSpan)dr["HORA"],
-                                Motivo = dr["MOTIVO"].ToString(),
+                                Motivo = dr["MOTIVO"] != DBNull.Value ? dr["MOTIVO"].ToString() : "Sin motivo",
                                 Estado = dr["ESTADO"].ToString(),
 
                                 PacienteNombre = dr["NombresPaciente"].ToString() + " " + dr["ApellidosPaciente"].ToString(),
                                 PacienteDNI = dr["NumDocPaciente"].ToString(),
                                 PacienteEmail = dr["EmailPaciente"].ToString(),
-                                PacienteTelefono = dr["TelefonoPaciente"].ToString(),
+                                PacienteTelefono = dr["TelefonoPaciente"] != DBNull.Value ? dr["TelefonoPaciente"].ToString() : "No registrado",
                                 PacientePeso = dr["PESO"] != DBNull.Value ? (decimal?)dr["PESO"] : null,
 
                                 DoctorNombre = dr["NombresDoctor"].ToString() + " " + dr["ApellidosDoctor"].ToString(),

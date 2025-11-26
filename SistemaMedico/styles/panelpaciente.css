@@ -763,28 +763,75 @@ h2.section-title-panel {
     animation: fadeIn 0.3s ease-out;
 }
 
-/* ================= BOTÓN MENÚ MÓVIL (Opcional) ================ */
+/* ================= BOTÓN MENÚ MÓVIL ================ */
 .mobile-menu-toggle {
     display: none;
     position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 2001;
+    top: 20px;
+    left: 20px;
+    z-index: 3000; /* Aumentado para estar siempre visible */
     background: var(--primary-purple);
     color: white;
     border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-size: 22px;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent; /* Eliminar highlight en móvil */
+    touch-action: manipulation; /* Mejorar respuesta táctil */
 }
 
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.4);
+}
+
+.mobile-menu-toggle:hover {
+    background: #5a54d6;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+}
+
+/* Asegurar que el botón siempre esté visible en móvil */
 @media (max-width: 768px) {
     .mobile-menu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    
+    /* Evitar que el header tape el botón */
+    .content-header {
+        padding-left: 80px; /* Dejar espacio para el botón */
+    }
+}
+
+/* Overlay oscuro cuando el sidebar está abierto */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+@media (max-width: 480px) {
+    .mobile-menu-toggle {
+        width: 48px;
+        height: 48px;
+        top: 15px;
+        left: 15px;
     }
 }

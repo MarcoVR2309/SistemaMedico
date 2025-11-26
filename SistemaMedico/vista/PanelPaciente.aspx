@@ -6,16 +6,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Mi Panel - Clínica Aguirre</title>
     
-    <link href="../styles/main.css" rel="stylesheet" />
-    <link href="../styles/panelmedico.css" rel="stylesheet" />
-    <link href="../styles/panelpaciente.css?v=2" rel="stylesheet" />
+    <link href="../styles/main.css?v=2025012501" rel="stylesheet" />
+    <link href="../styles/panelmedico.css?v=2025012501" rel="stylesheet" />
+    <link href="../styles/panelpaciente.css?v=2025012501" rel="stylesheet" />
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <script src="../Scripts/panelpaciente.js?v=1"></script>
+    <script src="../Scripts/panelpaciente.js?v=2025012501"></script>
 </head>
 <body>
 <form id="form1" runat="server">

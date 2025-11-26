@@ -64,11 +64,22 @@ function inicializarNavegacion() {
 }
 
 // ===========================================================================
-// MENÚ MÓVIL (HAMBURGUESA)
+// MENÚ MÓVIL (HAMBURGUESA) - VERSIÓN MEJORADA
 // ===========================================================================
+
+let menuBtnClickDebounce = false; // Variable para debounce
 
 function inicializarMenuMovil() {
     console.log('📱 Inicializando menú móvil...');
+
+    // Crear overlay oscuro si no existe
+    let overlay = document.querySelector('.sidebar-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'sidebar-overlay';
+        document.body.appendChild(overlay);
+        console.log('   ✅ Overlay creado');
+    }
 
     // Crear botón de menú si no existe
     let menuBtn = document.querySelector('.mobile-menu-toggle');
@@ -77,14 +88,29 @@ function inicializarMenuMovil() {
         menuBtn.className = 'mobile-menu-toggle';
         menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
         menuBtn.setAttribute('aria-label', 'Abrir menú');
+        menuBtn.setAttribute('type', 'button');
         document.body.appendChild(menuBtn);
         console.log('   ✅ Botón de menú creado');
     }
 
     const sidebar = document.querySelector('.dashboard-sidebar');
 
-    // Toggle del menú
-    menuBtn.addEventListener('click', function() {
+    // EVENTO PRINCIPAL: Click/Touch en el botón
+    menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Debounce: prevenir clics múltiples
+        if (menuBtnClickDebounce) {
+            console.log('   ⏳ Esperando debounce...');
+            return;
+        }
+        
+        menuBtnClickDebounce = true;
+        setTimeout(function() {
+            menuBtnClickDebounce = false;
+        }, 300);
+        
         if (sidebar.classList.contains('show')) {
             cerrarMenuMovil();
         } else {
@@ -92,12 +118,15 @@ function inicializarMenuMovil() {
         }
     });
 
-    // Cerrar al hacer clic fuera del sidebar en móvil
-    document.addEventListener('click', function(event) {
-        if (window.innerWidth <= 768) {
-            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
-                cerrarMenuMovil();
-            }
+    // Cerrar al hacer clic en el overlay
+    overlay.addEventListener('click', function() {
+        cerrarMenuMovil();
+    });
+
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('show')) {
+            cerrarMenuMovil();
         }
     });
 }
@@ -105,12 +134,15 @@ function inicializarMenuMovil() {
 function abrirMenuMovil() {
     const sidebar = document.querySelector('.dashboard-sidebar');
     const menuBtn = document.querySelector('.mobile-menu-toggle');
+    const overlay = document.querySelector('.sidebar-overlay');
     
     if (sidebar) {
         sidebar.classList.add('show');
+        if (overlay) overlay.classList.add('show');
         if (menuBtn) {
             menuBtn.innerHTML = '<i class="fas fa-times"></i>';
         }
+        document.body.style.overflow = 'hidden'; // Prevenir scroll
         console.log('   🔓 Menú móvil abierto');
     }
 }
@@ -118,12 +150,15 @@ function abrirMenuMovil() {
 function cerrarMenuMovil() {
     const sidebar = document.querySelector('.dashboard-sidebar');
     const menuBtn = document.querySelector('.mobile-menu-toggle');
+    const overlay = document.querySelector('.sidebar-overlay');
     
     if (sidebar) {
         sidebar.classList.remove('show');
+        if (overlay) overlay.classList.remove('show');
         if (menuBtn) {
             menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
         }
+        document.body.style.overflow = 'auto'; // Restaurar scroll
         console.log('   🔒 Menú móvil cerrado');
     }
 }

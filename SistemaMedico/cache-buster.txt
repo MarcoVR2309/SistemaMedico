@@ -1,0 +1,49 @@
+===========================================
+CACHE BUSTING GUIDE
+Versión: 2025-01-25
+===========================================
+
+PROBLEMA:
+Los cambios en CSS/JS no se ven en producción porque el navegador 
+guarda una copia en caché (cache).
+
+SOLUCIONES:
+
+1. AGREGAR VERSIÓN A LOS ARCHIVOS (Recomendado):
+   En tus archivos .aspx, cambia:
+   
+   ANTES:
+   <link href="../styles/panelpaciente.css" rel="stylesheet" />
+   <script src="../scripts/panelpaciente.js"></script>
+   
+   DESPUÉS:
+   <link href="../styles/panelpaciente.css?v=2.0" rel="stylesheet" />
+   <script src="../scripts/panelpaciente.js?v=2.0"></script>
+
+2. LIMPIAR CACHÉ DEL NAVEGADOR:
+   - Chrome/Edge: Ctrl + Shift + Delete
+   - Firefox: Ctrl + Shift + Delete
+   - Safari: Cmd + Option + E
+   
+   Luego: F5 o Ctrl + F5 para recargar
+
+3. MODO INCÓGNITO:
+   - Ctrl + Shift + N (Chrome/Edge)
+   - Ctrl + Shift + P (Firefox)
+
+4. CLEAR CACHE EN EL SERVIDOR:
+   - IIS: Reciclar el Application Pool
+   - Azure: Restart Web App
+
+===========================================
+MEJORAS IMPLEMENTADAS:
+===========================================
+
+? Botón hamburguesa más grande (50x50px)
+? Z-index aumentado a 3000
+? Debounce para evitar clics múltiples
+? Overlay oscuro al abrir menú
+? Mejor respuesta táctil (-webkit-tap-highlight-color)
+? Prevención de scroll cuando menu está abierto
+? Cierre con tecla ESC
+? Cierre al hacer clic fuera del sidebar
